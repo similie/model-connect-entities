@@ -1,8 +1,7 @@
 import { Connection } from "../connect";
 import { ModelRegister, Registar } from "../connect-registers";
-import { IModelEntity } from "../entities";
+import { IModelEntity, IModelCollection } from "../entities";
 import { IQueryLimiters } from "../models";
-import { IModelCollection } from "../structures";
 export interface LiveConnect extends Registar, Connection {
 }
 export declare class LiveConnectRegister implements ModelRegister {

@@ -1,7 +1,6 @@
 import { ModelRegister } from "../connect-registers/registration";
-import { IModelEntity } from "../entities";
+import { IModelEntity, IModelCollection } from "../entities";
 import { IQueryLimiters } from "../models";
-import { IModelCollection } from "../structures";
 
 /**
  * @interface Connector
