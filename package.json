@@ -1,8 +1,15 @@
 {
-  "name": "one-model-connectors",
+  "name": "@similie/one-model-connectors",
   "version": "1.0.0",
-  "description": "Creates a common interface for similie object classes",
+  "description": "Creates a common interface for similie model connects",
   "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:similie/one-model-connector-entities.git"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
