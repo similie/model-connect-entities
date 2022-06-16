@@ -1,11 +1,14 @@
-import { Connection } from "../connect";
-import { ModelRegister, Registar } from "../connect-registers";
-import { Connect } from "../connect/connect";
-import { IModelEntity, IModelCollection } from "../entities";
-import { IQueryLimiters } from "../models";
+import {
+  IModelEntity,
+  IModelCollection,
+  IQueryLimiters,
+  LiveConnectionConstruct,
+  IModelConfigurationDetails,
+} from "../entities";
 
-export interface LiveConnect extends Registar, Connection {}
-export class LiveConnectRegister implements ModelRegister {
+import { GlobalConnection } from "../glabal-connect";
+
+export class LiveConnectRegister implements IModelConfigurationDetails {
   _name: string;
   constructor() {
     this._name = "";
@@ -21,7 +24,7 @@ export class LiveConnectRegister implements ModelRegister {
 
 /**
  * @class
- * @name LiveConnectConstruct
+ * @name LiveConnectionConstruct
  *
  * @description The purpose of live connect is so that a single class
  * can manage the start instance. Also, the child classes can safely
@@ -32,10 +35,10 @@ export class LiveConnectRegister implements ModelRegister {
  * to create a new connector, you simply copy this class and populate the
  * public functions with the desired logic
  */
-export class LiveConnectConstruct implements LiveConnect {
+export class LiveConnection implements LiveConnectionConstruct {
   constructor(global?: boolean) {
-    if (global === Connect.SET_GLOBAL) {
-      Connect.startInstance(this);
+    if (global === GlobalConnection.SET_GLOBAL) {
+      GlobalConnection.startInstance(this);
     }
   }
 
@@ -47,43 +50,51 @@ export class LiveConnectConstruct implements LiveConnect {
     return new LiveConnectRegister();
   }
 
-  raw(registry?: ModelRegister) {
+  raw(config?: IModelConfigurationDetails) {
     return null as any;
   }
 
-  find(query: any, limiters: IQueryLimiters, registry?: ModelRegister) {
+  find(
+    query: any,
+    limiters: IQueryLimiters,
+    config?: IModelConfigurationDetails
+  ) {
     return null as any;
   }
 
-  findOne(query: any, limiters: IQueryLimiters, registry?: ModelRegister) {
+  findOne(
+    query: any,
+    limiters: IQueryLimiters,
+    config?: IModelConfigurationDetails
+  ) {
     return null as any;
   }
 
-  async save(values: any, registry?: ModelRegister) {
+  async save(values: any, config?: IModelConfigurationDetails) {
     return values;
   }
 
-  async update(query: any, update: any, registry?: ModelRegister) {
+  async update(query: any, update: any, config?: IModelConfigurationDetails) {
     return query;
   }
 
-  async count(query: any, registry?: ModelRegister) {
+  async count(query: any, config?: IModelConfigurationDetails) {
     return query;
   }
 
-  async destroy(query: any, registry?: ModelRegister) {
+  async destroy(query: any, config?: IModelConfigurationDetails) {
     return query;
   }
 
-  async create(query: any, registry?: ModelRegister) {
+  async create(query: any, config?: IModelConfigurationDetails) {
     return query;
   }
 
-  async createMany(query: any[], registry?: ModelRegister) {
+  async createMany(query: any[], config?: IModelConfigurationDetails) {
     return query;
   }
 
-  async destroyAll(query: any, registry?: ModelRegister) {
+  async destroyAll(query: any, config?: IModelConfigurationDetails) {
     return query;
   }
 
@@ -101,11 +112,11 @@ export class LiveConnectConstruct implements LiveConnect {
     return model;
   }
 
-  attr(registry?: ModelRegister) {
+  attr(config?: IModelConfigurationDetails) {
     return null;
   }
 
-  keys(registry?: ModelRegister) {
+  keys(config?: IModelConfigurationDetails) {
     return new Array<string>();
   }
 

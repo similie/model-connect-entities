@@ -15,9 +15,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./src/connectors"), exports);
-__exportStar(require("./src/connect"), exports);
-__exportStar(require("./src/connect-registers"), exports);
-__exportStar(require("./src/config"), exports);
-__exportStar(require("./src/models"), exports);
+__exportStar(require("./src/glabal-connect"), exports);
+__exportStar(require("./src/common"), exports);
 __exportStar(require("./src/entities"), exports);
 __exportStar(require("./src/structures"), exports);

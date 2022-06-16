@@ -1,5 +1,5 @@
-import { Connector } from "../connect";
 import { IModelEntity } from "../entities";
+import { ISharedDataConnects } from "./shared";
 
 /**
  * @interface ModelApi
@@ -8,7 +8,8 @@ import { IModelEntity } from "../entities";
  * @description Expands the Connector class with the model class. Allowing for property
  * differentiation for models
  */
-export interface ModelApi<T extends IModelEntity> extends Connector {
+export interface IModelConnect<T extends IModelEntity>
+  extends ISharedDataConnects {
   getId: (query: number | IModelEntity | undefined | null) => number | null;
   find: (query: any) => IQueryDecorators<T>;
   initWithId: (id: number) => IQueryPopulates<T>;
