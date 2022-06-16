@@ -8,7 +8,7 @@ import {
 
 import { GlobalConnection } from "../glabal-connect";
 
-export class LiveConnectRegister implements IModelConfigurationDetails {
+export class LiveConnectConfig implements IModelConfigurationDetails {
   _name: string;
   constructor() {
     this._name = "";
@@ -46,8 +46,8 @@ export class LiveConnection implements LiveConnectionConstruct {
     return null;
   }
 
-  registration() {
-    return new LiveConnectRegister();
+  get modelConfig() {
+    return new LiveConnectConfig();
   }
 
   raw(config?: IModelConfigurationDetails) {

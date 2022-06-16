@@ -7,5 +7,5 @@ export interface IModelConfigurationDetails {
     connection?: any;
 }
 export interface IModelConfiguration {
-    registration: () => IModelConfigurationDetails;
+    modelConfig: IModelConfigurationDetails;
 }

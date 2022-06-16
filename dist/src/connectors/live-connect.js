@@ -9,9 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LiveConnection = exports.LiveConnectRegister = void 0;
+exports.LiveConnection = exports.LiveConnectConfig = void 0;
 const glabal_connect_1 = require("../glabal-connect");
-class LiveConnectRegister {
+class LiveConnectConfig {
     constructor() {
         this._name = "";
     }
@@ -22,7 +22,7 @@ class LiveConnectRegister {
         this._name = modelname;
     }
 }
-exports.LiveConnectRegister = LiveConnectRegister;
+exports.LiveConnectConfig = LiveConnectConfig;
 /**
  * @class
  * @name LiveConnectionConstruct
@@ -47,8 +47,8 @@ class LiveConnection {
             return null;
         });
     }
-    registration() {
-        return new LiveConnectRegister();
+    get modelConfig() {
+        return new LiveConnectConfig();
     }
     raw(config) {
         return null;

@@ -8,5 +8,5 @@ export interface IModelConfigurationDetails {
 }
 
 export interface IModelConfiguration {
-  registration: () => IModelConfigurationDetails;
+  modelConfig: IModelConfigurationDetails;
 }

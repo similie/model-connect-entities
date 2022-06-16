@@ -1,5 +1,5 @@
 import { IModelEntity, IModelCollection, IQueryLimiters, LiveConnectionConstruct, IModelConfigurationDetails } from "../entities";
-export declare class LiveConnectRegister implements IModelConfigurationDetails {
+export declare class LiveConnectConfig implements IModelConfigurationDetails {
     _name: string;
     constructor();
     get modelname(): string;
@@ -21,7 +21,7 @@ export declare class LiveConnectRegister implements IModelConfigurationDetails {
 export declare class LiveConnection implements LiveConnectionConstruct {
     constructor(global?: boolean);
     init(): Promise<null>;
-    registration(): LiveConnectRegister;
+    get modelConfig(): LiveConnectConfig;
     raw(config?: IModelConfigurationDetails): any;
     find(query: any, limiters: IQueryLimiters, config?: IModelConfigurationDetails): any;
     findOne(query: any, limiters: IQueryLimiters, config?: IModelConfigurationDetails): any;
