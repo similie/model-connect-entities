@@ -1,10 +1,5 @@
-import { Connection } from "../connect";
-import { ModelRegister, Registar } from "../connect-registers";
-import { IModelEntity, IModelCollection } from "../entities";
-import { IQueryLimiters } from "../models";
-export interface LiveConnect extends Registar, Connection {
-}
-export declare class LiveConnectRegister implements ModelRegister {
+import { IModelEntity, IModelCollection, IQueryLimiters, LiveConnectionConstruct, IModelConfigurationDetails } from "../entities";
+export declare class LiveConnectConfig implements IModelConfigurationDetails {
     _name: string;
     constructor();
     get modelname(): string;
@@ -12,7 +7,7 @@ export declare class LiveConnectRegister implements ModelRegister {
 }
 /**
  * @class
- * @name LiveConnectConstruct
+ * @name LiveConnectionConstruct
  *
  * @description The purpose of live connect is so that a single class
  * can manage the start instance. Also, the child classes can safely
@@ -23,24 +18,24 @@ export declare class LiveConnectRegister implements ModelRegister {
  * to create a new connector, you simply copy this class and populate the
  * public functions with the desired logic
  */
-export declare class LiveConnectConstruct implements LiveConnect {
+export declare class LiveConnection implements LiveConnectionConstruct {
     constructor(global?: boolean);
     init(): Promise<null>;
-    registration(): LiveConnectRegister;
-    raw(registry?: ModelRegister): any;
-    find(query: any, limiters: IQueryLimiters, registry?: ModelRegister): any;
-    findOne(query: any, limiters: IQueryLimiters, registry?: ModelRegister): any;
-    save(values: any, registry?: ModelRegister): Promise<any>;
-    update(query: any, update: any, registry?: ModelRegister): Promise<any>;
-    count(query: any, registry?: ModelRegister): Promise<any>;
-    destroy(query: any, registry?: ModelRegister): Promise<any>;
-    create(query: any, registry?: ModelRegister): Promise<any>;
-    createMany(query: any[], registry?: ModelRegister): Promise<any[]>;
-    destroyAll(query: any, registry?: ModelRegister): Promise<any>;
-    add(value: any, collection: IModelCollection<IModelEntity>): Promise<void>;
-    remove(value: any, collection: IModelCollection<IModelEntity>): Promise<void>;
+    get modelConfig(): LiveConnectConfig;
+    raw(config?: IModelConfigurationDetails): any;
+    find(query: any, limiters: IQueryLimiters, config?: IModelConfigurationDetails): any;
+    findOne(query: any, limiters: IQueryLimiters, config?: IModelConfigurationDetails): any;
+    save(values: any, config?: IModelConfigurationDetails): Promise<any>;
+    update(query: any, update: any, config?: IModelConfigurationDetails): Promise<any>;
+    count(query: any, config?: IModelConfigurationDetails): Promise<any>;
+    destroy(query: any, config?: IModelConfigurationDetails): Promise<any>;
+    create(query: any, config?: IModelConfigurationDetails): Promise<any>;
+    createMany(query: any[], config?: IModelConfigurationDetails): Promise<any[]>;
+    destroyAll(query: any, config?: IModelConfigurationDetails): Promise<any>;
+    addToCollection(value: any, collection: IModelCollection<IModelEntity>): Promise<void>;
+    removeFromCollection(value: any, collection: IModelCollection<IModelEntity>): Promise<void>;
     saveAs(value: any, model: IModelEntity): Promise<IModelEntity>;
-    attr(registry?: ModelRegister): null;
-    keys(registry?: ModelRegister): string[];
+    attr(config?: IModelConfigurationDetails): any;
+    keys(config?: IModelConfigurationDetails): string[];
     tearDown(): Promise<void>;
 }

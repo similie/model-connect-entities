@@ -9,9 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LiveConnectConstruct = exports.LiveConnectRegister = void 0;
-const connect_1 = require("../connect/connect");
-class LiveConnectRegister {
+exports.LiveConnection = exports.LiveConnectConfig = void 0;
+const glabal_connect_1 = require("../glabal-connect");
+class LiveConnectConfig {
     constructor() {
         this._name = "";
     }
@@ -22,10 +22,10 @@ class LiveConnectRegister {
         this._name = modelname;
     }
 }
-exports.LiveConnectRegister = LiveConnectRegister;
+exports.LiveConnectConfig = LiveConnectConfig;
 /**
  * @class
- * @name LiveConnectConstruct
+ * @name LiveConnectionConstruct
  *
  * @description The purpose of live connect is so that a single class
  * can manage the start instance. Also, the child classes can safely
@@ -36,10 +36,10 @@ exports.LiveConnectRegister = LiveConnectRegister;
  * to create a new connector, you simply copy this class and populate the
  * public functions with the desired logic
  */
-class LiveConnectConstruct {
+class LiveConnection {
     constructor(global) {
-        if (global === connect_1.Connect.SET_GLOBAL) {
-            connect_1.Connect.startInstance(this);
+        if (global === glabal_connect_1.GlobalConnection.SET_GLOBAL) {
+            glabal_connect_1.GlobalConnection.startInstance(this);
         }
     }
     init() {
@@ -47,57 +47,57 @@ class LiveConnectConstruct {
             return null;
         });
     }
-    registration() {
-        return new LiveConnectRegister();
+    get modelConfig() {
+        return new LiveConnectConfig();
     }
-    raw(registry) {
+    raw(config) {
         return null;
     }
-    find(query, limiters, registry) {
+    find(query, limiters, config) {
         return null;
     }
-    findOne(query, limiters, registry) {
+    findOne(query, limiters, config) {
         return null;
     }
-    save(values, registry) {
+    save(values, config) {
         return __awaiter(this, void 0, void 0, function* () {
             return values;
         });
     }
-    update(query, update, registry) {
+    update(query, update, config) {
         return __awaiter(this, void 0, void 0, function* () {
             return query;
         });
     }
-    count(query, registry) {
+    count(query, config) {
         return __awaiter(this, void 0, void 0, function* () {
             return query;
         });
     }
-    destroy(query, registry) {
+    destroy(query, config) {
         return __awaiter(this, void 0, void 0, function* () {
             return query;
         });
     }
-    create(query, registry) {
+    create(query, config) {
         return __awaiter(this, void 0, void 0, function* () {
             return query;
         });
     }
-    createMany(query, registry) {
+    createMany(query, config) {
         return __awaiter(this, void 0, void 0, function* () {
             return query;
         });
     }
-    destroyAll(query, registry) {
+    destroyAll(query, config) {
         return __awaiter(this, void 0, void 0, function* () {
             return query;
         });
     }
-    add(value, collection) {
+    addToCollection(value, collection) {
         return __awaiter(this, void 0, void 0, function* () { });
     }
-    remove(value, collection) {
+    removeFromCollection(value, collection) {
         return __awaiter(this, void 0, void 0, function* () { });
     }
     saveAs(value, model) {
@@ -105,14 +105,14 @@ class LiveConnectConstruct {
             return model;
         });
     }
-    attr(registry) {
+    attr(config) {
         return null;
     }
-    keys(registry) {
+    keys(config) {
         return new Array();
     }
     tearDown() {
         return __awaiter(this, void 0, void 0, function* () { });
     }
 }
-exports.LiveConnectConstruct = LiveConnectConstruct;
+exports.LiveConnection = LiveConnection;
