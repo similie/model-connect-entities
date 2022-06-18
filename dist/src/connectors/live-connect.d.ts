@@ -34,8 +34,12 @@ export declare class LiveConnection implements LiveConnectionConstruct {
     destroyAll(query: any, config?: IModelConfigurationDetails): Promise<any>;
     addToCollection(value: any, collection: IModelCollection<IModelEntity>): Promise<void>;
     removeFromCollection(value: any, collection: IModelCollection<IModelEntity>): Promise<void>;
-    saveAs(value: any, model: IModelEntity): Promise<IModelEntity>;
     attr(config?: IModelConfigurationDetails): any;
     keys(config?: IModelConfigurationDetails): string[];
+    sum(numericAttrName: keyof IModelEntity, criteria?: IModelEntity, config?: IModelConfigurationDetails): Promise<any>;
+    avg(numericAttrName: keyof IModelEntity, criteria?: IModelEntity, config?: IModelConfigurationDetails): Promise<any>;
+    findOrCreate(criteria: IModelEntity, initialsValues: IModelEntity, config?: IModelConfigurationDetails): Promise<any>;
+    streamEach(query: IModelEntity, limiters: IQueryLimiters, config: IModelConfigurationDetails, cb: (model: IModelEntity) => Promise<void> | void): Promise<void>;
+    streamBatch(query: IModelEntity, limiters: IQueryLimiters, config: IModelConfigurationDetails, cb: (model: IModelEntity) => Promise<void> | void): Promise<void>;
     tearDown(): Promise<void>;
 }

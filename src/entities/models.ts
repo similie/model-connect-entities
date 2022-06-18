@@ -13,13 +13,16 @@ export interface IModelConnect<T extends IModelEntity>
   getId: (query: number | IModelEntity | undefined | null) => number | null;
   find: (query: any) => IQueryDecorators<T>;
   initWithId: (id: number) => IQueryPopulates<T>;
+  stream: (query: any) => IQueryStreamDecorators<T>;
+  toJson: (model: T) => Promise<any>;
 }
 
 export interface IQueryLimiters {
   sort?: any;
   skip?: number;
   limit?: number;
-  populate?: string;
+  batchNumber?: number;
+  populate?: any;
 }
 
 export interface IQueryFetch<T extends IModelEntity> {
@@ -27,7 +30,7 @@ export interface IQueryFetch<T extends IModelEntity> {
 }
 
 export interface IQueryPopulates<T extends IModelEntity> {
-  populate: (value: string) => IQueryFetch<T>;
+  populate: (value: string, criteria?: T) => IQueryFetch<T>;
   populateAll: () => IQueryFetch<T>;
   fetch: () => Promise<T>;
 }
@@ -37,7 +40,18 @@ export interface IQueryDecorators<T extends IModelEntity> {
   skip: (value: number) => IQueryDecorators<T>;
   limit: (value: number) => IQueryDecorators<T>;
   populateAll: () => IQueryDecorators<T>;
-  populate: (value: string) => IQueryDecorators<T>;
+  populate: (value: string, criteria?: T) => IQueryDecorators<T>;
   fetch: () => Promise<T[]>;
   fetchOne: () => Promise<T>;
+}
+
+export interface IQueryStreamDecorators<T extends IModelEntity>
+  extends IQueryDecorators<T> {
+  eachRecord: (
+    cb: (model: T) => Promise<any> | any
+  ) => IQueryStreamDecorators<T>;
+  eachBatch: (
+    batchNumber: number,
+    cb: (model: T[]) => Promise<any> | any
+  ) => IQueryStreamDecorators<T>;
 }

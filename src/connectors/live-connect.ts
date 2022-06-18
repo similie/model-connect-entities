@@ -108,10 +108,6 @@ export class LiveConnection implements LiveConnectionConstruct {
     collection: IModelCollection<IModelEntity>
   ): Promise<void> {}
 
-  async saveAs(value: any, model: IModelEntity) {
-    return model;
-  }
-
   attr(config?: IModelConfigurationDetails) {
     return null as any;
   }
@@ -119,6 +115,44 @@ export class LiveConnection implements LiveConnectionConstruct {
   keys(config?: IModelConfigurationDetails) {
     return new Array<string>();
   }
+
+  async sum(
+    numericAttrName: keyof IModelEntity,
+    criteria?: IModelEntity,
+    config?: IModelConfigurationDetails
+  ) {
+    return null as any;
+  }
+
+  async avg(
+    numericAttrName: keyof IModelEntity,
+    criteria?: IModelEntity,
+    config?: IModelConfigurationDetails
+  ) {
+    return null as any;
+  }
+
+  async findOrCreate(
+    criteria: IModelEntity,
+    initialsValues: IModelEntity,
+    config?: IModelConfigurationDetails
+  ) {
+    return null as any;
+  }
+
+  async streamEach(
+    query: IModelEntity,
+    limiters: IQueryLimiters,
+    config: IModelConfigurationDetails,
+    cb: (model: IModelEntity) => Promise<void> | void
+  ) {}
+
+  async streamBatch(
+    query: IModelEntity,
+    limiters: IQueryLimiters,
+    config: IModelConfigurationDetails,
+    cb: (model: IModelEntity) => Promise<void> | void
+  ) {}
 
   async tearDown() {}
 }

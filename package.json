@@ -1,6 +1,6 @@
 {
   "name": "@similie/one-model-connector-entities",
-  "version": "1.0.0-rc.11",
+  "version": "1.0.0-rc.21",
   "description": "Creates a common interface for similie model connects",
   "main": "dist/index.js",
   "repository": {

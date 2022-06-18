@@ -100,16 +100,32 @@ class LiveConnection {
     removeFromCollection(value, collection) {
         return __awaiter(this, void 0, void 0, function* () { });
     }
-    saveAs(value, model) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return model;
-        });
-    }
     attr(config) {
         return null;
     }
     keys(config) {
         return new Array();
+    }
+    sum(numericAttrName, criteria, config) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return null;
+        });
+    }
+    avg(numericAttrName, criteria, config) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return null;
+        });
+    }
+    findOrCreate(criteria, initialsValues, config) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return null;
+        });
+    }
+    streamEach(query, limiters, config, cb) {
+        return __awaiter(this, void 0, void 0, function* () { });
+    }
+    streamBatch(query, limiters, config, cb) {
+        return __awaiter(this, void 0, void 0, function* () { });
     }
     tearDown() {
         return __awaiter(this, void 0, void 0, function* () { });

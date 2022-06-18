@@ -13,8 +13,8 @@ export interface ISharedDataConnects {
     config?: IModelConfigurationDetails
   ) => Promise<IModelEntity>;
   update: (
-    query: any,
-    update: any,
+    query: IModelEntity,
+    update: IModelEntity,
     config?: IModelConfigurationDetails
   ) => Promise<IModelEntity[]>;
   count: (query: any, config?: IModelConfigurationDetails) => Promise<number>;
@@ -23,7 +23,7 @@ export interface ISharedDataConnects {
     config?: IModelConfigurationDetails
   ) => Promise<IModelEntity>;
   destroyAll: (
-    query: any,
+    query: IModelEntity,
     config?: IModelConfigurationDetails
   ) => Promise<IModelEntity[]>;
   create: (
@@ -35,4 +35,19 @@ export interface ISharedDataConnects {
     config?: IModelConfigurationDetails
   ) => Promise<IModelEntity[]>;
   raw: (config?: IModelConfigurationDetails) => any;
+  findOrCreate: (
+    criteria: IModelEntity,
+    initialsValues: IModelEntity,
+    config?: IModelConfigurationDetails
+  ) => Promise<IModelEntity>;
+  sum: (
+    numericAttrName: keyof IModelEntity,
+    criteria?: IModelEntity,
+    config?: IModelConfigurationDetails
+  ) => Promise<number>;
+  avg: (
+    numericAttrName: keyof IModelEntity,
+    criteria?: IModelEntity,
+    config?: IModelConfigurationDetails
+  ) => Promise<number>;
 }
