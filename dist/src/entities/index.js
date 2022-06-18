@@ -20,3 +20,4 @@ __exportStar(require("./shared"), exports);
 __exportStar(require("./models"), exports);
 __exportStar(require("./config"), exports);
 __exportStar(require("./live-connection"), exports);
+__exportStar(require("./model-attr"), exports);

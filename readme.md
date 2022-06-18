@@ -1,5 +1,5 @@
 # One Connect Entitites
 
-### Note, this package should only be used for similie products. It is not for public consumption of usage
+### Note, this package should only be used for similie products. It is not to be used for public consumption
 
-Create a common package for model connector entities and common utilities to be used by our model connector classes
+Creates a common package for model connector entities and common utilities for Similie model connector packages.

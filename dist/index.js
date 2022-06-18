@@ -18,4 +18,4 @@ __exportStar(require("./src/connectors"), exports);
 __exportStar(require("./src/glabal-connect"), exports);
 __exportStar(require("./src/common"), exports);
 __exportStar(require("./src/entities"), exports);
-__exportStar(require("./src/structures"), exports);
+__exportStar(require("./src/utils"), exports);

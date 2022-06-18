@@ -94,10 +94,10 @@ class LiveConnection {
             return query;
         });
     }
-    add(value, collection) {
+    addToCollection(value, collection) {
         return __awaiter(this, void 0, void 0, function* () { });
     }
-    remove(value, collection) {
+    removeFromCollection(value, collection) {
         return __awaiter(this, void 0, void 0, function* () { });
     }
     saveAs(value, model) {

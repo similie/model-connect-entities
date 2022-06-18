@@ -1,4 +1,5 @@
 import { IModelEntity, IModelCollection, ISharedDataConnects, IQueryLimiters, IModelConfigurationDetails } from ".";
+import { IModelAttributes } from "./model-attr";
 /**
  * @interface IModelConnect
  * @extends ISharedDataConnects
@@ -7,12 +8,11 @@ import { IModelEntity, IModelCollection, ISharedDataConnects, IQueryLimiters, IM
  */
 export interface IConnectorConnect extends ISharedDataConnects {
     init: (payload?: any) => Promise<any>;
-    attr: (config?: IModelConfigurationDetails) => any;
+    attr: (config?: IModelConfigurationDetails) => Record<string, IModelAttributes>;
     keys: (config?: IModelConfigurationDetails) => string[];
     tearDown: () => Promise<void>;
-    add: (value: any, collection: IModelCollection<IModelEntity>) => Promise<void>;
-    remove: (value: any, collection: IModelCollection<IModelEntity>) => Promise<void>;
-    saveAs: (value: any, model: IModelEntity) => Promise<IModelEntity>;
+    addToCollection: (value: any, collection: IModelCollection<IModelEntity>) => Promise<void>;
+    removeFromCollection: (value: any, collection: IModelCollection<IModelEntity>) => Promise<void>;
     find: (query: any, limiters: IQueryLimiters, config?: IModelConfigurationDetails) => Promise<IModelEntity[]>;
     findOne: (query: any, limiters: IQueryLimiters, config?: IModelConfigurationDetails) => Promise<IModelEntity>;
 }

@@ -98,12 +98,12 @@ export class LiveConnection implements LiveConnectionConstruct {
     return query;
   }
 
-  async add(
+  async addToCollection(
     value: any,
     collection: IModelCollection<IModelEntity>
   ): Promise<void> {}
 
-  async remove(
+  async removeFromCollection(
     value: any,
     collection: IModelCollection<IModelEntity>
   ): Promise<void> {}
@@ -113,7 +113,7 @@ export class LiveConnection implements LiveConnectionConstruct {
   }
 
   attr(config?: IModelConfigurationDetails) {
-    return null;
+    return null as any;
   }
 
   keys(config?: IModelConfigurationDetails) {

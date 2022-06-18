@@ -32,10 +32,10 @@ export declare class LiveConnection implements LiveConnectionConstruct {
     create(query: any, config?: IModelConfigurationDetails): Promise<any>;
     createMany(query: any[], config?: IModelConfigurationDetails): Promise<any[]>;
     destroyAll(query: any, config?: IModelConfigurationDetails): Promise<any>;
-    add(value: any, collection: IModelCollection<IModelEntity>): Promise<void>;
-    remove(value: any, collection: IModelCollection<IModelEntity>): Promise<void>;
+    addToCollection(value: any, collection: IModelCollection<IModelEntity>): Promise<void>;
+    removeFromCollection(value: any, collection: IModelCollection<IModelEntity>): Promise<void>;
     saveAs(value: any, model: IModelEntity): Promise<IModelEntity>;
-    attr(config?: IModelConfigurationDetails): null;
+    attr(config?: IModelConfigurationDetails): any;
     keys(config?: IModelConfigurationDetails): string[];
     tearDown(): Promise<void>;
 }
