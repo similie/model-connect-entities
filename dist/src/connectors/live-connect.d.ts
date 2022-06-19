@@ -1,4 +1,4 @@
-import { IModelEntity, IModelCollection, IQueryLimiters, LiveConnectionConstruct, IModelConfigurationDetails } from "../entities";
+import { IModelEntity, IModelCollection, IQueryLimiters, LiveConnectionConstruct, IModelConfigurationDetails, IQueryOrPartial, IModelEntityPartial, IValuesToEscape } from "../entities";
 export declare class LiveConnectConfig implements IModelConfigurationDetails {
     _name: string;
     constructor();
@@ -36,11 +36,11 @@ export declare class LiveConnection implements LiveConnectionConstruct {
     removeFromCollection(value: any, collection: IModelCollection<IModelEntity>): Promise<void>;
     attr(config?: IModelConfigurationDetails): any;
     keys(config?: IModelConfigurationDetails): string[];
-    sum(numericAttrName: keyof IModelEntity, criteria?: IModelEntity, config?: IModelConfigurationDetails): Promise<any>;
-    avg(numericAttrName: keyof IModelEntity, criteria?: IModelEntity, config?: IModelConfigurationDetails): Promise<any>;
-    findOrCreate(criteria: IModelEntity, initialsValues: IModelEntity, config?: IModelConfigurationDetails): Promise<any>;
+    sum(numericAttrName: keyof IModelEntity, criteria?: IQueryOrPartial<IModelEntity>, config?: IModelConfigurationDetails): Promise<any>;
+    avg(numericAttrName: keyof IModelEntity, criteria?: IQueryOrPartial<IModelEntity>, config?: IModelConfigurationDetails): Promise<any>;
+    findOrCreate(criteria: IQueryOrPartial<IModelEntity>, initialsValues: IModelEntityPartial<IModelEntity>, config?: IModelConfigurationDetails): Promise<any>;
     streamEach(query: IModelEntity, limiters: IQueryLimiters, config: IModelConfigurationDetails, cb: (model: IModelEntity) => Promise<void> | void): Promise<void>;
     streamBatch(query: IModelEntity, limiters: IQueryLimiters, config: IModelConfigurationDetails, cb: (model: IModelEntity) => Promise<void> | void): Promise<void>;
     tearDown(): Promise<void>;
-    query(): Promise<any>;
+    query(query: string, valuesToEscape?: IValuesToEscape, config?: IModelConfigurationDetails): Promise<any>;
 }

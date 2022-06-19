@@ -4,6 +4,9 @@ import {
   IQueryLimiters,
   LiveConnectionConstruct,
   IModelConfigurationDetails,
+  IQueryOrPartial,
+  IModelEntityPartial,
+  IValuesToEscape,
 } from "../entities";
 
 import { GlobalConnection } from "../glabal-connect";
@@ -118,7 +121,7 @@ export class LiveConnection implements LiveConnectionConstruct {
 
   async sum(
     numericAttrName: keyof IModelEntity,
-    criteria?: IModelEntity,
+    criteria?: IQueryOrPartial<IModelEntity>,
     config?: IModelConfigurationDetails
   ) {
     return null as any;
@@ -126,15 +129,15 @@ export class LiveConnection implements LiveConnectionConstruct {
 
   async avg(
     numericAttrName: keyof IModelEntity,
-    criteria?: IModelEntity,
+    criteria?: IQueryOrPartial<IModelEntity>,
     config?: IModelConfigurationDetails
   ) {
     return null as any;
   }
 
   async findOrCreate(
-    criteria: IModelEntity,
-    initialsValues: IModelEntity,
+    criteria: IQueryOrPartial<IModelEntity>,
+    initialsValues: IModelEntityPartial<IModelEntity>,
     config?: IModelConfigurationDetails
   ) {
     return null as any;
@@ -156,7 +159,11 @@ export class LiveConnection implements LiveConnectionConstruct {
 
   async tearDown() {}
 
-  async query() {
+  async query(
+    query: string,
+    valuesToEscape?: IValuesToEscape,
+    config?: IModelConfigurationDetails
+  ) {
     return null as any;
   }
 }

@@ -28,7 +28,7 @@ export interface IQueryLimiters {
   skip?: number;
   limit?: number;
   batchNumber?: number;
-  populate?: Record<string, ISingleQueryObject<IModelEntity> | undefined>; // this is a query Object
+  populate?: Record<string, ISingleQueryObject<any> | undefined>; // this is a query Object
 }
 
 /**
@@ -48,7 +48,10 @@ export interface IQueryFetch<T extends IModelEntity> {
  *   queries will perform.
  */
 export interface IQueryPopulates<T extends IModelEntity> {
-  populate: (value: string, criteria?: T) => IQueryFetch<T>;
+  populate: (
+    value: string,
+    criteria?: ISingleQueryObject<any>
+  ) => IQueryFetch<T>;
   populateAll: () => IQueryFetch<T>;
   fetch: () => Promise<T>;
 }
@@ -63,7 +66,10 @@ export interface IQueryDecorators<T extends IModelEntity> {
   skip: (value: number) => IQueryDecorators<T>;
   limit: (value: number) => IQueryDecorators<T>;
   populateAll: () => IQueryDecorators<T>;
-  populate: (value: string, criteria?: T) => IQueryDecorators<T>;
+  populate: (
+    value: string,
+    criteria?: ISingleQueryObject<any>
+  ) => IQueryDecorators<T>;
   fetch: () => Promise<T[]>;
   fetchOne: () => Promise<T>;
 }

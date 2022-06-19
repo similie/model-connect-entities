@@ -9,7 +9,8 @@ export interface ISingleQueryObject<T extends IModelEntity> {
     sort?: string | object | object[];
     limit?: number;
     skip?: number;
-    where: IModelEntityPartial<T>;
+    where?: IModelEntityPartial<T>;
 }
 /** @todo Type def from Kris Query builder code */
 export declare type IQuery = object;
+export declare type IQueryOrPartial<T extends IModelEntity> = ISingleQueryObject<T> | IModelEntityPartial<T>;

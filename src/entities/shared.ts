@@ -1,4 +1,6 @@
 import { IModelEntity, IModelConfigurationDetails } from ".";
+import { IModelEntityPartial, IValuesToEscape } from "./base-entity";
+import { IQueryOrPartial } from "./queries";
 /**
  * @interface ISharedDataConnects
  * @description used by both the model class and connector class
@@ -36,19 +38,23 @@ export interface ISharedDataConnects {
   ) => Promise<IModelEntity[]>;
   raw: (config?: IModelConfigurationDetails) => any;
   findOrCreate: (
-    criteria: IModelEntity,
-    initialsValues: IModelEntity,
+    criteria: IQueryOrPartial<IModelEntity>,
+    initialsValues: IModelEntityPartial<IModelEntity>,
     config?: IModelConfigurationDetails
   ) => Promise<IModelEntity>;
   sum: (
     numericAttrName: keyof IModelEntity,
-    criteria?: IModelEntity,
+    criteria?: IQueryOrPartial<IModelEntity>,
     config?: IModelConfigurationDetails
   ) => Promise<number>;
   avg: (
     numericAttrName: keyof IModelEntity,
-    criteria?: IModelEntity,
+    criteria?: IQueryOrPartial<IModelEntity>,
     config?: IModelConfigurationDetails
   ) => Promise<number>;
-  query: (query: any, config?: IModelConfigurationDetails) => Promise<any>;
+  query: (
+    nativeQuery: string,
+    valuesToEscape?: IValuesToEscape,
+    config?: IModelConfigurationDetails
+  ) => Promise<any>;
 }

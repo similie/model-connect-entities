@@ -14,7 +14,7 @@ export interface IModelEntity {
  * @name IModelCollection<IModelEntity>
  * @description describes partial attributes of a given query
  */
-export type IModelEntityPartial<T extends IModelEntity> = {
+export declare type IModelEntityPartial<T extends IModelEntity> = {
   [A in keyof T]?: T[A];
 };
 
@@ -32,3 +32,6 @@ export interface IModelCollection<T extends IModelEntity> extends Array<T> {
   addToCollection: (value: number | T) => Promise<void>;
   removeFromCollection: (value: number | T) => Promise<void>;
 }
+
+export declare type json = string | object | undefined;
+export declare type IValuesToEscape = any[] | null | undefined;

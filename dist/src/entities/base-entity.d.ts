@@ -29,3 +29,5 @@ export interface IModelCollection<T extends IModelEntity> extends Array<T> {
     addToCollection: (value: number | T) => Promise<void>;
     removeFromCollection: (value: number | T) => Promise<void>;
 }
+export declare type json = string | object | undefined;
+export declare type IValuesToEscape = any[] | null | undefined;
