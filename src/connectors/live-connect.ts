@@ -144,14 +144,14 @@ export class LiveConnection implements LiveConnectionConstruct {
   }
 
   async streamEach(
-    query: IModelEntity,
+    query: IQueryOrPartial<IModelEntity>,
     limiters: IQueryLimiters,
     config: IModelConfigurationDetails,
     cb: (model: IModelEntity) => Promise<void> | void
   ) {}
 
   async streamBatch(
-    query: IModelEntity,
+    query: IQueryOrPartial<IModelEntity>,
     limiters: IQueryLimiters,
     config: IModelConfigurationDetails,
     cb: (model: IModelEntity) => Promise<void> | void

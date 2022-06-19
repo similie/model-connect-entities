@@ -8,6 +8,7 @@ export interface IModelEntity {
     createdAt: Date;
     updatedAt: Date;
 }
+export declare type IModelType<T extends IModelEntity> = T | number;
 /**
  * @type
  * @name IModelCollection<IModelEntity>
