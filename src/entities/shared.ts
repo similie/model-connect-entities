@@ -9,47 +9,47 @@ import { IQueryOrPartial } from "./queries";
  * registar to pass context to the connector class. Otherwise, it wouldn't know
  * it's modelname or other identifies required to process the transation
  */
-export interface ISharedDataConnects {
-  save: (
-    values: IModelEntity,
-    config?: IModelConfigurationDetails
-  ) => Promise<IModelEntity>;
+export interface ISharedDataConnects<T extends IModelEntity> {
+  save: (values: T, config?: IModelConfigurationDetails) => Promise<T>;
   update: (
-    query: IModelEntity,
-    update: IModelEntity,
+    query: IQueryOrPartial<T>,
+    update: IModelEntityPartial<T>,
     config?: IModelConfigurationDetails
-  ) => Promise<IModelEntity[]>;
-  count: (query: any, config?: IModelConfigurationDetails) => Promise<number>;
+  ) => Promise<T[]>;
+  count: (
+    query: IQueryOrPartial<T>,
+    config?: IModelConfigurationDetails
+  ) => Promise<number>;
   destroy: (
-    query: number | IModelEntity,
+    query: number | IModelEntityPartial<T>,
     config?: IModelConfigurationDetails
-  ) => Promise<IModelEntity>;
+  ) => Promise<T>;
   destroyAll: (
-    query: IModelEntity,
+    query: IQueryOrPartial<T>,
     config?: IModelConfigurationDetails
-  ) => Promise<IModelEntity[]>;
+  ) => Promise<T[]>;
   create: (
-    model: IModelEntity,
+    model: IModelEntityPartial<T>,
     config?: IModelConfigurationDetails
-  ) => Promise<IModelEntity>;
+  ) => Promise<T>;
   createMany: (
-    query: IModelEntity[],
+    query: IModelEntityPartial<T>[],
     config?: IModelConfigurationDetails
-  ) => Promise<IModelEntity[]>;
+  ) => Promise<T[]>;
   raw: (config?: IModelConfigurationDetails) => any;
   findOrCreate: (
-    criteria: IQueryOrPartial<IModelEntity>,
-    initialsValues: IModelEntityPartial<IModelEntity>,
+    criteria: IQueryOrPartial<T>,
+    initialsValues: IModelEntityPartial<T>,
     config?: IModelConfigurationDetails
-  ) => Promise<IModelEntity>;
+  ) => Promise<T>;
   sum: (
-    numericAttrName: keyof IModelEntity,
-    criteria?: IQueryOrPartial<IModelEntity>,
+    numericAttrName: keyof T,
+    criteria?: IQueryOrPartial<T>,
     config?: IModelConfigurationDetails
   ) => Promise<number>;
   avg: (
-    numericAttrName: keyof IModelEntity,
-    criteria?: IQueryOrPartial<IModelEntity>,
+    numericAttrName: keyof T,
+    criteria?: IQueryOrPartial<T>,
     config?: IModelConfigurationDetails
   ) => Promise<number>;
   query: (

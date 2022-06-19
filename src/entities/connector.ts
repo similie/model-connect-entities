@@ -6,6 +6,7 @@ import {
   IModelConfigurationDetails,
 } from ".";
 import { IModelAttributes } from "./model-attr";
+import { IQueryOrPartial } from "./queries";
 
 /**
  * @interface IModelConnect
@@ -13,7 +14,8 @@ import { IModelAttributes } from "./model-attr";
  * @description used only by a connector class to differentiate functionality
  * from a basic model
  */
-export interface IConnectorConnect extends ISharedDataConnects {
+export interface IConnectorConnect<T extends IModelEntity>
+  extends ISharedDataConnects<T> {
   init: (payload?: any) => Promise<any>;
   attr: (
     config?: IModelConfigurationDetails
@@ -22,32 +24,32 @@ export interface IConnectorConnect extends ISharedDataConnects {
   tearDown: () => Promise<void>;
   addToCollection: (
     value: any,
-    collection: IModelCollection<IModelEntity>
+    collection: IModelCollection<T>
   ) => Promise<void>;
   removeFromCollection: (
     value: any,
-    collection: IModelCollection<IModelEntity>
+    collection: IModelCollection<T>
   ) => Promise<void>;
   find: (
-    query: any,
+    query: IQueryOrPartial<T>,
     limiters: IQueryLimiters,
     config: IModelConfigurationDetails
-  ) => Promise<IModelEntity[]>;
+  ) => Promise<T[]>;
   findOne: (
-    query: any,
+    query: IQueryOrPartial<T>,
     limiters: IQueryLimiters,
     config: IModelConfigurationDetails
-  ) => Promise<IModelEntity>;
+  ) => Promise<T>;
   streamEach: (
-    query: IModelEntity,
+    query: IQueryOrPartial<T>,
     limiters: IQueryLimiters,
     config: IModelConfigurationDetails,
-    cb: (model: IModelEntity) => Promise<void> | void
+    cb: (model: T) => Promise<void> | void
   ) => Promise<void>;
   streamBatch: (
-    query: IModelEntity,
+    query: IQueryOrPartial<T>,
     limiters: IQueryLimiters,
     config: IModelConfigurationDetails,
-    cb: (model: IModelEntity) => Promise<void> | void
+    cb: (model: T) => Promise<void> | void
   ) => Promise<void>;
 }

@@ -39,8 +39,8 @@ export declare class LiveConnection implements LiveConnectionConstruct {
     sum(numericAttrName: keyof IModelEntity, criteria?: IQueryOrPartial<IModelEntity>, config?: IModelConfigurationDetails): Promise<any>;
     avg(numericAttrName: keyof IModelEntity, criteria?: IQueryOrPartial<IModelEntity>, config?: IModelConfigurationDetails): Promise<any>;
     findOrCreate(criteria: IQueryOrPartial<IModelEntity>, initialsValues: IModelEntityPartial<IModelEntity>, config?: IModelConfigurationDetails): Promise<any>;
-    streamEach(query: IModelEntity, limiters: IQueryLimiters, config: IModelConfigurationDetails, cb: (model: IModelEntity) => Promise<void> | void): Promise<void>;
-    streamBatch(query: IModelEntity, limiters: IQueryLimiters, config: IModelConfigurationDetails, cb: (model: IModelEntity) => Promise<void> | void): Promise<void>;
+    streamEach(query: IQueryOrPartial<IModelEntity>, limiters: IQueryLimiters, config: IModelConfigurationDetails, cb: (model: IModelEntity) => Promise<void> | void): Promise<void>;
+    streamBatch(query: IQueryOrPartial<IModelEntity>, limiters: IQueryLimiters, config: IModelConfigurationDetails, cb: (model: IModelEntity) => Promise<void> | void): Promise<void>;
     tearDown(): Promise<void>;
     query(query: string, valuesToEscape?: IValuesToEscape, config?: IModelConfigurationDetails): Promise<any>;
 }

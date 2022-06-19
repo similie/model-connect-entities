@@ -1,5 +1,6 @@
 import { IConnectorConnect } from "./connector";
 import { IModelConfiguration } from "./config";
+import { IModelEntity } from "./base-entity";
 
 /**
  * @interface
@@ -10,4 +11,4 @@ import { IModelConfiguration } from "./config";
  */
 export interface LiveConnectionConstruct
   extends IModelConfiguration,
-    IConnectorConnect {}
+    IConnectorConnect<IModelEntity> {}

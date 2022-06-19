@@ -3,11 +3,14 @@
  * @name IModelEntity
  * @description the basic type for a base model
  */
+
 export interface IModelEntity {
   id: number;
   createdAt: Date;
   updatedAt: Date;
 }
+
+export declare type IModelType<T extends IModelEntity> = T | number;
 
 /**
  * @type

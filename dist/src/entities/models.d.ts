@@ -8,8 +8,8 @@ import { ISharedDataConnects } from "./shared";
  * @description Expands the Connector class with the model class. Allowing for property
  * differentiation for models
  */
-export interface IModelConnect<T extends IModelEntity> extends ISharedDataConnects {
-    getId: (query: number | IModelEntity | undefined | null) => number | null;
+export interface IModelConnect<T extends IModelEntity> extends ISharedDataConnects<T> {
+    getId: (query: number | T | undefined | null) => number | undefined;
     find: (query: any) => IQueryDecorators<T>;
     initWithId: (id: number) => IQueryPopulates<T>;
     stream: (query: any) => IQueryStreamDecorators<T>;
