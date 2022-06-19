@@ -11,7 +11,7 @@ export declare class LiveConnectConfig implements IModelConfigurationDetails {
  *
  * @description The purpose of live connect is so that a single class
  * can manage the start instance. Also, the child classes can safely
- * choose to it NOT implement certain functions such as init or teardown
+ * choose to NOT implement certain functions such as init or teardown
  * if they are not required. Additonally, for future functionality
  * we can use this class to implement parent logic that all the child classes
  * can extend without changing the structure of the child class. Finally,
@@ -42,4 +42,5 @@ export declare class LiveConnection implements LiveConnectionConstruct {
     streamEach(query: IModelEntity, limiters: IQueryLimiters, config: IModelConfigurationDetails, cb: (model: IModelEntity) => Promise<void> | void): Promise<void>;
     streamBatch(query: IModelEntity, limiters: IQueryLimiters, config: IModelConfigurationDetails, cb: (model: IModelEntity) => Promise<void> | void): Promise<void>;
     tearDown(): Promise<void>;
+    query(): Promise<any>;
 }

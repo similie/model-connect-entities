@@ -19,4 +19,5 @@ export interface ISharedDataConnects {
     findOrCreate: (criteria: IModelEntity, initialsValues: IModelEntity, config?: IModelConfigurationDetails) => Promise<IModelEntity>;
     sum: (numericAttrName: keyof IModelEntity, criteria?: IModelEntity, config?: IModelConfigurationDetails) => Promise<number>;
     avg: (numericAttrName: keyof IModelEntity, criteria?: IModelEntity, config?: IModelConfigurationDetails) => Promise<number>;
+    query: (query: any, config?: IModelConfigurationDetails) => Promise<any>;
 }

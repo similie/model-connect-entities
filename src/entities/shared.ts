@@ -50,4 +50,5 @@ export interface ISharedDataConnects {
     criteria?: IModelEntity,
     config?: IModelConfigurationDetails
   ) => Promise<number>;
+  query: (query: any, config?: IModelConfigurationDetails) => Promise<any>;
 }
