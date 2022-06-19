@@ -31,11 +31,23 @@ export interface IConnectorConnect extends ISharedDataConnects {
   find: (
     query: any,
     limiters: IQueryLimiters,
-    config?: IModelConfigurationDetails
+    config: IModelConfigurationDetails
   ) => Promise<IModelEntity[]>;
   findOne: (
     query: any,
     limiters: IQueryLimiters,
-    config?: IModelConfigurationDetails
+    config: IModelConfigurationDetails
   ) => Promise<IModelEntity>;
+  streamEach: (
+    query: IModelEntity,
+    limiters: IQueryLimiters,
+    config: IModelConfigurationDetails,
+    cb: (model: IModelEntity) => Promise<void> | void
+  ) => Promise<void>;
+  streamBatch: (
+    query: IModelEntity,
+    limiters: IQueryLimiters,
+    config: IModelConfigurationDetails,
+    cb: (model: IModelEntity) => Promise<void> | void
+  ) => Promise<void>;
 }

@@ -29,7 +29,7 @@ exports.LiveConnectConfig = LiveConnectConfig;
  *
  * @description The purpose of live connect is so that a single class
  * can manage the start instance. Also, the child classes can safely
- * choose to it NOT implement certain functions such as init or teardown
+ * choose to NOT implement certain functions such as init or teardown
  * if they are not required. Additonally, for future functionality
  * we can use this class to implement parent logic that all the child classes
  * can extend without changing the structure of the child class. Finally,
@@ -100,19 +100,40 @@ class LiveConnection {
     removeFromCollection(value, collection) {
         return __awaiter(this, void 0, void 0, function* () { });
     }
-    saveAs(value, model) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return model;
-        });
-    }
     attr(config) {
         return null;
     }
     keys(config) {
         return new Array();
     }
+    sum(numericAttrName, criteria, config) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return null;
+        });
+    }
+    avg(numericAttrName, criteria, config) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return null;
+        });
+    }
+    findOrCreate(criteria, initialsValues, config) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return null;
+        });
+    }
+    streamEach(query, limiters, config, cb) {
+        return __awaiter(this, void 0, void 0, function* () { });
+    }
+    streamBatch(query, limiters, config, cb) {
+        return __awaiter(this, void 0, void 0, function* () { });
+    }
     tearDown() {
         return __awaiter(this, void 0, void 0, function* () { });
+    }
+    query(query, valuesToEscape, config) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return null;
+        });
     }
 }
 exports.LiveConnection = LiveConnection;

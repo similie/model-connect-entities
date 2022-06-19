@@ -21,3 +21,4 @@ __exportStar(require("./models"), exports);
 __exportStar(require("./config"), exports);
 __exportStar(require("./live-connection"), exports);
 __exportStar(require("./model-attr"), exports);
+__exportStar(require("./queries"), exports);
