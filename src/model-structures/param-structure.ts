@@ -1,16 +1,16 @@
 import {
-  IBaseModelEntity,
+  IEntity,
   LiveConnectionConstruct,
   IModelCollection,
   IModelConfigurationDetails,
   IModelAttributes,
-} from "../entities";
+} from '../entities';
 
-import { getId } from "../utils";
+import { getId } from '../utils';
 
 /**
  * @class
- * @name CollectionIdentifier<IBaseModelEntity>
+ * @name CollectionIdentifier<IEntity>
  * @description provides the configuration details
  *  required by the connector to run the collection-based
  *  functions
@@ -47,12 +47,12 @@ export class CollectionIdentifier<T> {
 
 /**
  * @class
- * @name ModelCollection<IBaseModelEntity>
- * @extends Array<IBaseModelEntity>
+ * @name ModelCollection<IEntity>
+ * @extends Array<IEntity>
  * @description Allows us to apply functionalty to collection
  *  attributes that behaive as arrays
  */
-export class ModelCollection<T extends IBaseModelEntity>
+export class ModelCollection<T extends IEntity>
   extends Array<T>
   implements IModelCollection<T>
 {
@@ -84,10 +84,10 @@ export class ModelCollection<T extends IBaseModelEntity>
    * @name addToCollection
    * @description adds and entity or id to a collection. It's function is
    *   controlled by the connector
-   * @param value {number | IBaseModelEntity}
+   * @param value {number | IEntity}
    * @returns {Promise<void>}
    */
-  async addToCollection(value: number | IBaseModelEntity): Promise<void> {
+  async addToCollection(value: number | IEntity): Promise<void> {
     return await this.#_connector.addToCollection(value, this);
   }
   /**
@@ -95,29 +95,29 @@ export class ModelCollection<T extends IBaseModelEntity>
    * @name removeFromCollection
    * @description removes and entity or id to a collection. It's function is
    *   controlled by the connector
-   * @param value {number | IBaseModelEntity}
+   * @param value {number | IEntity}
    * @returns {Promise<void>}
    */
-  async removeFromCollection(value: number | IBaseModelEntity): Promise<void> {
+  async removeFromCollection(value: number | IEntity): Promise<void> {
     return await this.#_connector.removeFromCollection(value, this);
   }
 }
 
 /**
  * @class
- * @name ModelInstance<IBaseModelEntity>
+ * @name ModelInstance<IEntity>
  * @description when we get a raw model from the there is
  *  a specfic functionality we want to apply to these models.
  *  the most obvious use case is the operations on collection
  *  attributes. We can also are stringified JSON and any
  *  additional operations required by the application
  */
-export class ModelInstance<T extends IBaseModelEntity> {
+export class ModelInstance<T extends IEntity> {
   connector: LiveConnectionConstruct;
   _modelConfig: IModelConfigurationDetails;
   types = {
-    collection: "collection",
-    json: "json",
+    collection: 'collection',
+    json: 'json',
   };
   // we instantiate with the LiveConnection and
   // the configuration details
@@ -155,8 +155,8 @@ export class ModelInstance<T extends IBaseModelEntity> {
   /**
    * @public
    * @name applyOne
-   * @param {IBaseModelEntity} - the raw model
-   * @returns {ModelInstanceIdentity<IBaseModelEntity>}
+   * @param {IEntity} - the raw model
+   * @returns {ModelInstanceIdentity<IEntity>}
    */
   applyOne(model: T): ModelInstanceIdentity<T> {
     return this.applyRegistration(model);
@@ -164,8 +164,8 @@ export class ModelInstance<T extends IBaseModelEntity> {
   /**
    * @public
    * @name applyMany
-   * @param {IBaseModelEntity[]} - the raw models
-   * @returns {ModelInstanceIdentity<IBaseModelEntity>[]}
+   * @param {IEntity[]} - the raw models
+   * @returns {ModelInstanceIdentity<IEntity>[]}
    */
   applyMany(models: T[]): ModelInstanceIdentity<T[]> {
     for (let i = 0; i < models.length; i++) {
@@ -198,7 +198,7 @@ export class ModelInstance<T extends IBaseModelEntity> {
    */
   private containsKey(attr: IModelAttributes | string, key: string) {
     // sometimes in waterline, 0.1x you can define an attribute as "param": 'string'
-    if (typeof attr === "string") {
+    if (typeof attr === 'string') {
       return attr === key;
     }
     // default to false
@@ -219,7 +219,7 @@ export class ModelInstance<T extends IBaseModelEntity> {
    * @name buildCollection
    * @description builds those paramters that are defined as a collection
    *   with the Model collection object
-   * @param model {IBaseModelEntity}
+   * @param model {IEntity}
    * @param key {string} - the name of the param
    * @param attr {IModelAttributes}
    */
@@ -228,10 +228,10 @@ export class ModelInstance<T extends IBaseModelEntity> {
     const value = model[_k] as unknown;
     const arr = (value as T[]) || new Array<T>();
     const clone: T[] = [...arr];
-    const modelName = this.modelConfig.modelname || "";
+    const modelName = this.modelConfig.modelname || '';
     const identity = new CollectionIdentifier<T>(
       key,
-      attr.collection || "",
+      attr.collection || '',
       model,
       modelName
     );
@@ -262,7 +262,7 @@ export class ModelInstance<T extends IBaseModelEntity> {
    * @returns {boolean} - if the string is valid
    */
   private startsAndEndsWith(value: string, chars: string) {
-    const split = chars.split(",");
+    const split = chars.split(',');
     return value.startsWith(split[0]) && value.endsWith(split[1]);
   }
 
@@ -275,9 +275,9 @@ export class ModelInstance<T extends IBaseModelEntity> {
    */
   private isStringJson(model: any) {
     return (
-      typeof model === "string" &&
-      (this.startsAndEndsWith(model as string, "[,]") ||
-        this.startsAndEndsWith(model as string, "{,}"))
+      typeof model === 'string' &&
+      (this.startsAndEndsWith(model as string, '[,]') ||
+        this.startsAndEndsWith(model as string, '{,}'))
     );
   }
 
@@ -298,7 +298,7 @@ export class ModelInstance<T extends IBaseModelEntity> {
    * @name ensureIsValidJSON
    * @description we want to make sure our params designated as JSON
    *   or array are not stringified
-   * @param model {IBaseModelEntity}
+   * @param model {IEntity}
    * @param key {string} the key of the paramter
    * @returns {void}
    */

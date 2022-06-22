@@ -1,6 +1,6 @@
-import { IBaseModelEntity, IModelConfigurationDetails } from ".";
-import { IBaseModelEntityPartial, IValuesToEscape } from "./base-entity";
-import { IQueryOrPartial } from "./queries";
+import { IEntity, IModelConfigurationDetails } from '.';
+import { IEntityPartial, IValuesToEscape } from './base-entity';
+import { IQueryOrPartial } from './queries';
 /**
  * @interface ISharedDataConnects
  * @description used by both the model class and connector class
@@ -9,11 +9,11 @@ import { IQueryOrPartial } from "./queries";
  * registar to pass context to the connector class. Otherwise, it wouldn't know
  * it's modelname or other identifies required to process the transation
  */
-export interface ISharedDataConnects<T extends IBaseModelEntity> {
+export interface ISharedDataConnects<T extends IEntity> {
   save: (values: T, config?: IModelConfigurationDetails) => Promise<T>;
   update: (
     query: IQueryOrPartial<T>,
-    update: IBaseModelEntityPartial<T>,
+    update: IEntityPartial<T>,
     config?: IModelConfigurationDetails
   ) => Promise<T[]>;
   count: (
@@ -21,7 +21,7 @@ export interface ISharedDataConnects<T extends IBaseModelEntity> {
     config?: IModelConfigurationDetails
   ) => Promise<number>;
   destroy: (
-    query: number | IBaseModelEntityPartial<T>,
+    query: number | IEntityPartial<T>,
     config?: IModelConfigurationDetails
   ) => Promise<T>;
   destroyAll: (
@@ -29,17 +29,17 @@ export interface ISharedDataConnects<T extends IBaseModelEntity> {
     config?: IModelConfigurationDetails
   ) => Promise<T[]>;
   create: (
-    model: IBaseModelEntityPartial<T>,
+    model: IEntityPartial<T>,
     config?: IModelConfigurationDetails
   ) => Promise<T>;
   createMany: (
-    query: IBaseModelEntityPartial<T>[],
+    query: IEntityPartial<T>[],
     config?: IModelConfigurationDetails
   ) => Promise<T[]>;
   raw: (config?: IModelConfigurationDetails) => any;
   findOrCreate: (
     criteria: IQueryOrPartial<T>,
-    initialsValues: IBaseModelEntityPartial<T>,
+    initialsValues: IEntityPartial<T>,
     config?: IModelConfigurationDetails
   ) => Promise<T>;
   sum: (

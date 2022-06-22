@@ -1,7 +1,7 @@
-import { IBaseModelEntity, LiveConnectionConstruct, IModelCollection, IModelConfigurationDetails, IModelAttributes } from "../entities";
+import { IEntity, LiveConnectionConstruct, IModelCollection, IModelConfigurationDetails, IModelAttributes } from '../entities';
 /**
  * @class
- * @name CollectionIdentifier<IBaseModelEntity>
+ * @name CollectionIdentifier<IEntity>
  * @description provides the configuration details
  *  required by the connector to run the collection-based
  *  functions
@@ -19,12 +19,12 @@ export declare class CollectionIdentifier<T> {
 }
 /**
  * @class
- * @name ModelCollection<IBaseModelEntity>
- * @extends Array<IBaseModelEntity>
+ * @name ModelCollection<IEntity>
+ * @extends Array<IEntity>
  * @description Allows us to apply functionalty to collection
  *  attributes that behaive as arrays
  */
-export declare class ModelCollection<T extends IBaseModelEntity> extends Array<T> implements IModelCollection<T> {
+export declare class ModelCollection<T extends IEntity> extends Array<T> implements IModelCollection<T> {
     #private;
     constructor(identity: CollectionIdentifier<T>, connector: LiveConnectionConstruct);
     get model(): string;
@@ -36,30 +36,30 @@ export declare class ModelCollection<T extends IBaseModelEntity> extends Array<T
      * @name addToCollection
      * @description adds and entity or id to a collection. It's function is
      *   controlled by the connector
-     * @param value {number | IBaseModelEntity}
+     * @param value {number | IEntity}
      * @returns {Promise<void>}
      */
-    addToCollection(value: number | IBaseModelEntity): Promise<void>;
+    addToCollection(value: number | IEntity): Promise<void>;
     /**
      * @public
      * @name removeFromCollection
      * @description removes and entity or id to a collection. It's function is
      *   controlled by the connector
-     * @param value {number | IBaseModelEntity}
+     * @param value {number | IEntity}
      * @returns {Promise<void>}
      */
-    removeFromCollection(value: number | IBaseModelEntity): Promise<void>;
+    removeFromCollection(value: number | IEntity): Promise<void>;
 }
 /**
  * @class
- * @name ModelInstance<IBaseModelEntity>
+ * @name ModelInstance<IEntity>
  * @description when we get a raw model from the there is
  *  a specfic functionality we want to apply to these models.
  *  the most obvious use case is the operations on collection
  *  attributes. We can also are stringified JSON and any
  *  additional operations required by the application
  */
-export declare class ModelInstance<T extends IBaseModelEntity> {
+export declare class ModelInstance<T extends IEntity> {
     connector: LiveConnectionConstruct;
     _modelConfig: IModelConfigurationDetails;
     types: {
@@ -85,15 +85,15 @@ export declare class ModelInstance<T extends IBaseModelEntity> {
     /**
      * @public
      * @name applyOne
-     * @param {IBaseModelEntity} - the raw model
-     * @returns {ModelInstanceIdentity<IBaseModelEntity>}
+     * @param {IEntity} - the raw model
+     * @returns {ModelInstanceIdentity<IEntity>}
      */
     applyOne(model: T): ModelInstanceIdentity<T>;
     /**
      * @public
      * @name applyMany
-     * @param {IBaseModelEntity[]} - the raw models
-     * @returns {ModelInstanceIdentity<IBaseModelEntity>[]}
+     * @param {IEntity[]} - the raw models
+     * @returns {ModelInstanceIdentity<IEntity>[]}
      */
     applyMany(models: T[]): ModelInstanceIdentity<T[]>;
     /**
@@ -121,7 +121,7 @@ export declare class ModelInstance<T extends IBaseModelEntity> {
      * @name buildCollection
      * @description builds those paramters that are defined as a collection
      *   with the Model collection object
-     * @param model {IBaseModelEntity}
+     * @param model {IEntity}
      * @param key {string} - the name of the param
      * @param attr {IModelAttributes}
      */
@@ -166,7 +166,7 @@ export declare class ModelInstance<T extends IBaseModelEntity> {
      * @name ensureIsValidJSON
      * @description we want to make sure our params designated as JSON
      *   or array are not stringified
-     * @param model {IBaseModelEntity}
+     * @param model {IEntity}
      * @param key {string} the key of the paramter
      * @returns {void}
      */

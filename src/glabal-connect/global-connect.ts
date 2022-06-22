@@ -1,4 +1,4 @@
-import { LiveConnectionConstruct } from "../entities";
+import { LiveConnectionConstruct } from '../entities';
 
 export class GlobalConnection {
   private static instance: GlobalConnection;
@@ -25,7 +25,7 @@ export class GlobalConnection {
 
   public static getInstance(): GlobalConnection {
     if (!GlobalConnection.instance) {
-      throw new Error("A connection has not been initialized");
+      throw new Error('A connection has not been initialized');
     }
     return GlobalConnection.instance;
   }

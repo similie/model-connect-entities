@@ -1,4 +1,4 @@
-import { LiveConnectionConstruct } from "../entities";
+import { LiveConnectionConstruct } from '../entities';
 export declare class GlobalConnection {
     private static instance;
     static readonly SET_GLOBAL = true;

@@ -4,26 +4,24 @@
 */
 
 import {
-  IBaseModelEntity,
+  IEntity,
   IQueryDecorators,
   IQueryFetch,
   IQueryLimiters,
   IQueryPopulates,
   IQueryStreamDecorators,
   ISingleQueryObject,
-} from "../entities";
-import { Model } from ".";
-import { ALL_POPULANTS } from "../common";
+} from '../entities';
+import { Model } from '.';
+import { ALL_POPULANTS } from '../common';
 
 /**
- * @class QyeryFetchDecorators<IBaseModelEntity>
- * @implements IQueryFetch<IBaseModelEntity>
+ * @class QyeryFetchDecorators<IEntity>
+ * @implements IQueryFetch<IEntity>
  * @description when an initWithId is called it can only have
  * a populates param;
  */
-export class QyeryFetchDecorators<T extends IBaseModelEntity>
-  implements IQueryFetch<T>
-{
+export class QyeryFetchDecorators<T extends IEntity> implements IQueryFetch<T> {
   private _decorator: QueryDecorators<T>;
   constructor(decorator: QueryDecorators<T>) {
     this._decorator = decorator;
@@ -31,7 +29,7 @@ export class QyeryFetchDecorators<T extends IBaseModelEntity>
   /**
    * @name fetch
    * @description
-   * @returns IBaseModelEntity - decorator fetchOne
+   * @returns IEntity - decorator fetchOne
    */
   fetch() {
     return this._decorator.fetchOne();
@@ -39,12 +37,12 @@ export class QyeryFetchDecorators<T extends IBaseModelEntity>
 }
 
 /**
- * @class QyeryPopulantDecorators<IBaseModelEntity>
- * @implements IQueryPopulates<IBaseModelEntity>
+ * @class QyeryPopulantDecorators<IEntity>
+ * @implements IQueryPopulates<IEntity>
  * @description when an find is called it can only have
  * a populates param;
  */
-export class QyeryPopulantDecorators<T extends IBaseModelEntity>
+export class QyeryPopulantDecorators<T extends IEntity>
   implements IQueryPopulates<T>
 {
   private _decorator: QueryDecorators<T>;
@@ -57,7 +55,7 @@ export class QyeryPopulantDecorators<T extends IBaseModelEntity>
    * @name populate
    * @description - applies a populate value to the query
    * @param value - string the association to populate
-   * @returns QyeryFetchDecorators<IBaseModelEntity> - it should only contain a fetch function
+   * @returns QyeryFetchDecorators<IEntity> - it should only contain a fetch function
    */
   populate(value: string, criteria?: ISingleQueryObject<any>) {
     this._decorator.populate(value, criteria);
@@ -68,7 +66,7 @@ export class QyeryPopulantDecorators<T extends IBaseModelEntity>
    * @public
    * @name populateAll
    * @description - popluations all associates
-   * @returns QyeryFetchDecorators<IBaseModelEntity> - it should only contain a fetch function
+   * @returns QyeryFetchDecorators<IEntity> - it should only contain a fetch function
    */
   populateAll() {
     this._decorator.populateAll();
@@ -79,7 +77,7 @@ export class QyeryPopulantDecorators<T extends IBaseModelEntity>
    * @public
    * @name fetch
    * @description pulls a fetchOne for the initWithId function
-   * @returns IBaseModelEntity
+   * @returns IEntity
    */
   fetch() {
     return this._decorator.fetchOne();
@@ -88,13 +86,11 @@ export class QyeryPopulantDecorators<T extends IBaseModelEntity>
 
 /**
  * @class
- * @name QueryDecorators<IBaseModelEntity>
- * @implements IQueryDecorators<IBaseModelEntity>
+ * @name QueryDecorators<IEntity>
+ * @implements IQueryDecorators<IEntity>
  * @description allows for query chaining for the model find function
  */
-export class QueryDecorators<T extends IBaseModelEntity>
-  implements IQueryDecorators<T>
-{
+export class QueryDecorators<T extends IEntity> implements IQueryDecorators<T> {
   private _model: Model<T>;
   private _query: any;
   private _limiter: IQueryLimiters = {};
@@ -106,7 +102,7 @@ export class QueryDecorators<T extends IBaseModelEntity>
    * @public
    * @name fetch
    * @description pulls a fetch for the initWithId function
-   * @returns IBaseModelEntity[]
+   * @returns IEntity[]
    */
   async fetch() {
     const found: T[] = <T[]>(
@@ -118,7 +114,7 @@ export class QueryDecorators<T extends IBaseModelEntity>
    * @public
    * @name fetchOne
    * @description pulls a fetchOne for the initWithId function
-   * @returns IBaseModelEntity
+   * @returns IEntity
    */
   async fetchOne() {
     const found = <T>(
@@ -135,12 +131,12 @@ export class QueryDecorators<T extends IBaseModelEntity>
    * @name populate
    * @description - applies a populate value to the query
    * @param value - string the association to populate
-   * @returns QyeryFetchDecorators<IBaseModelEntity>
+   * @returns QyeryFetchDecorators<IEntity>
    */
   populate(value: string, criteria?: ISingleQueryObject<any>) {
     const populate = this._limiter.populate || {};
     populate[value] = criteria;
-    this.setLimiter("populate", populate);
+    this.setLimiter('populate', populate);
     return this;
   }
 
@@ -148,10 +144,10 @@ export class QueryDecorators<T extends IBaseModelEntity>
    * @public
    * @name populateAll
    * @description - popluations all associates
-   * @returns QyeryFetchDecorators<IBaseModelEntity>
+   * @returns QyeryFetchDecorators<IEntity>
    */
   populateAll() {
-    this.setLimiter("populate", ALL_POPULANTS);
+    this.setLimiter('populate', ALL_POPULANTS);
     return this;
   }
 
@@ -160,7 +156,7 @@ export class QueryDecorators<T extends IBaseModelEntity>
    * @name setLimiter
    * @param attr keyof IQueryLimiters
    * @param value any
-   * @returns QueryDecorators<IBaseModelEntity>
+   * @returns QueryDecorators<IEntity>
    */
   setLimiter(attr: keyof IQueryLimiters, value: any) {
     this._limiter[attr] = value;
@@ -171,10 +167,10 @@ export class QueryDecorators<T extends IBaseModelEntity>
    * @public
    * @name sort
    * @param sort string | object[] | object
-   * @returns QueryDecorators<IBaseModelEntity>
+   * @returns QueryDecorators<IEntity>
    */
   sort(sort: string | object[] | object) {
-    this.setLimiter("sort", sort);
+    this.setLimiter('sort', sort);
     return this;
   }
 
@@ -182,10 +178,10 @@ export class QueryDecorators<T extends IBaseModelEntity>
    * @public
    * @name limit
    * @param value number
-   * @returns QueryDecorators<IBaseModelEntity>
+   * @returns QueryDecorators<IEntity>
    */
   limit(value: number) {
-    this.setLimiter("limit", value);
+    this.setLimiter('limit', value);
     return this;
   }
 
@@ -193,10 +189,10 @@ export class QueryDecorators<T extends IBaseModelEntity>
    * @public
    * @name skip
    * @param value number
-   * @returns QueryDecorators<IBaseModelEntity>
+   * @returns QueryDecorators<IEntity>
    */
   skip(value: number) {
-    this.setLimiter("skip", value);
+    this.setLimiter('skip', value);
     return this;
   }
   // getters
@@ -223,12 +219,12 @@ export class QueryDecorators<T extends IBaseModelEntity>
 
 /**
  * @class
- * @name QueryStreamDecorator<IBaseModelEntity>
- * @extends QueryDecorators<IBaseModelEntity>
- * @implements IQueryStreamDecorators<IBaseModelEntity>
+ * @name QueryStreamDecorator<IEntity>
+ * @extends QueryDecorators<IEntity>
+ * @implements IQueryStreamDecorators<IEntity>
  * @description runs opperations for stream style queries
  */
-export class QueryStreamDecorators<T extends IBaseModelEntity>
+export class QueryStreamDecorators<T extends IEntity>
   extends QueryDecorators<T>
   implements IQueryStreamDecorators<T>
 {
@@ -244,10 +240,10 @@ export class QueryStreamDecorators<T extends IBaseModelEntity>
    * @private
    * @name applyStreamCallback
    * @description managers the action for the fetch callback
-   * @param records {IBaseModelEntity | IBaseModelEntity[]}
+   * @param records {IEntity | IEntity[]}
    * @returns {Promis<void> | void}
    */
-  private applyStreamCallback(records: IBaseModelEntity | IBaseModelEntity[]) {
+  private applyStreamCallback(records: IEntity | IEntity[]) {
     const isArray = Array.isArray(records);
     if (isArray && this._batch) {
       const boundFunction = this._localBatchCallback!.bind(this);
@@ -258,7 +254,7 @@ export class QueryStreamDecorators<T extends IBaseModelEntity>
       const applied = this.modelInstance.applyOne(records as T) as T;
       return boundFunction(applied);
     }
-    throw new Error("There was an error processing the streamed query");
+    throw new Error('There was an error processing the streamed query');
   }
 
   /**
@@ -270,9 +266,9 @@ export class QueryStreamDecorators<T extends IBaseModelEntity>
    */
   async fetch() {
     if (!this._localBatchCallback && !this._localEachCallback) {
-      throw new Error("A local callback must be defined");
+      throw new Error('A local callback must be defined');
     }
-    const fnName = this._batch ? "streamBatch" : "streamEach";
+    const fnName = this._batch ? 'streamBatch' : 'streamEach';
     await this.connector[fnName](
       this.query,
       this.limiter,
@@ -293,7 +289,7 @@ export class QueryStreamDecorators<T extends IBaseModelEntity>
    */
   async fetchOne() {
     throw new Error(
-      "This operation should not occur. Please use fetch or a find() operation with fetchOne"
+      'This operation should not occur. Please use fetch or a find() operation with fetchOne'
     );
     return null as any;
   }
@@ -304,7 +300,7 @@ export class QueryStreamDecorators<T extends IBaseModelEntity>
    * @description runs a single record operation for streaming models
    * @param batchNumber {number}
    * @param cb  { (models: T[]) => Promise<any> | any}
-   * @returns {QueryStreamDecorators<IBaseModelEntity>}
+   * @returns {QueryStreamDecorators<IEntity>}
    */
   eachRecord(cb: (model: T) => any | Promise<any>) {
     this._localEachCallback = cb;
@@ -317,7 +313,7 @@ export class QueryStreamDecorators<T extends IBaseModelEntity>
    * @description runs a batch operation for streaming models
    * @param batchNumber {number}
    * @param cb  { (models: T[]) => Promise<any> | any}
-   * @returns {QueryStreamDecorators<IBaseModelEntity>}
+   * @returns {QueryStreamDecorators<IEntity>}
    */
   eachBatch(batchNumber: number, cb: (models: T[]) => Promise<any> | any) {
     this._localBatchCallback = cb;

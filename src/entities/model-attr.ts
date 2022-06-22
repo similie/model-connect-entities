@@ -3,7 +3,7 @@ export interface IAutoMigrationAttribute {
 }
 
 export interface IModelAttributes {
-  type?: "json" | "string" | "number" | "ref";
+  type?: 'json' | 'string' | 'number' | 'ref';
   columnType?: string;
   collection?: string;
   model?: string;

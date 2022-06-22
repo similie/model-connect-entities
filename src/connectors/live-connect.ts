@@ -1,20 +1,20 @@
 import {
-  IBaseModelEntity,
+  IEntity,
   IModelCollection,
   IQueryLimiters,
   LiveConnectionConstruct,
   IModelConfigurationDetails,
   IQueryOrPartial,
-  IBaseModelEntityPartial,
+  IEntityPartial,
   IValuesToEscape,
-} from "../entities";
+} from '../entities';
 
-import { GlobalConnection } from "../glabal-connect";
+import { GlobalConnection } from '../glabal-connect';
 
 export class LiveConnectConfig implements IModelConfigurationDetails {
   _name: string;
   constructor() {
-    this._name = "";
+    this._name = '';
   }
   get modelname(): string {
     return this._name;
@@ -103,12 +103,12 @@ export class LiveConnection implements LiveConnectionConstruct {
 
   async addToCollection(
     value: any,
-    collection: IModelCollection<IBaseModelEntity>
+    collection: IModelCollection<IEntity>
   ): Promise<void> {}
 
   async removeFromCollection(
     value: any,
-    collection: IModelCollection<IBaseModelEntity>
+    collection: IModelCollection<IEntity>
   ): Promise<void> {}
 
   attr(config?: IModelConfigurationDetails) {
@@ -120,41 +120,41 @@ export class LiveConnection implements LiveConnectionConstruct {
   }
 
   async sum(
-    numericAttrName: keyof IBaseModelEntity,
-    criteria?: IQueryOrPartial<IBaseModelEntity>,
+    numericAttrName: keyof IEntity,
+    criteria?: IQueryOrPartial<IEntity>,
     config?: IModelConfigurationDetails
   ) {
     return null as any;
   }
 
   async avg(
-    numericAttrName: keyof IBaseModelEntity,
-    criteria?: IQueryOrPartial<IBaseModelEntity>,
+    numericAttrName: keyof IEntity,
+    criteria?: IQueryOrPartial<IEntity>,
     config?: IModelConfigurationDetails
   ) {
     return null as any;
   }
 
   async findOrCreate(
-    criteria: IQueryOrPartial<IBaseModelEntity>,
-    initialsValues: IBaseModelEntityPartial<IBaseModelEntity>,
+    criteria: IQueryOrPartial<IEntity>,
+    initialsValues: IEntityPartial<IEntity>,
     config?: IModelConfigurationDetails
   ) {
     return null as any;
   }
 
   async streamEach(
-    query: IQueryOrPartial<IBaseModelEntity>,
+    query: IQueryOrPartial<IEntity>,
     limiters: IQueryLimiters,
     config: IModelConfigurationDetails,
-    cb: (model: IBaseModelEntity) => Promise<void> | void
+    cb: (model: IEntity) => Promise<void> | void
   ) {}
 
   async streamBatch(
-    query: IQueryOrPartial<IBaseModelEntity>,
+    query: IQueryOrPartial<IEntity>,
     limiters: IQueryLimiters,
     config: IModelConfigurationDetails,
-    cb: (model: IBaseModelEntity) => Promise<void> | void
+    cb: (model: IEntity) => Promise<void> | void
   ) {}
 
   async tearDown() {}

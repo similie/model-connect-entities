@@ -1,13 +1,13 @@
-import { IBaseModelEntity, IModelCollection, ISharedDataConnects, IQueryLimiters, IModelConfigurationDetails } from ".";
-import { IModelAttributes } from "./model-attr";
-import { IQueryOrPartial } from "./queries";
+import { IEntity, IModelCollection, ISharedDataConnects, IQueryLimiters, IModelConfigurationDetails } from '.';
+import { IModelAttributes } from './model-attr';
+import { IQueryOrPartial } from './queries';
 /**
  * @interface IModelConnect
  * @extends ISharedDataConnects
  * @description used only by a connector class to differentiate functionality
  * from a basic model
  */
-export interface IConnectorConnect<T extends IBaseModelEntity> extends ISharedDataConnects<T> {
+export interface IConnectorConnect<T extends IEntity> extends ISharedDataConnects<T> {
     init: (payload?: any) => Promise<any>;
     attr: (config?: IModelConfigurationDetails) => Record<string, IModelAttributes>;
     keys: (config?: IModelConfigurationDetails) => string[];
