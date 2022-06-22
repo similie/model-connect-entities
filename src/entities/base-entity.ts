@@ -1,32 +1,32 @@
 /**
  * @interface
- * @name IModelEntity
+ * @name IBaseModelEntity
  * @description the basic type for a base model
  */
 
-export interface IModelEntity {
+export interface IBaseModelEntity {
   id: number;
   createdAt: Date;
   updatedAt: Date;
 }
 
-export declare type IModelType<T extends IModelEntity> = T | number;
+export declare type IModelType<T extends IBaseModelEntity> = T | number;
 
 /**
  * @type
- * @name IModelCollection<IModelEntity>
+ * @name IModelCollection<IBaseModelEntity>
  * @description describes partial attributes of a given query
  */
-export declare type IModelEntityPartial<T extends IModelEntity> = {
+export declare type IBaseModelEntityPartial<T extends IBaseModelEntity> = {
   [A in keyof T]?: T[A];
 };
 
 /**
  * @interface
- * @name IModelCollection<IModelEntity>
+ * @name IModelCollection<IBaseModelEntity>
  * @description the type for describing a collection
  */
-export interface IModelCollection<T extends IModelEntity> extends Array<T> {
+export interface IModelCollection<T extends IBaseModelEntity> extends Array<T> {
   // hides properties from console.log
   model: string;
   name: string;

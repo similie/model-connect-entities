@@ -1,5 +1,5 @@
-import { IModelEntity, IModelConfigurationDetails } from ".";
-import { IModelEntityPartial, IValuesToEscape } from "./base-entity";
+import { IBaseModelEntity, IModelConfigurationDetails } from ".";
+import { IBaseModelEntityPartial, IValuesToEscape } from "./base-entity";
 import { IQueryOrPartial } from "./queries";
 /**
  * @interface ISharedDataConnects
@@ -9,11 +9,11 @@ import { IQueryOrPartial } from "./queries";
  * registar to pass context to the connector class. Otherwise, it wouldn't know
  * it's modelname or other identifies required to process the transation
  */
-export interface ISharedDataConnects<T extends IModelEntity> {
+export interface ISharedDataConnects<T extends IBaseModelEntity> {
   save: (values: T, config?: IModelConfigurationDetails) => Promise<T>;
   update: (
     query: IQueryOrPartial<T>,
-    update: IModelEntityPartial<T>,
+    update: IBaseModelEntityPartial<T>,
     config?: IModelConfigurationDetails
   ) => Promise<T[]>;
   count: (
@@ -21,7 +21,7 @@ export interface ISharedDataConnects<T extends IModelEntity> {
     config?: IModelConfigurationDetails
   ) => Promise<number>;
   destroy: (
-    query: number | IModelEntityPartial<T>,
+    query: number | IBaseModelEntityPartial<T>,
     config?: IModelConfigurationDetails
   ) => Promise<T>;
   destroyAll: (
@@ -29,17 +29,17 @@ export interface ISharedDataConnects<T extends IModelEntity> {
     config?: IModelConfigurationDetails
   ) => Promise<T[]>;
   create: (
-    model: IModelEntityPartial<T>,
+    model: IBaseModelEntityPartial<T>,
     config?: IModelConfigurationDetails
   ) => Promise<T>;
   createMany: (
-    query: IModelEntityPartial<T>[],
+    query: IBaseModelEntityPartial<T>[],
     config?: IModelConfigurationDetails
   ) => Promise<T[]>;
   raw: (config?: IModelConfigurationDetails) => any;
   findOrCreate: (
     criteria: IQueryOrPartial<T>,
-    initialsValues: IModelEntityPartial<T>,
+    initialsValues: IBaseModelEntityPartial<T>,
     config?: IModelConfigurationDetails
   ) => Promise<T>;
   sum: (

@@ -1,4 +1,4 @@
-import { IModelEntity } from "../entities";
+import { IBaseModelEntity } from "../entities";
 import { ISingleQueryObject } from "./queries";
 import { ISharedDataConnects } from "./shared";
 
@@ -9,7 +9,7 @@ import { ISharedDataConnects } from "./shared";
  * @description Expands the Connector class with the model class. Allowing for property
  * differentiation for models
  */
-export interface IModelConnect<T extends IModelEntity>
+export interface IModelConnect<T extends IBaseModelEntity>
   extends ISharedDataConnects<T> {
   getId: (query: number | T | undefined | null) => number | undefined;
   find: (query: any) => IQueryDecorators<T>;
@@ -33,21 +33,21 @@ export interface IQueryLimiters {
 
 /**
  * @interface
- * @name IQueryFetch<IModelEntity>
+ * @name IQueryFetch<IBaseModelEntity>
  * @description when we want just the fetch details from
  *   the model query
  */
-export interface IQueryFetch<T extends IModelEntity> {
+export interface IQueryFetch<T extends IBaseModelEntity> {
   fetch: () => Promise<T>;
 }
 
 /**
  * @interface
- * @name IQueryPopulates<IModelEntity>
+ * @name IQueryPopulates<IBaseModelEntity>
  * @description used when a populate event occurs for single initWithId()
  *   queries will perform.
  */
-export interface IQueryPopulates<T extends IModelEntity> {
+export interface IQueryPopulates<T extends IBaseModelEntity> {
   populate: (
     value: string,
     criteria?: ISingleQueryObject<any>
@@ -58,10 +58,10 @@ export interface IQueryPopulates<T extends IModelEntity> {
 
 /**
  * @interface
- * @name IQueryDecorator<IModelEntity>
+ * @name IQueryDecorator<IBaseModelEntity>
  * @description provides the structure for how a find() query might perform
  */
-export interface IQueryDecorators<T extends IModelEntity> {
+export interface IQueryDecorators<T extends IBaseModelEntity> {
   sort: (sort: string | object[] | object) => IQueryDecorators<T>;
   skip: (value: number) => IQueryDecorators<T>;
   limit: (value: number) => IQueryDecorators<T>;
@@ -75,12 +75,12 @@ export interface IQueryDecorators<T extends IModelEntity> {
 }
 
 /**
- * @interface IQueryStreamDecorators<IModelEntity>
- * @extends IQueryDecorators<IModelEntity>
+ * @interface IQueryStreamDecorators<IBaseModelEntity>
+ * @extends IQueryDecorators<IBaseModelEntity>
  * @description offers us similar functionality to the IQueryDecorators
  *   but addes the functionality for streaming data.
  */
-export interface IQueryStreamDecorators<T extends IModelEntity>
+export interface IQueryStreamDecorators<T extends IBaseModelEntity>
   extends IQueryDecorators<T> {
   eachRecord: (
     cb: (model: T) => Promise<any> | any
