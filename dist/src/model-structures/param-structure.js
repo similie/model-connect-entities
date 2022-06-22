@@ -25,7 +25,7 @@ exports.ModelInstanceIdentity = exports.ModelInstance = exports.ModelCollection 
 const utils_1 = require("../utils");
 /**
  * @class
- * @name CollectionIdentifier<IBaseModelEntity>
+ * @name CollectionIdentifier<IEntity>
  * @description provides the configuration details
  *  required by the connector to run the collection-based
  *  functions
@@ -53,8 +53,8 @@ class CollectionIdentifier {
 exports.CollectionIdentifier = CollectionIdentifier;
 /**
  * @class
- * @name ModelCollection<IBaseModelEntity>
- * @extends Array<IBaseModelEntity>
+ * @name ModelCollection<IEntity>
+ * @extends Array<IEntity>
  * @description Allows us to apply functionalty to collection
  *  attributes that behaive as arrays
  */
@@ -84,7 +84,7 @@ class ModelCollection extends Array {
      * @name addToCollection
      * @description adds and entity or id to a collection. It's function is
      *   controlled by the connector
-     * @param value {number | IBaseModelEntity}
+     * @param value {number | IEntity}
      * @returns {Promise<void>}
      */
     addToCollection(value) {
@@ -97,7 +97,7 @@ class ModelCollection extends Array {
      * @name removeFromCollection
      * @description removes and entity or id to a collection. It's function is
      *   controlled by the connector
-     * @param value {number | IBaseModelEntity}
+     * @param value {number | IEntity}
      * @returns {Promise<void>}
      */
     removeFromCollection(value) {
@@ -110,7 +110,7 @@ exports.ModelCollection = ModelCollection;
 _ModelCollection__identity = new WeakMap(), _ModelCollection__connector = new WeakMap();
 /**
  * @class
- * @name ModelInstance<IBaseModelEntity>
+ * @name ModelInstance<IEntity>
  * @description when we get a raw model from the there is
  *  a specfic functionality we want to apply to these models.
  *  the most obvious use case is the operations on collection
@@ -122,8 +122,8 @@ class ModelInstance {
     // the configuration details
     constructor(connector, modelConfig) {
         this.types = {
-            collection: "collection",
-            json: "json",
+            collection: 'collection',
+            json: 'json',
         };
         this.connector = connector;
         this._modelConfig = modelConfig;
@@ -152,8 +152,8 @@ class ModelInstance {
     /**
      * @public
      * @name applyOne
-     * @param {IBaseModelEntity} - the raw model
-     * @returns {ModelInstanceIdentity<IBaseModelEntity>}
+     * @param {IEntity} - the raw model
+     * @returns {ModelInstanceIdentity<IEntity>}
      */
     applyOne(model) {
         return this.applyRegistration(model);
@@ -161,8 +161,8 @@ class ModelInstance {
     /**
      * @public
      * @name applyMany
-     * @param {IBaseModelEntity[]} - the raw models
-     * @returns {ModelInstanceIdentity<IBaseModelEntity>[]}
+     * @param {IEntity[]} - the raw models
+     * @returns {ModelInstanceIdentity<IEntity>[]}
      */
     applyMany(models) {
         for (let i = 0; i < models.length; i++) {
@@ -193,7 +193,7 @@ class ModelInstance {
      */
     containsKey(attr, key) {
         // sometimes in waterline, 0.1x you can define an attribute as "param": 'string'
-        if (typeof attr === "string") {
+        if (typeof attr === 'string') {
             return attr === key;
         }
         // default to false
@@ -213,7 +213,7 @@ class ModelInstance {
      * @name buildCollection
      * @description builds those paramters that are defined as a collection
      *   with the Model collection object
-     * @param model {IBaseModelEntity}
+     * @param model {IEntity}
      * @param key {string} - the name of the param
      * @param attr {IModelAttributes}
      */
@@ -222,8 +222,8 @@ class ModelInstance {
         const value = model[_k];
         const arr = value || new Array();
         const clone = [...arr];
-        const modelName = this.modelConfig.modelname || "";
-        const identity = new CollectionIdentifier(key, attr.collection || "", model, modelName);
+        const modelName = this.modelConfig.modelname || '';
+        const identity = new CollectionIdentifier(key, attr.collection || '', model, modelName);
         const c = new ModelCollection(identity, this.connector);
         c.push(...clone);
         // set the model with the new collection
@@ -249,7 +249,7 @@ class ModelInstance {
      * @returns {boolean} - if the string is valid
      */
     startsAndEndsWith(value, chars) {
-        const split = chars.split(",");
+        const split = chars.split(',');
         return value.startsWith(split[0]) && value.endsWith(split[1]);
     }
     /**
@@ -260,9 +260,9 @@ class ModelInstance {
      * @returns boolean - true if it is a stringified json object
      */
     isStringJson(model) {
-        return (typeof model === "string" &&
-            (this.startsAndEndsWith(model, "[,]") ||
-                this.startsAndEndsWith(model, "{,}")));
+        return (typeof model === 'string' &&
+            (this.startsAndEndsWith(model, '[,]') ||
+                this.startsAndEndsWith(model, '{,}')));
     }
     /**
      * @private
@@ -280,7 +280,7 @@ class ModelInstance {
      * @name ensureIsValidJSON
      * @description we want to make sure our params designated as JSON
      *   or array are not stringified
-     * @param model {IBaseModelEntity}
+     * @param model {IEntity}
      * @param key {string} the key of the paramter
      * @returns {void}
      */

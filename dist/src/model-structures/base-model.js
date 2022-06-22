@@ -20,7 +20,7 @@ const glabal_connect_1 = require("../glabal-connect");
 const utils_1 = require("../utils");
 /**
  * @class
- * @name Model<IBaseModelEntity>
+ * @name Model<IEntity>
  * @description working base class for connector communication
  */
 class Model {
@@ -35,7 +35,7 @@ class Model {
             this._connector = globalConfig.connector;
         }
         else {
-            throw new Error("A valid connection is required to instantiate this model");
+            throw new Error('A valid connection is required to instantiate this model');
         }
         // [AS] we are only defining the modelname currently for the configuration
         // we can also apply other attributes for future functionality
@@ -76,7 +76,7 @@ class Model {
     /**
      * @name getId
      * @description tries to pull an id param from the payload
-     * @param query number | IBaseModelEntity | undefined | null
+     * @param query number | IEntity | undefined | null
      * @returns number | null
      */
     getId(query) {
@@ -86,7 +86,7 @@ class Model {
      * @name initWithId
      * @description starts a query for a model entity
      * @param id number
-     * @returns QyeryPopulantDecorators<IBaseModelEntity>
+     * @returns QyeryPopulantDecorators<IEntity>
      */
     initWithId(id) {
         const decorator = new _1.QueryDecorators(this, { id: id });
@@ -96,7 +96,7 @@ class Model {
      * @name find
      * @description starts a search query with chainable functions
      * @param query
-     * @returns QueryDecorators<IBaseModelEntity>
+     * @returns QueryDecorators<IEntity>
      */
     find(query) {
         return new _1.QueryDecorators(this, query);
@@ -104,8 +104,8 @@ class Model {
     /**
      * @name save
      * @description saves a single record
-     * @param values IBaseModelEntity
-     * @returns Promise<IBaseModelEntity> - saved values
+     * @param values IEntity
+     * @returns Promise<IEntity> - saved values
      */
     save(values) {
         var _a;
@@ -119,7 +119,7 @@ class Model {
      * @description updates multiple records
      * @param query object
      * @param update values to saved to entity
-     * @returns Promise<IBaseModelEntity[]> - saved records
+     * @returns Promise<IEntity[]> - saved records
      */
     update(query, update) {
         var _a;
@@ -143,8 +143,8 @@ class Model {
     /**
      * @name destroy
      * @description destroys a single record
-     * @param value IBaseModelEntity
-     * @returns Promise<IBaseModelEntity> - deleted record if avaible
+     * @param value IEntity
+     * @returns Promise<IEntity> - deleted record if avaible
      */
     destroy(value) {
         var _a;
@@ -158,7 +158,7 @@ class Model {
      * @name destroyAll
      * @description destroys multiple records depending one query
      * @param query object
-     * @returns Promise<IBaseModelEntity[]> - destroyed records
+     * @returns Promise<IEntity[]> - destroyed records
      */
     destroyAll(query) {
         var _a;
@@ -170,7 +170,7 @@ class Model {
      * @name create
      * @description creates a new model
      * @param query any the values to be created
-     * @returns Promise<IBaseModelEntity> - newly created model
+     * @returns Promise<IEntity> - newly created model
      */
     create(query) {
         var _a;
@@ -183,7 +183,7 @@ class Model {
      * @name createMany
      * @description creates a lot of records of a givin type
      * @param query any[]
-     * @returns Promise<IBaseModelEntity[]> - newly created models
+     * @returns Promise<IEntity[]> - newly created models
      */
     createMany(query) {
         var _a;
@@ -197,9 +197,9 @@ class Model {
      * @name findOrCreate
      * @description finds a model based on the given criteria. The model criteria does
      *   not exist in the database, it creates a model with the initials values
-     * @param criteria {IBaseModelEntity}
-     * @param initialsValues {IBaseModelEntity}
-     * @returns Promise<IBaseModelEntity>
+     * @param criteria {IEntity}
+     * @param initialsValues {IEntity}
+     * @returns Promise<IEntity>
      */
     findOrCreate(criteria, initialsValues) {
         var _a;
@@ -210,7 +210,7 @@ class Model {
     }
     /**
      * @public
-     * @name avg {param: keyof IBaseModelEntity} - the numeric paramter
+     * @name avg {param: keyof IEntity} - the numeric paramter
      * @description gets the average for a numeric paramter
      * @returns Promise<number>
      */
@@ -222,7 +222,7 @@ class Model {
     }
     /**
      * @public
-     * @name sum {param: keyof IBaseModelEntity} - the numeric paramter
+     * @name sum {param: keyof IEntity} - the numeric paramter
      * @description gets the sum for a numeric paramter
      * @returns Promise<number>
      */
@@ -238,7 +238,7 @@ class Model {
      * @description streams records from the database instream of buffering
      *   all records. This is good for API calls with massive datasets
      * @param query {any}
-     * @returns QueryStreamDecorators<IBaseModelEntity>
+     * @returns QueryStreamDecorators<IEntity>
      */
     stream(query) {
         return new _1.QueryStreamDecorators(this, query);
@@ -249,7 +249,7 @@ class Model {
      * @description allows for an object override to occur. The default
      *  bechavior will simply return the model. However, it can be overriden
      *  in the individual model entities. Useful for sending data over the api
-     * @param model {IBaseModelEntity}
+     * @param model {IEntity}
      * @returns {any}
      */
     toJson(model) {

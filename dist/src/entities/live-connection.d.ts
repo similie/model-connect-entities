@@ -1,6 +1,6 @@
-import { IConnectorConnect } from "./connector";
-import { IModelConfiguration } from "./config";
-import { IBaseModelEntity } from "./base-entity";
+import { IConnectorConnect } from './connector';
+import { IModelConfiguration } from './config';
+import { IEntity } from './base-entity';
 /**
  * @interface
  * @name LiveConnectionConstruct
@@ -8,5 +8,5 @@ import { IBaseModelEntity } from "./base-entity";
  *   to build the live connect construct. Other params can be added should
  *   they be required
  */
-export interface LiveConnectionConstruct extends IModelConfiguration, IConnectorConnect<IBaseModelEntity> {
+export interface LiveConnectionConstruct extends IModelConfiguration, IConnectorConnect<IEntity> {
 }

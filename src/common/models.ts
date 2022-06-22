@@ -1,1 +1,1 @@
-export const ALL_POPULANTS = "ALL";
+export const ALL_POPULANTS = 'ALL';

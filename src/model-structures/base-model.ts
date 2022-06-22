@@ -7,27 +7,27 @@ import {
   QueryDecorators,
   QyeryPopulantDecorators,
   QueryStreamDecorators,
-} from ".";
-import { ModelInstance } from ".";
+} from '.';
+import { ModelInstance } from '.';
 import {
-  IBaseModelEntity,
+  IEntity,
   IModelConnect,
   LiveConnectionConstruct,
   IModelConfigurationDetails,
   IQueryOrPartial,
-  IBaseModelEntityPartial,
+  IEntityPartial,
   IValuesToEscape,
-} from "../entities";
+} from '../entities';
 
-import { GlobalConnection } from "../glabal-connect";
-import { getId } from "../utils";
+import { GlobalConnection } from '../glabal-connect';
+import { getId } from '../utils';
 
 /**
  * @class
- * @name Model<IBaseModelEntity>
+ * @name Model<IEntity>
  * @description working base class for connector communication
  */
-export class Model<T extends IBaseModelEntity> implements IModelConnect<T> {
+export class Model<T extends IEntity> implements IModelConnect<T> {
   _modelConfig: IModelConfigurationDetails;
   _connector: LiveConnectionConstruct;
   _modelInstance: ModelInstance<T>;
@@ -42,7 +42,7 @@ export class Model<T extends IBaseModelEntity> implements IModelConnect<T> {
       this._connector = globalConfig.connector;
     } else {
       throw new Error(
-        "A valid connection is required to instantiate this model"
+        'A valid connection is required to instantiate this model'
       );
     }
     // [AS] we are only defining the modelname currently for the configuration
@@ -91,7 +91,7 @@ export class Model<T extends IBaseModelEntity> implements IModelConnect<T> {
   /**
    * @name getId
    * @description tries to pull an id param from the payload
-   * @param query number | IBaseModelEntity | undefined | null
+   * @param query number | IEntity | undefined | null
    * @returns number | null
    */
   public getId(query: number | T | undefined | null): number | undefined {
@@ -102,7 +102,7 @@ export class Model<T extends IBaseModelEntity> implements IModelConnect<T> {
    * @name initWithId
    * @description starts a query for a model entity
    * @param id number
-   * @returns QyeryPopulantDecorators<IBaseModelEntity>
+   * @returns QyeryPopulantDecorators<IEntity>
    */
   public initWithId(id: number) {
     const decorator = new QueryDecorators<T>(this, { id: id });
@@ -113,7 +113,7 @@ export class Model<T extends IBaseModelEntity> implements IModelConnect<T> {
    * @name find
    * @description starts a search query with chainable functions
    * @param query
-   * @returns QueryDecorators<IBaseModelEntity>
+   * @returns QueryDecorators<IEntity>
    */
   public find(query?: IQueryOrPartial<T>) {
     return new QueryDecorators<T>(this, query);
@@ -122,8 +122,8 @@ export class Model<T extends IBaseModelEntity> implements IModelConnect<T> {
   /**
    * @name save
    * @description saves a single record
-   * @param values IBaseModelEntity
-   * @returns Promise<IBaseModelEntity> - saved values
+   * @param values IEntity
+   * @returns Promise<IEntity> - saved values
    */
   public async save(values: T): Promise<T> {
     const updated = <T>await this.connector?.save(values, this.modelConfig);
@@ -135,12 +135,9 @@ export class Model<T extends IBaseModelEntity> implements IModelConnect<T> {
    * @description updates multiple records
    * @param query object
    * @param update values to saved to entity
-   * @returns Promise<IBaseModelEntity[]> - saved records
+   * @returns Promise<IEntity[]> - saved records
    */
-  public async update(
-    query: IQueryOrPartial<T>,
-    update: IBaseModelEntityPartial<T>
-  ) {
+  public async update(query: IQueryOrPartial<T>, update: IEntityPartial<T>) {
     const updated = <T[]>(
       await this.connector?.update(query, update, this.modelConfig)
     );
@@ -155,7 +152,7 @@ export class Model<T extends IBaseModelEntity> implements IModelConnect<T> {
    */
   public async count(query?: IQueryOrPartial<T>) {
     return await this.connector?.count(
-      query as IQueryOrPartial<IBaseModelEntity>,
+      query as IQueryOrPartial<IEntity>,
       this.modelConfig
     );
   }
@@ -163,10 +160,10 @@ export class Model<T extends IBaseModelEntity> implements IModelConnect<T> {
   /**
    * @name destroy
    * @description destroys a single record
-   * @param value IBaseModelEntity
-   * @returns Promise<IBaseModelEntity> - deleted record if avaible
+   * @param value IEntity
+   * @returns Promise<IEntity> - deleted record if avaible
    */
-  public async destroy(value: IBaseModelEntityPartial<T> | number) {
+  public async destroy(value: IEntityPartial<T> | number) {
     // [AS] I don't bother sending through the model instance
     // param since it is destroyed now
     return <T>await this.connector?.destroy(value, this.modelConfig);
@@ -176,7 +173,7 @@ export class Model<T extends IBaseModelEntity> implements IModelConnect<T> {
    * @name destroyAll
    * @description destroys multiple records depending one query
    * @param query object
-   * @returns Promise<IBaseModelEntity[]> - destroyed records
+   * @returns Promise<IEntity[]> - destroyed records
    */
   public async destroyAll(query: IQueryOrPartial<T>) {
     return <T[]>await this.connector?.destroyAll(query, this.modelConfig);
@@ -186,9 +183,9 @@ export class Model<T extends IBaseModelEntity> implements IModelConnect<T> {
    * @name create
    * @description creates a new model
    * @param query any the values to be created
-   * @returns Promise<IBaseModelEntity> - newly created model
+   * @returns Promise<IEntity> - newly created model
    */
-  public async create(query: IBaseModelEntityPartial<T>) {
+  public async create(query: IEntityPartial<T>) {
     const created = <T>await this.connector?.create(query, this.modelConfig);
     return this.modelInstance.applyOne(created) as T;
   }
@@ -197,9 +194,9 @@ export class Model<T extends IBaseModelEntity> implements IModelConnect<T> {
    * @name createMany
    * @description creates a lot of records of a givin type
    * @param query any[]
-   * @returns Promise<IBaseModelEntity[]> - newly created models
+   * @returns Promise<IEntity[]> - newly created models
    */
-  public async createMany(query: IBaseModelEntityPartial<T>[]) {
+  public async createMany(query: IEntityPartial<T>[]) {
     const created = <T[]>(
       await this.connector?.createMany(query, this.modelConfig)
     );
@@ -211,13 +208,13 @@ export class Model<T extends IBaseModelEntity> implements IModelConnect<T> {
    * @name findOrCreate
    * @description finds a model based on the given criteria. The model criteria does
    *   not exist in the database, it creates a model with the initials values
-   * @param criteria {IBaseModelEntity}
-   * @param initialsValues {IBaseModelEntity}
-   * @returns Promise<IBaseModelEntity>
+   * @param criteria {IEntity}
+   * @param initialsValues {IEntity}
+   * @returns Promise<IEntity>
    */
   public async findOrCreate(
-    criteria: IQueryOrPartial<IBaseModelEntity>,
-    initialsValues: IBaseModelEntityPartial<IBaseModelEntity>
+    criteria: IQueryOrPartial<IEntity>,
+    initialsValues: IEntityPartial<IEntity>
   ) {
     const foundOrCreated = <T>(
       await this.connector?.findOrCreate(
@@ -231,13 +228,13 @@ export class Model<T extends IBaseModelEntity> implements IModelConnect<T> {
 
   /**
    * @public
-   * @name avg {param: keyof IBaseModelEntity} - the numeric paramter
+   * @name avg {param: keyof IEntity} - the numeric paramter
    * @description gets the average for a numeric paramter
    * @returns Promise<number>
    */
   public async avg(numericAttrName: keyof T, criteria?: IQueryOrPartial<T>) {
     return this.connector?.avg(
-      numericAttrName as keyof IBaseModelEntity,
+      numericAttrName as keyof IEntity,
       criteria,
       this.modelConfig
     );
@@ -245,13 +242,13 @@ export class Model<T extends IBaseModelEntity> implements IModelConnect<T> {
 
   /**
    * @public
-   * @name sum {param: keyof IBaseModelEntity} - the numeric paramter
+   * @name sum {param: keyof IEntity} - the numeric paramter
    * @description gets the sum for a numeric paramter
    * @returns Promise<number>
    */
   public async sum(numericAttrName: keyof T, criteria?: IQueryOrPartial<T>) {
     return this.connector?.sum(
-      numericAttrName as keyof IBaseModelEntity,
+      numericAttrName as keyof IEntity,
       criteria,
       this.modelConfig
     );
@@ -263,7 +260,7 @@ export class Model<T extends IBaseModelEntity> implements IModelConnect<T> {
    * @description streams records from the database instream of buffering
    *   all records. This is good for API calls with massive datasets
    * @param query {any}
-   * @returns QueryStreamDecorators<IBaseModelEntity>
+   * @returns QueryStreamDecorators<IEntity>
    */
   public stream(query: any) {
     return new QueryStreamDecorators<T>(this, query);
@@ -274,7 +271,7 @@ export class Model<T extends IBaseModelEntity> implements IModelConnect<T> {
    * @description allows for an object override to occur. The default
    *  bechavior will simply return the model. However, it can be overriden
    *  in the individual model entities. Useful for sending data over the api
-   * @param model {IBaseModelEntity}
+   * @param model {IEntity}
    * @returns {any}
    */
   public async toJson(model: T) {

@@ -13,7 +13,7 @@ exports.LiveConnection = exports.LiveConnectConfig = void 0;
 const glabal_connect_1 = require("../glabal-connect");
 class LiveConnectConfig {
     constructor() {
-        this._name = "";
+        this._name = '';
     }
     get modelname() {
         return this._name;

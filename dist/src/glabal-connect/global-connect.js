@@ -16,7 +16,7 @@ class GlobalConnection {
     }
     static getInstance() {
         if (!GlobalConnection.instance) {
-            throw new Error("A connection has not been initialized");
+            throw new Error('A connection has not been initialized');
         }
         return GlobalConnection.instance;
     }

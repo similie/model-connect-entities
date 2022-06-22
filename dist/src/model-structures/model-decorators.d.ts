@@ -1,28 +1,28 @@
-import { IBaseModelEntity, IQueryDecorators, IQueryFetch, IQueryLimiters, IQueryPopulates, IQueryStreamDecorators, ISingleQueryObject } from "../entities";
-import { Model } from ".";
+import { IEntity, IQueryDecorators, IQueryFetch, IQueryLimiters, IQueryPopulates, IQueryStreamDecorators, ISingleQueryObject } from '../entities';
+import { Model } from '.';
 /**
- * @class QyeryFetchDecorators<IBaseModelEntity>
- * @implements IQueryFetch<IBaseModelEntity>
+ * @class QyeryFetchDecorators<IEntity>
+ * @implements IQueryFetch<IEntity>
  * @description when an initWithId is called it can only have
  * a populates param;
  */
-export declare class QyeryFetchDecorators<T extends IBaseModelEntity> implements IQueryFetch<T> {
+export declare class QyeryFetchDecorators<T extends IEntity> implements IQueryFetch<T> {
     private _decorator;
     constructor(decorator: QueryDecorators<T>);
     /**
      * @name fetch
      * @description
-     * @returns IBaseModelEntity - decorator fetchOne
+     * @returns IEntity - decorator fetchOne
      */
     fetch(): Promise<T>;
 }
 /**
- * @class QyeryPopulantDecorators<IBaseModelEntity>
- * @implements IQueryPopulates<IBaseModelEntity>
+ * @class QyeryPopulantDecorators<IEntity>
+ * @implements IQueryPopulates<IEntity>
  * @description when an find is called it can only have
  * a populates param;
  */
-export declare class QyeryPopulantDecorators<T extends IBaseModelEntity> implements IQueryPopulates<T> {
+export declare class QyeryPopulantDecorators<T extends IEntity> implements IQueryPopulates<T> {
     private _decorator;
     constructor(decorator: QueryDecorators<T>);
     /**
@@ -30,31 +30,31 @@ export declare class QyeryPopulantDecorators<T extends IBaseModelEntity> impleme
      * @name populate
      * @description - applies a populate value to the query
      * @param value - string the association to populate
-     * @returns QyeryFetchDecorators<IBaseModelEntity> - it should only contain a fetch function
+     * @returns QyeryFetchDecorators<IEntity> - it should only contain a fetch function
      */
     populate(value: string, criteria?: ISingleQueryObject<any>): QyeryFetchDecorators<T>;
     /**
      * @public
      * @name populateAll
      * @description - popluations all associates
-     * @returns QyeryFetchDecorators<IBaseModelEntity> - it should only contain a fetch function
+     * @returns QyeryFetchDecorators<IEntity> - it should only contain a fetch function
      */
     populateAll(): QyeryFetchDecorators<T>;
     /**
      * @public
      * @name fetch
      * @description pulls a fetchOne for the initWithId function
-     * @returns IBaseModelEntity
+     * @returns IEntity
      */
     fetch(): Promise<T>;
 }
 /**
  * @class
- * @name QueryDecorators<IBaseModelEntity>
- * @implements IQueryDecorators<IBaseModelEntity>
+ * @name QueryDecorators<IEntity>
+ * @implements IQueryDecorators<IEntity>
  * @description allows for query chaining for the model find function
  */
-export declare class QueryDecorators<T extends IBaseModelEntity> implements IQueryDecorators<T> {
+export declare class QueryDecorators<T extends IEntity> implements IQueryDecorators<T> {
     private _model;
     private _query;
     private _limiter;
@@ -63,14 +63,14 @@ export declare class QueryDecorators<T extends IBaseModelEntity> implements IQue
      * @public
      * @name fetch
      * @description pulls a fetch for the initWithId function
-     * @returns IBaseModelEntity[]
+     * @returns IEntity[]
      */
     fetch(): Promise<T[]>;
     /**
      * @public
      * @name fetchOne
      * @description pulls a fetchOne for the initWithId function
-     * @returns IBaseModelEntity
+     * @returns IEntity
      */
     fetchOne(): Promise<T>;
     /**
@@ -78,14 +78,14 @@ export declare class QueryDecorators<T extends IBaseModelEntity> implements IQue
      * @name populate
      * @description - applies a populate value to the query
      * @param value - string the association to populate
-     * @returns QyeryFetchDecorators<IBaseModelEntity>
+     * @returns QyeryFetchDecorators<IEntity>
      */
     populate(value: string, criteria?: ISingleQueryObject<any>): this;
     /**
      * @public
      * @name populateAll
      * @description - popluations all associates
-     * @returns QyeryFetchDecorators<IBaseModelEntity>
+     * @returns QyeryFetchDecorators<IEntity>
      */
     populateAll(): this;
     /**
@@ -93,28 +93,28 @@ export declare class QueryDecorators<T extends IBaseModelEntity> implements IQue
      * @name setLimiter
      * @param attr keyof IQueryLimiters
      * @param value any
-     * @returns QueryDecorators<IBaseModelEntity>
+     * @returns QueryDecorators<IEntity>
      */
     setLimiter(attr: keyof IQueryLimiters, value: any): this;
     /**
      * @public
      * @name sort
      * @param sort string | object[] | object
-     * @returns QueryDecorators<IBaseModelEntity>
+     * @returns QueryDecorators<IEntity>
      */
     sort(sort: string | object[] | object): this;
     /**
      * @public
      * @name limit
      * @param value number
-     * @returns QueryDecorators<IBaseModelEntity>
+     * @returns QueryDecorators<IEntity>
      */
     limit(value: number): this;
     /**
      * @public
      * @name skip
      * @param value number
-     * @returns QueryDecorators<IBaseModelEntity>
+     * @returns QueryDecorators<IEntity>
      */
     skip(value: number): this;
     protected get connector(): import("../entities").LiveConnectionConstruct;
@@ -125,12 +125,12 @@ export declare class QueryDecorators<T extends IBaseModelEntity> implements IQue
 }
 /**
  * @class
- * @name QueryStreamDecorator<IBaseModelEntity>
- * @extends QueryDecorators<IBaseModelEntity>
- * @implements IQueryStreamDecorators<IBaseModelEntity>
+ * @name QueryStreamDecorator<IEntity>
+ * @extends QueryDecorators<IEntity>
+ * @implements IQueryStreamDecorators<IEntity>
  * @description runs opperations for stream style queries
  */
-export declare class QueryStreamDecorators<T extends IBaseModelEntity> extends QueryDecorators<T> implements IQueryStreamDecorators<T> {
+export declare class QueryStreamDecorators<T extends IEntity> extends QueryDecorators<T> implements IQueryStreamDecorators<T> {
     _modelQuery: any;
     _batch: boolean;
     _localBatchCallback: undefined | ((model: T[]) => any | Promise<any>);
@@ -140,7 +140,7 @@ export declare class QueryStreamDecorators<T extends IBaseModelEntity> extends Q
      * @private
      * @name applyStreamCallback
      * @description managers the action for the fetch callback
-     * @param records {IBaseModelEntity | IBaseModelEntity[]}
+     * @param records {IEntity | IEntity[]}
      * @returns {Promis<void> | void}
      */
     private applyStreamCallback;
@@ -166,7 +166,7 @@ export declare class QueryStreamDecorators<T extends IBaseModelEntity> extends Q
      * @description runs a single record operation for streaming models
      * @param batchNumber {number}
      * @param cb  { (models: T[]) => Promise<any> | any}
-     * @returns {QueryStreamDecorators<IBaseModelEntity>}
+     * @returns {QueryStreamDecorators<IEntity>}
      */
     eachRecord(cb: (model: T) => any | Promise<any>): this;
     /**
@@ -175,7 +175,7 @@ export declare class QueryStreamDecorators<T extends IBaseModelEntity> extends Q
      * @description runs a batch operation for streaming models
      * @param batchNumber {number}
      * @param cb  { (models: T[]) => Promise<any> | any}
-     * @returns {QueryStreamDecorators<IBaseModelEntity>}
+     * @returns {QueryStreamDecorators<IEntity>}
      */
     eachBatch(batchNumber: number, cb: (models: T[]) => Promise<any> | any): this;
 }
