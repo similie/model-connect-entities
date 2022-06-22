@@ -1,4 +1,4 @@
-import { IModelEntity, IModelEntityPartial } from "./base-entity";
+import { IBaseModelEntity, IBaseModelEntityPartial } from "./base-entity";
 
 /**
  * @interface
@@ -6,16 +6,16 @@ import { IModelEntity, IModelEntityPartial } from "./base-entity";
  * @description defines the structure of the objects
  *   used to find and limit the queries
  */
-export interface ISingleQueryObject<T extends IModelEntity> {
+export interface ISingleQueryObject<T extends IBaseModelEntity> {
   sort?: string | object | object[];
   limit?: number;
   skip?: number;
-  where?: IModelEntityPartial<T>;
+  where?: IBaseModelEntityPartial<T>;
 }
 
 /** @todo Type def from Kris Query builder code */
 export declare type IQuery = object;
 
-export declare type IQueryOrPartial<T extends IModelEntity> =
+export declare type IQueryOrPartial<T extends IBaseModelEntity> =
   | ISingleQueryObject<T>
-  | IModelEntityPartial<T>;
+  | IBaseModelEntityPartial<T>;

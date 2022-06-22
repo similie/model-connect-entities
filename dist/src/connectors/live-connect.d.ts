@@ -1,4 +1,4 @@
-import { IModelEntity, IModelCollection, IQueryLimiters, LiveConnectionConstruct, IModelConfigurationDetails, IQueryOrPartial, IModelEntityPartial, IValuesToEscape } from "../entities";
+import { IBaseModelEntity, IModelCollection, IQueryLimiters, LiveConnectionConstruct, IModelConfigurationDetails, IQueryOrPartial, IBaseModelEntityPartial, IValuesToEscape } from "../entities";
 export declare class LiveConnectConfig implements IModelConfigurationDetails {
     _name: string;
     constructor();
@@ -32,15 +32,15 @@ export declare class LiveConnection implements LiveConnectionConstruct {
     create(query: any, config?: IModelConfigurationDetails): Promise<any>;
     createMany(query: any[], config?: IModelConfigurationDetails): Promise<any[]>;
     destroyAll(query: any, config?: IModelConfigurationDetails): Promise<any>;
-    addToCollection(value: any, collection: IModelCollection<IModelEntity>): Promise<void>;
-    removeFromCollection(value: any, collection: IModelCollection<IModelEntity>): Promise<void>;
+    addToCollection(value: any, collection: IModelCollection<IBaseModelEntity>): Promise<void>;
+    removeFromCollection(value: any, collection: IModelCollection<IBaseModelEntity>): Promise<void>;
     attr(config?: IModelConfigurationDetails): any;
     keys(config?: IModelConfigurationDetails): string[];
-    sum(numericAttrName: keyof IModelEntity, criteria?: IQueryOrPartial<IModelEntity>, config?: IModelConfigurationDetails): Promise<any>;
-    avg(numericAttrName: keyof IModelEntity, criteria?: IQueryOrPartial<IModelEntity>, config?: IModelConfigurationDetails): Promise<any>;
-    findOrCreate(criteria: IQueryOrPartial<IModelEntity>, initialsValues: IModelEntityPartial<IModelEntity>, config?: IModelConfigurationDetails): Promise<any>;
-    streamEach(query: IQueryOrPartial<IModelEntity>, limiters: IQueryLimiters, config: IModelConfigurationDetails, cb: (model: IModelEntity) => Promise<void> | void): Promise<void>;
-    streamBatch(query: IQueryOrPartial<IModelEntity>, limiters: IQueryLimiters, config: IModelConfigurationDetails, cb: (model: IModelEntity) => Promise<void> | void): Promise<void>;
+    sum(numericAttrName: keyof IBaseModelEntity, criteria?: IQueryOrPartial<IBaseModelEntity>, config?: IModelConfigurationDetails): Promise<any>;
+    avg(numericAttrName: keyof IBaseModelEntity, criteria?: IQueryOrPartial<IBaseModelEntity>, config?: IModelConfigurationDetails): Promise<any>;
+    findOrCreate(criteria: IQueryOrPartial<IBaseModelEntity>, initialsValues: IBaseModelEntityPartial<IBaseModelEntity>, config?: IModelConfigurationDetails): Promise<any>;
+    streamEach(query: IQueryOrPartial<IBaseModelEntity>, limiters: IQueryLimiters, config: IModelConfigurationDetails, cb: (model: IBaseModelEntity) => Promise<void> | void): Promise<void>;
+    streamBatch(query: IQueryOrPartial<IBaseModelEntity>, limiters: IQueryLimiters, config: IModelConfigurationDetails, cb: (model: IBaseModelEntity) => Promise<void> | void): Promise<void>;
     tearDown(): Promise<void>;
     query(query: string, valuesToEscape?: IValuesToEscape, config?: IModelConfigurationDetails): Promise<any>;
 }
