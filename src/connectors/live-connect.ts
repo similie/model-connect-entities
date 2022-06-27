@@ -27,7 +27,7 @@ export class LiveConnectConfig implements IModelConfigurationDetails {
 
 /**
  * @class
- * @name LiveConnectionConstruct
+ * @name LiveConnection
  *
  * @description The purpose of live connect is so that a single class
  * can manage the start instance. Also, the child classes can safely
