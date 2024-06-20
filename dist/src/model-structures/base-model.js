@@ -1,8 +1,4 @@
 "use strict";
-/*
-█▀▄▀█ █▀█ █▀▄ █▀▀ █░░ █▀
-█░▀░█ █▄█ █▄▀ ██▄ █▄▄ ▄█
- */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -16,12 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Model = void 0;
 const _1 = require(".");
 const _2 = require(".");
-const glabal_connect_1 = require("../glabal-connect");
+const global_connect_1 = require("../global-connect");
 const utils_1 = require("../utils");
 /**
  * @class
- * @name Model<IEntity>
+ * @name Model
  * @description working base class for connector communication
+ * @param {LiveConnectionConstruct?} connector
  */
 class Model {
     constructor(connector) {
@@ -29,9 +26,9 @@ class Model {
         if (connector) {
             this._connector = connector;
         }
-        else if (glabal_connect_1.GlobalConnection.hasConnection()) {
+        else if (global_connect_1.GlobalConnection.hasConnection()) {
             // for if it is statically defined
-            const globalConfig = glabal_connect_1.GlobalConnection.getInstance();
+            const globalConfig = global_connect_1.GlobalConnection.getInstance();
             this._connector = globalConfig.connector;
         }
         else {
@@ -67,7 +64,7 @@ class Model {
      * @name raw
      * @description used for raw access to the ORM namedspaced
      *    by the registry
-     * @returns a raw instance of the connector model
+     * @returns {LiveConnectionConstruct} a raw instance of the connector model
      */
     raw() {
         var _a;
@@ -76,8 +73,8 @@ class Model {
     /**
      * @name getId
      * @description tries to pull an id param from the payload
-     * @param query number | IEntity | undefined | null
-     * @returns number | null
+     * @param {number | IEntity | undefined | null} query
+     * @returns {number | null}
      */
     getId(query) {
         return (0, utils_1.getId)(query);
@@ -85,18 +82,18 @@ class Model {
     /**
      * @name initWithId
      * @description starts a query for a model entity
-     * @param id number
-     * @returns QyeryPopulantDecorators<IEntity>
+     * @param {number} id
+     * @returns {QyeryPopulantDecorators<IEntity>}
      */
     initWithId(id) {
         const decorator = new _1.QueryDecorators(this, { id: id });
-        return new _1.QyeryPopulantDecorators(decorator);
+        return new _1.QueryPopulantDecorators(decorator);
     }
     /**
      * @name find
      * @description starts a search query with chainable functions
-     * @param query
-     * @returns QueryDecorators<IEntity>
+     * @param {IQueryOrPartial<T>} query
+     * @returns {QueryDecorators<IEntity>}
      */
     find(query) {
         return new _1.QueryDecorators(this, query);
@@ -104,8 +101,8 @@ class Model {
     /**
      * @name save
      * @description saves a single record
-     * @param values IEntity
-     * @returns Promise<IEntity> - saved values
+     * @param {IEntity} values
+     * @returns {Promise<IEntity>} saved values
      */
     save(values) {
         var _a;
@@ -117,9 +114,9 @@ class Model {
     /**
      * @name update
      * @description updates multiple records
-     * @param query object
-     * @param update values to saved to entity
-     * @returns Promise<IEntity[]> - saved records
+     * @param {IQueryOrPartial<T>} query
+     * @param {IEntityPartial<T>} update values to saved to entity
+     * @returns {Promise<IEntity[]>} saved records
      */
     update(query, update) {
         var _a;
@@ -131,8 +128,8 @@ class Model {
     /**
      * @name count
      * @description counts the number of elements based in a given query
-     * @param query object - parameters to count
-     * @returns Promise<number>
+     * @param {IQueryOrPartial<T>} query parameters to count
+     * @returns {Promise<number>}
      */
     count(query) {
         var _a;
@@ -143,8 +140,8 @@ class Model {
     /**
      * @name destroy
      * @description destroys a single record
-     * @param value IEntity
-     * @returns Promise<IEntity> - deleted record if avaible
+     * @param {IEntity} value
+     * @returns {Promise<IEntity>} deleted record if avaible
      */
     destroy(value) {
         var _a;
@@ -157,8 +154,8 @@ class Model {
     /**
      * @name destroyAll
      * @description destroys multiple records depending one query
-     * @param query object
-     * @returns Promise<IEntity[]> - destroyed records
+     * @param {IQueryOrPartial<T>} query
+     * @returns {Promise<IEntity[]>} destroyed records
      */
     destroyAll(query) {
         var _a;
@@ -169,8 +166,8 @@ class Model {
     /**
      * @name create
      * @description creates a new model
-     * @param query any the values to be created
-     * @returns Promise<IEntity> - newly created model
+     * @param { IEntityPartial<T>} query any the values to be created
+     * @returns {Promise<IEntity>} newly created model
      */
     create(query) {
         var _a;
@@ -182,8 +179,8 @@ class Model {
     /**
      * @name createMany
      * @description creates a lot of records of a givin type
-     * @param query any[]
-     * @returns Promise<IEntity[]> - newly created models
+     * @param {IEntityPartial<T>[]} query
+     * @returns {Promise<IEntity[]>} newly created models
      */
     createMany(query) {
         var _a;
@@ -197,22 +194,24 @@ class Model {
      * @name findOrCreate
      * @description finds a model based on the given criteria. The model criteria does
      *   not exist in the database, it creates a model with the initials values
-     * @param criteria {IEntity}
-     * @param initialsValues {IEntity}
-     * @returns Promise<IEntity>
+     * @param {IQueryOrPartial<IEntity>} criteria
+     * @param {IEntityPartial<IEntity>} initialValues
+     * @returns {Promise<IEntity>}
      */
-    findOrCreate(criteria, initialsValues) {
+    findOrCreate(criteria, initialValues) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            const foundOrCreated = (yield ((_a = this.connector) === null || _a === void 0 ? void 0 : _a.findOrCreate(criteria, initialsValues, this.modelConfig)));
+            const foundOrCreated = (yield ((_a = this.connector) === null || _a === void 0 ? void 0 : _a.findOrCreate(criteria, initialValues, this.modelConfig)));
             return this.modelInstance.applyOne(foundOrCreated);
         });
     }
     /**
      * @public
-     * @name avg {param: keyof IEntity} - the numeric paramter
-     * @description gets the average for a numeric paramter
-     * @returns Promise<number>
+     * @name avg
+     * @description gets the average for a numeric parameter
+     * @param {keyofT} numericAttrName
+     * @param {IQueryOrPartial<T>?} criteria
+     * @returns {Promise<number>}
      */
     avg(numericAttrName, criteria) {
         var _a;
@@ -222,9 +221,11 @@ class Model {
     }
     /**
      * @public
-     * @name sum {param: keyof IEntity} - the numeric paramter
-     * @description gets the sum for a numeric paramter
-     * @returns Promise<number>
+     * @name sum
+     * @param {keyofT} numericAttrName
+     * @param {IQueryOrPartial<T>?} criteria
+     * @description gets the sum for a numeric parameter
+     * @returns {Promise<ISumType>}
      */
     sum(numericAttrName, criteria) {
         var _a;
@@ -237,9 +238,10 @@ class Model {
      * @name stream
      * @description streams records from the database instream of buffering
      *   all records. This is good for API calls with massive datasets
-     * @param query {any}
-     * @returns QueryStreamDecorators<IEntity>
+     * @param {any} query
+     * @returns {QueryStreamDecorators<IEntity>}
      */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     stream(query) {
         return new _1.QueryStreamDecorators(this, query);
     }
@@ -249,7 +251,7 @@ class Model {
      * @description allows for an object override to occur. The default
      *  bechavior will simply return the model. However, it can be overriden
      *  in the individual model entities. Useful for sending data over the api
-     * @param model {IEntity}
+     * @param {IEntity} model {IEntity}
      * @returns {any}
      */
     toJson(model) {
@@ -261,7 +263,8 @@ class Model {
      * @public
      * @name query
      * @description generates a row sql query to the connector
-     * @param query {string}
+     * @param {string} query
+     * @param {IValuesToEscape} valuesToEscape
      * @returns {any} the queried results
      */
     query(query, valuesToEscape) {
@@ -269,6 +272,16 @@ class Model {
         return __awaiter(this, void 0, void 0, function* () {
             return (_a = this.connector) === null || _a === void 0 ? void 0 : _a.query(query, valuesToEscape, this.modelConfig);
         });
+    }
+    /**
+     * @public
+     * @name attr
+     * @description pulls the attribute values from the model
+     * @returns {Record<string, string>}
+     */
+    attr() {
+        var _a;
+        return (_a = this.connector) === null || _a === void 0 ? void 0 : _a.attr(this.modelConfig);
     }
 }
 exports.Model = Model;

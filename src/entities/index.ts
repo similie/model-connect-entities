@@ -6,3 +6,4 @@ export * from './config';
 export * from './live-connection';
 export * from './model-attr';
 export * from './queries';
+export * from './orm-entities';

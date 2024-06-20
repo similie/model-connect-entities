@@ -9,7 +9,7 @@ import { IQueryOrPartial } from './queries';
  */
 export interface IConnectorConnect<T extends IEntity> extends ISharedDataConnects<T> {
     init: (payload?: any) => Promise<any>;
-    attr: (config?: IModelConfigurationDetails) => Record<string, IModelAttributes>;
+    attr: (config?: IModelConfigurationDetails) => Promise<Record<string, IModelAttributes>>;
     keys: (config?: IModelConfigurationDetails) => string[];
     tearDown: () => Promise<void>;
     addToCollection: (value: any, collection: IModelCollection<T>) => Promise<void>;
@@ -17,5 +17,5 @@ export interface IConnectorConnect<T extends IEntity> extends ISharedDataConnect
     find: (query: IQueryOrPartial<T>, limiters: IQueryLimiters, config: IModelConfigurationDetails) => Promise<T[]>;
     findOne: (query: IQueryOrPartial<T>, limiters: IQueryLimiters, config: IModelConfigurationDetails) => Promise<T>;
     streamEach: (query: IQueryOrPartial<T>, limiters: IQueryLimiters, config: IModelConfigurationDetails, cb: (model: T) => Promise<void> | void) => Promise<void>;
-    streamBatch: (query: IQueryOrPartial<T>, limiters: IQueryLimiters, config: IModelConfigurationDetails, cb: (model: T) => Promise<void> | void) => Promise<void>;
+    streamBatch: (query: IQueryOrPartial<T>, limiters: IQueryLimiters, config: IModelConfigurationDetails, cb: (model: T[]) => Promise<void> | void) => Promise<void>;
 }

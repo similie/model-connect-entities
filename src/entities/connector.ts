@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   IEntity,
   IModelCollection,
@@ -19,7 +20,7 @@ export interface IConnectorConnect<T extends IEntity>
   init: (payload?: any) => Promise<any>;
   attr: (
     config?: IModelConfigurationDetails
-  ) => Record<string, IModelAttributes>;
+  ) => Promise<Record<string, IModelAttributes>>;
   keys: (config?: IModelConfigurationDetails) => string[];
   tearDown: () => Promise<void>;
   addToCollection: (
@@ -50,6 +51,6 @@ export interface IConnectorConnect<T extends IEntity>
     query: IQueryOrPartial<T>,
     limiters: IQueryLimiters,
     config: IModelConfigurationDetails,
-    cb: (model: T) => Promise<void> | void
+    cb: (model: T[]) => Promise<void> | void
   ) => Promise<void>;
 }

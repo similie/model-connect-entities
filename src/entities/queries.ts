@@ -11,6 +11,7 @@ export interface ISingleQueryObject<T extends IEntity> {
   limit?: number;
   skip?: number;
   where?: IEntityPartial<T>;
+  or?: IEntityPartial<T>[];
 }
 
 /** @todo Type def from Kris Query builder code */

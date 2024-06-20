@@ -11,6 +11,7 @@ export interface IModelConfigurationDetails {
   database?: string;
   type?: string;
   port?: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   connection?: any;
 }
 

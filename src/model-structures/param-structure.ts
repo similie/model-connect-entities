@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   IEntity,
   LiveConnectionConstruct,
@@ -10,17 +11,21 @@ import { getId } from '../utils';
 
 /**
  * @class
- * @name CollectionIdentifier<IEntity>
+ * @name CollectionIdentifier
  * @description provides the configuration details
  *  required by the connector to run the collection-based
  *  functions
+ * @param {string} name
+ * @param {string} collection
+ * @param {T | number} instance
+ * @param {string} model
  */
 export class CollectionIdentifier<T> {
   private _name: string; // files
   private _collection: string; // sysfiles
   private _instance: number; // parent id,
   private _model: string; // purchaseorder
-  constructor(
+  public constructor(
     name: string,
     collection: string,
     instance: T | number,
@@ -31,26 +36,28 @@ export class CollectionIdentifier<T> {
     this._instance = getId(instance) || -1;
     this._model = model;
   }
-  get model() {
+  public get model() {
     return this._model;
   }
-  get name() {
+  public get name() {
     return this._name;
   }
-  get collection() {
+  public get collection() {
     return this._collection;
   }
-  get instance() {
+  public get instance() {
     return this._instance;
   }
 }
 
 /**
  * @class
- * @name ModelCollection<IEntity>
- * @extends Array<IEntity>
- * @description Allows us to apply functionalty to collection
- *  attributes that behaive as arrays
+ * @name ModelCollection
+ * @extends Array
+ * @description Allows us to apply functionality to collection
+ *  attributes that behave as arrays
+ * @param {CollectionIdentifier<T>} identity
+ * @param {LiveConnectionConstruct} connector
  */
 export class ModelCollection<T extends IEntity>
   extends Array<T>
@@ -59,7 +66,7 @@ export class ModelCollection<T extends IEntity>
   // [AS] hides properties from console.log
   #_identity: CollectionIdentifier<T>;
   #_connector: LiveConnectionConstruct;
-  constructor(
+  public constructor(
     identity: CollectionIdentifier<T>,
     connector: LiveConnectionConstruct
   ) {
@@ -67,16 +74,16 @@ export class ModelCollection<T extends IEntity>
     this.#_identity = identity;
     this.#_connector = connector;
   }
-  get model() {
+  public get model() {
     return this.#_identity.model;
   }
-  get name() {
+  public get name() {
     return this.#_identity.name;
   }
-  get collection() {
+  public get collection() {
     return this.#_identity.collection;
   }
-  get instance() {
+  public get instance() {
     return this.#_identity.instance;
   }
   /**
@@ -84,10 +91,10 @@ export class ModelCollection<T extends IEntity>
    * @name addToCollection
    * @description adds and entity or id to a collection. It's function is
    *   controlled by the connector
-   * @param value {number | IEntity}
+   * @param {number | IEntity} value
    * @returns {Promise<void>}
    */
-  async addToCollection(value: number | IEntity): Promise<void> {
+  public async addToCollection(value: number | IEntity): Promise<void> {
     return await this.#_connector.addToCollection(value, this);
   }
   /**
@@ -95,33 +102,35 @@ export class ModelCollection<T extends IEntity>
    * @name removeFromCollection
    * @description removes and entity or id to a collection. It's function is
    *   controlled by the connector
-   * @param value {number | IEntity}
+   * @param {number | IEntity} value
    * @returns {Promise<void>}
    */
-  async removeFromCollection(value: number | IEntity): Promise<void> {
+  public async removeFromCollection(value: number | IEntity): Promise<void> {
     return await this.#_connector.removeFromCollection(value, this);
   }
 }
 
 /**
  * @class
- * @name ModelInstance<IEntity>
+ * @name ModelInstance
  * @description when we get a raw model from the there is
  *  a specfic functionality we want to apply to these models.
  *  the most obvious use case is the operations on collection
  *  attributes. We can also are stringified JSON and any
  *  additional operations required by the application
+ * @param {LiveConnectionConstruct} connector
+ * @param {IModelConfigurationDetails} modelConfig
  */
 export class ModelInstance<T extends IEntity> {
-  connector: LiveConnectionConstruct;
-  _modelConfig: IModelConfigurationDetails;
-  types = {
+  private connector: LiveConnectionConstruct;
+  private _modelConfig: IModelConfigurationDetails;
+  private types = {
     collection: 'collection',
     json: 'json',
   };
   // we instantiate with the LiveConnection and
   // the configuration details
-  constructor(
+  public constructor(
     connector: LiveConnectionConstruct,
     modelConfig: IModelConfigurationDetails
   ) {
@@ -129,7 +138,7 @@ export class ModelInstance<T extends IEntity> {
     this._modelConfig = modelConfig;
   }
 
-  get modelConfig() {
+  public get modelConfig() {
     return this._modelConfig;
   }
 
@@ -140,7 +149,7 @@ export class ModelInstance<T extends IEntity> {
    *    from the connector
    * @returns {Record<string, IModelAttributes>}
    */
-  attrs() {
+  public attrs() {
     return this.connector.attr(this.modelConfig);
   }
 
@@ -149,27 +158,31 @@ export class ModelInstance<T extends IEntity> {
    * @description retrieves the list of keys for a given model
    * @returns {string[]}
    */
-  getKeys() {
+  public getKeys() {
     return this.connector.keys(this.modelConfig);
   }
   /**
    * @public
    * @name applyOne
-   * @param {IEntity} - the raw model
-   * @returns {ModelInstanceIdentity<IEntity>}
+   * @param {IEntity} model - the raw model
+   * @returns {Promise<ModelInstanceIdentity<IEntity>>}
    */
-  applyOne(model: T): ModelInstanceIdentity<T> {
+  public applyOne(model: T): Promise<ModelInstanceIdentity<T> | null> {
     return this.applyRegistration(model);
   }
   /**
    * @public
    * @name applyMany
-   * @param {IEntity[]} - the raw models
-   * @returns {ModelInstanceIdentity<IEntity>[]}
+   * @param {IEntity[]} models - the raw models
+   * @returns {Promise<ModelInstanceIdentity<IEntity[]>>}
    */
-  applyMany(models: T[]): ModelInstanceIdentity<T[]> {
+  public async applyMany(models: T[]): Promise<ModelInstanceIdentity<T[]>> {
     for (let i = 0; i < models.length; i++) {
-      this.applyOne(models[i]);
+      const model = models[i];
+      if (!model) {
+        continue;
+      }
+      await this.applyOne(model);
     }
     return models;
   }
@@ -179,8 +192,8 @@ export class ModelInstance<T extends IEntity> {
    * @name isType
    * @description Checks the type param to see if we have
    *   a specific type
-   * @param attr {any} the param getting checked
-   * @param type {string}
+   * @param {IModelAttributes} attr the param getting checked
+   * @param {string} type
    * @returns {boolean} true if type matches
    */
   private isType(attr: IModelAttributes = {}, type: string) {
@@ -192,9 +205,9 @@ export class ModelInstance<T extends IEntity> {
    * @name containsKey
    * @description we are searching for a specific key value in the
    *   attribute
-   * @param attr {IModelAttributes | string}
-   * @param key string
-   * @returns boolean - true if it contains the second key param
+   * @param {IModelAttributes | string} attr
+   * @param {string} key
+   * @returns {boolean} true if it contains the second key param
    */
   private containsKey(attr: IModelAttributes | string, key: string) {
     // sometimes in waterline, 0.1x you can define an attribute as "param": 'string'
@@ -219,9 +232,10 @@ export class ModelInstance<T extends IEntity> {
    * @name buildCollection
    * @description builds those paramters that are defined as a collection
    *   with the Model collection object
-   * @param model {IEntity}
-   * @param key {string} - the name of the param
-   * @param attr {IModelAttributes}
+   * @param {IEntity} model
+   * @param {string} key
+   * @param {IModelAttributes} attr
+   * @returns {void}
    */
   private buildCollection(model: T, key: string, attr: IModelAttributes) {
     const _k: keyof T = <keyof T>key;
@@ -245,7 +259,7 @@ export class ModelInstance<T extends IEntity> {
    * @private
    * @name isValidJson
    * @description checks to see of a json specific model is valid JSON
-   * @param model
+   * @param {any} model
    * @returns {boolean} - if the json is valid
    */
   private isValidJson(model: any) {
@@ -257,21 +271,21 @@ export class ModelInstance<T extends IEntity> {
    * @name startsAndEndsWith
    * @description we want to see if a string looks like json. It should either
    *   start and end with {} or [].
-   * @param value {string} - the values to check
-   * @param chars {string} - comma deliniated start and end characters, length 3
+   * @param  {string} value the values to check
+   * @param {string} chars comma delineated start and end characters, length 3
    * @returns {boolean} - if the string is valid
    */
   private startsAndEndsWith(value: string, chars: string) {
     const split = chars.split(',');
-    return value.startsWith(split[0]) && value.endsWith(split[1]);
+    return value.startsWith(split[0] || '') && value.endsWith(split[1] || '');
   }
 
   /**
    * @private
    * @name isStringJson
    * @description is our JSON a string?
-   * @param model {any} - we are trying to see if the value is a string
-   * @returns boolean - true if it is a stringified json object
+   * @param {any} model we are trying to see if the value is a string
+   * @returns {boolean} - true if it is a stringified json object
    */
   private isStringJson(model: any) {
     return (
@@ -285,9 +299,9 @@ export class ModelInstance<T extends IEntity> {
    * @private
    * @name parseJSONString
    * @description simply parses a JSON string
-   * @param json {string} - string value but any to make
+   * @param {string} json - string value but any to make
    *   the interpreter happy
-   * @returns JSON
+   * @returns {object}
    */
   private parseJSONString(json: any) {
     return JSON.parse(json);
@@ -298,8 +312,8 @@ export class ModelInstance<T extends IEntity> {
    * @name ensureIsValidJSON
    * @description we want to make sure our params designated as JSON
    *   or array are not stringified
-   * @param model {IEntity}
-   * @param key {string} the key of the paramter
+   * @param {IEntity} model
+   * @param {string} key the key of the parameter
    * @returns {void}
    */
   private ensureIsValidJSON(model: T, key: string) {
@@ -318,15 +332,24 @@ export class ModelInstance<T extends IEntity> {
    * @private
    * @name applyRegistration
    * @description iterates through all the param values and checks to
-   *   make sure they are in the correct form from the database. Additionaly,
+   *   make sure they are in the correct form from the database. Additionally,
    *   we can add decorators to specific params such as collections.
-   * @param model
-   * @returns
+   * @param {IEntity} model
+   * @returns {ModelInstanceIdentity<T>}
    */
-  private applyRegistration(model: T): ModelInstanceIdentity<T> {
-    const attrs = this.attrs();
+  private async applyRegistration(
+    model: T | null
+  ): Promise<ModelInstanceIdentity<T> | null> {
+    if (!model) {
+      return null;
+    }
+
+    const attrs: Record<string, IModelAttributes> = await this.attrs();
     for (const k in attrs) {
       const attr = attrs[k];
+      if (!attr) {
+        continue;
+      }
       if (this.containsKey(attr, this.types.collection)) {
         this.buildCollection(model, k, attr);
       } else if (this.isType(attr, this.types.json)) {
@@ -334,7 +357,7 @@ export class ModelInstance<T extends IEntity> {
       }
     }
     // we simply instantiate this incase we want to
-    // add funtionality to the base model. For now
+    // add functionality to the base model. For now
     // we just copy the values.
     return new ModelInstanceIdentity<T>(model);
   }
@@ -347,7 +370,7 @@ export class ModelInstance<T extends IEntity> {
  *   for now it acts like a noop wrapper.
  */
 export class ModelInstanceIdentity<T> {
-  constructor(model: T) {
+  public constructor(model: T) {
     Object.assign(this, model);
   }
 }
