@@ -1,3 +1,5 @@
+import { IEntity } from './base-entity';
+import { FindOptionsWhere, QueryDeepPartialEntity, DeepPartial } from './orm-entities';
 export interface IAutoMigrationAttribute {
     autoIncrement: boolean;
 }
@@ -21,4 +23,30 @@ export interface IModelAttributes {
     autoIncrement?: boolean;
     autoUpdatedAt?: boolean;
     autoMigrations?: IAutoMigrationAttribute;
+    array?: boolean;
+    name?: string;
 }
+export interface IModelDestroy<t extends IEntity> {
+    where?: FindOptionsWhere<t>;
+    id?: number;
+}
+export interface IModelUpdate<t extends IEntity> extends IModelDestroy<t> {
+    values: Partial<t>;
+}
+export interface IModelUpdateValues<t extends IEntity> {
+    query: FindOptionsWhere<t>;
+    update: QueryDeepPartialEntity<t>;
+}
+export interface IModelSeekValues<t extends IEntity> {
+    criteria: FindOptionsWhere<t>;
+    initialValues: DeepPartial<t>;
+}
+export declare type ICountType = {
+    count: number;
+};
+export declare type ISumType = {
+    sum: number;
+};
+export declare type IAvgType = {
+    avg: number;
+};

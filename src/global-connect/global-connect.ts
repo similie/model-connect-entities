@@ -4,7 +4,7 @@ export class GlobalConnection {
   private static instance: GlobalConnection;
   public static readonly SET_GLOBAL = true;
   public static readonly SET_LOCAL = false;
-  connection: LiveConnectionConstruct;
+  private connection: LiveConnectionConstruct;
   private constructor(Connector: LiveConnectionConstruct) {
     this.connection = Connector;
   }
@@ -30,7 +30,7 @@ export class GlobalConnection {
     return GlobalConnection.instance;
   }
 
-  get connector(): LiveConnectionConstruct {
+  public get connector(): LiveConnectionConstruct {
     return this.connection;
   }
 }

@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IEntity } from '../entities';
-import { ISingleQueryObject } from './queries';
+import { IQueryOrPartial, ISingleQueryObject } from './queries';
 import { ISharedDataConnects } from './shared';
 
 /**
@@ -12,7 +13,7 @@ import { ISharedDataConnects } from './shared';
 export interface IModelConnect<T extends IEntity>
   extends ISharedDataConnects<T> {
   getId: (query: number | T | undefined | null) => number | undefined;
-  find: (query: any) => IQueryDecorators<T>;
+  find: (query: IQueryOrPartial<T>) => IQueryDecorators<T>;
   initWithId: (id: number) => IQueryPopulates<T>;
   stream: (query: any) => IQueryStreamDecorators<T>;
   toJson: (model: T) => Promise<any>;

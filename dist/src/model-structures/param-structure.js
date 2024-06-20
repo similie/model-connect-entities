@@ -25,10 +25,14 @@ exports.ModelInstanceIdentity = exports.ModelInstance = exports.ModelCollection 
 const utils_1 = require("../utils");
 /**
  * @class
- * @name CollectionIdentifier<IEntity>
+ * @name CollectionIdentifier
  * @description provides the configuration details
  *  required by the connector to run the collection-based
  *  functions
+ * @param {string} name
+ * @param {string} collection
+ * @param {T | number} instance
+ * @param {string} model
  */
 class CollectionIdentifier {
     constructor(name, collection, instance, model) {
@@ -53,10 +57,12 @@ class CollectionIdentifier {
 exports.CollectionIdentifier = CollectionIdentifier;
 /**
  * @class
- * @name ModelCollection<IEntity>
- * @extends Array<IEntity>
- * @description Allows us to apply functionalty to collection
- *  attributes that behaive as arrays
+ * @name ModelCollection
+ * @extends Array
+ * @description Allows us to apply functionality to collection
+ *  attributes that behave as arrays
+ * @param {CollectionIdentifier<T>} identity
+ * @param {LiveConnectionConstruct} connector
  */
 class ModelCollection extends Array {
     constructor(identity, connector) {
@@ -84,7 +90,7 @@ class ModelCollection extends Array {
      * @name addToCollection
      * @description adds and entity or id to a collection. It's function is
      *   controlled by the connector
-     * @param value {number | IEntity}
+     * @param {number | IEntity} value
      * @returns {Promise<void>}
      */
     addToCollection(value) {
@@ -97,7 +103,7 @@ class ModelCollection extends Array {
      * @name removeFromCollection
      * @description removes and entity or id to a collection. It's function is
      *   controlled by the connector
-     * @param value {number | IEntity}
+     * @param {number | IEntity} value
      * @returns {Promise<void>}
      */
     removeFromCollection(value) {
@@ -110,12 +116,14 @@ exports.ModelCollection = ModelCollection;
 _ModelCollection__identity = new WeakMap(), _ModelCollection__connector = new WeakMap();
 /**
  * @class
- * @name ModelInstance<IEntity>
+ * @name ModelInstance
  * @description when we get a raw model from the there is
  *  a specfic functionality we want to apply to these models.
  *  the most obvious use case is the operations on collection
  *  attributes. We can also are stringified JSON and any
  *  additional operations required by the application
+ * @param {LiveConnectionConstruct} connector
+ * @param {IModelConfigurationDetails} modelConfig
  */
 class ModelInstance {
     // we instantiate with the LiveConnection and
@@ -152,8 +160,8 @@ class ModelInstance {
     /**
      * @public
      * @name applyOne
-     * @param {IEntity} - the raw model
-     * @returns {ModelInstanceIdentity<IEntity>}
+     * @param {IEntity} model - the raw model
+     * @returns {Promise<ModelInstanceIdentity<IEntity>>}
      */
     applyOne(model) {
         return this.applyRegistration(model);
@@ -161,22 +169,28 @@ class ModelInstance {
     /**
      * @public
      * @name applyMany
-     * @param {IEntity[]} - the raw models
-     * @returns {ModelInstanceIdentity<IEntity>[]}
+     * @param {IEntity[]} models - the raw models
+     * @returns {Promise<ModelInstanceIdentity<IEntity[]>>}
      */
     applyMany(models) {
-        for (let i = 0; i < models.length; i++) {
-            this.applyOne(models[i]);
-        }
-        return models;
+        return __awaiter(this, void 0, void 0, function* () {
+            for (let i = 0; i < models.length; i++) {
+                const model = models[i];
+                if (!model) {
+                    continue;
+                }
+                yield this.applyOne(model);
+            }
+            return models;
+        });
     }
     /**
      * @private
      * @name isType
      * @description Checks the type param to see if we have
      *   a specific type
-     * @param attr {any} the param getting checked
-     * @param type {string}
+     * @param {IModelAttributes} attr the param getting checked
+     * @param {string} type
      * @returns {boolean} true if type matches
      */
     isType(attr = {}, type) {
@@ -187,9 +201,9 @@ class ModelInstance {
      * @name containsKey
      * @description we are searching for a specific key value in the
      *   attribute
-     * @param attr {IModelAttributes | string}
-     * @param key string
-     * @returns boolean - true if it contains the second key param
+     * @param {IModelAttributes | string} attr
+     * @param {string} key
+     * @returns {boolean} true if it contains the second key param
      */
     containsKey(attr, key) {
         // sometimes in waterline, 0.1x you can define an attribute as "param": 'string'
@@ -213,9 +227,10 @@ class ModelInstance {
      * @name buildCollection
      * @description builds those paramters that are defined as a collection
      *   with the Model collection object
-     * @param model {IEntity}
-     * @param key {string} - the name of the param
-     * @param attr {IModelAttributes}
+     * @param {IEntity} model
+     * @param {string} key
+     * @param {IModelAttributes} attr
+     * @returns {void}
      */
     buildCollection(model, key, attr) {
         const _k = key;
@@ -233,7 +248,7 @@ class ModelInstance {
      * @private
      * @name isValidJson
      * @description checks to see of a json specific model is valid JSON
-     * @param model
+     * @param {any} model
      * @returns {boolean} - if the json is valid
      */
     isValidJson(model) {
@@ -244,20 +259,20 @@ class ModelInstance {
      * @name startsAndEndsWith
      * @description we want to see if a string looks like json. It should either
      *   start and end with {} or [].
-     * @param value {string} - the values to check
-     * @param chars {string} - comma deliniated start and end characters, length 3
+     * @param  {string} value the values to check
+     * @param {string} chars comma delineated start and end characters, length 3
      * @returns {boolean} - if the string is valid
      */
     startsAndEndsWith(value, chars) {
         const split = chars.split(',');
-        return value.startsWith(split[0]) && value.endsWith(split[1]);
+        return value.startsWith(split[0] || '') && value.endsWith(split[1] || '');
     }
     /**
      * @private
      * @name isStringJson
      * @description is our JSON a string?
-     * @param model {any} - we are trying to see if the value is a string
-     * @returns boolean - true if it is a stringified json object
+     * @param {any} model we are trying to see if the value is a string
+     * @returns {boolean} - true if it is a stringified json object
      */
     isStringJson(model) {
         return (typeof model === 'string' &&
@@ -268,9 +283,9 @@ class ModelInstance {
      * @private
      * @name parseJSONString
      * @description simply parses a JSON string
-     * @param json {string} - string value but any to make
+     * @param {string} json - string value but any to make
      *   the interpreter happy
-     * @returns JSON
+     * @returns {object}
      */
     parseJSONString(json) {
         return JSON.parse(json);
@@ -280,8 +295,8 @@ class ModelInstance {
      * @name ensureIsValidJSON
      * @description we want to make sure our params designated as JSON
      *   or array are not stringified
-     * @param model {IEntity}
-     * @param key {string} the key of the paramter
+     * @param {IEntity} model
+     * @param {string} key the key of the parameter
      * @returns {void}
      */
     ensureIsValidJSON(model, key) {
@@ -299,26 +314,34 @@ class ModelInstance {
      * @private
      * @name applyRegistration
      * @description iterates through all the param values and checks to
-     *   make sure they are in the correct form from the database. Additionaly,
+     *   make sure they are in the correct form from the database. Additionally,
      *   we can add decorators to specific params such as collections.
-     * @param model
-     * @returns
+     * @param {IEntity} model
+     * @returns {ModelInstanceIdentity<T>}
      */
     applyRegistration(model) {
-        const attrs = this.attrs();
-        for (const k in attrs) {
-            const attr = attrs[k];
-            if (this.containsKey(attr, this.types.collection)) {
-                this.buildCollection(model, k, attr);
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!model) {
+                return null;
             }
-            else if (this.isType(attr, this.types.json)) {
-                this.ensureIsValidJSON(model, k);
+            const attrs = yield this.attrs();
+            for (const k in attrs) {
+                const attr = attrs[k];
+                if (!attr) {
+                    continue;
+                }
+                if (this.containsKey(attr, this.types.collection)) {
+                    this.buildCollection(model, k, attr);
+                }
+                else if (this.isType(attr, this.types.json)) {
+                    this.ensureIsValidJSON(model, k);
+                }
             }
-        }
-        // we simply instantiate this incase we want to
-        // add funtionality to the base model. For now
-        // we just copy the values.
-        return new ModelInstanceIdentity(model);
+            // we simply instantiate this incase we want to
+            // add functionality to the base model. For now
+            // we just copy the values.
+            return new ModelInstanceIdentity(model);
+        });
     }
 }
 exports.ModelInstance = ModelInstance;
