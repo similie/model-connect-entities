@@ -12,8 +12,8 @@ export interface IConnectorConnect<T extends IEntity> extends ISharedDataConnect
     attr: (config?: IModelConfigurationDetails) => Promise<Record<string, IModelAttributes>>;
     keys: (config?: IModelConfigurationDetails) => string[];
     tearDown: () => Promise<void>;
-    addToCollection: (value: any, collection: IModelCollection<T>) => Promise<void>;
-    removeFromCollection: (value: any, collection: IModelCollection<T>) => Promise<void>;
+    addToCollection: (value: any, collection: IModelCollection<T>) => Promise<void | T>;
+    removeFromCollection: (value: any, collection: IModelCollection<T>) => Promise<void | T>;
     find: (query: IQueryOrPartial<T>, limiters: IQueryLimiters, config: IModelConfigurationDetails) => Promise<T[]>;
     findOne: (query: IQueryOrPartial<T>, limiters: IQueryLimiters, config: IModelConfigurationDetails) => Promise<T>;
     streamEach: (query: IQueryOrPartial<T>, limiters: IQueryLimiters, config: IModelConfigurationDetails, cb: (model: T) => Promise<void> | void) => Promise<void>;

@@ -43,9 +43,9 @@ export declare class ModelCollection<T extends IEntity> extends Array<T> impleme
      * @description adds and entity or id to a collection. It's function is
      *   controlled by the connector
      * @param {number | IEntity} value
-     * @returns {Promise<void>}
+     * @returns {Promise<void | T>}
      */
-    addToCollection(value: number | IEntity): Promise<void>;
+    addToCollection(value: number | IEntity): Promise<void | IEntity>;
     /**
      * @public
      * @name removeFromCollection
@@ -54,7 +54,7 @@ export declare class ModelCollection<T extends IEntity> extends Array<T> impleme
      * @param {number | IEntity} value
      * @returns {Promise<void>}
      */
-    removeFromCollection(value: number | IEntity): Promise<void>;
+    removeFromCollection(value: number | IEntity): Promise<void | IEntity>;
 }
 /**
  * @class

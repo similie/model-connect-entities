@@ -91,7 +91,7 @@ class ModelCollection extends Array {
      * @description adds and entity or id to a collection. It's function is
      *   controlled by the connector
      * @param {number | IEntity} value
-     * @returns {Promise<void>}
+     * @returns {Promise<void | T>}
      */
     addToCollection(value) {
         return __awaiter(this, void 0, void 0, function* () {

@@ -26,11 +26,11 @@ export interface IConnectorConnect<T extends IEntity>
   addToCollection: (
     value: any,
     collection: IModelCollection<T>
-  ) => Promise<void>;
+  ) => Promise<void | T>;
   removeFromCollection: (
     value: any,
     collection: IModelCollection<T>
-  ) => Promise<void>;
+  ) => Promise<void | T>;
   find: (
     query: IQueryOrPartial<T>,
     limiters: IQueryLimiters,

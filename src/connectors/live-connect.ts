@@ -133,7 +133,7 @@ export abstract class LiveConnection implements LiveConnectionConstruct {
   public async addToCollection(
     value: any,
     collection: IModelCollection<IEntity>
-  ): Promise<void> {
+  ): Promise<void | IEntity> {
     !{ value, collection };
     throw new Error('NOT IMPLEMENTED');
     return null as any;
@@ -142,7 +142,7 @@ export abstract class LiveConnection implements LiveConnectionConstruct {
   public async removeFromCollection(
     value: any,
     collection: IModelCollection<IEntity>
-  ): Promise<void> {
+  ): Promise<void | IEntity> {
     !{ value, collection };
     throw new Error('NOT IMPLEMENTED');
     return null as any;

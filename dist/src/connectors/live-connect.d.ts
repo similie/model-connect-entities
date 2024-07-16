@@ -33,8 +33,8 @@ export declare abstract class LiveConnection implements LiveConnectionConstruct 
     create(query: any, config?: IModelConfigurationDetails): Promise<any>;
     createMany(query: any[], config?: IModelConfigurationDetails): Promise<any>;
     destroyAll(query: any, config?: IModelConfigurationDetails): Promise<any>;
-    addToCollection(value: any, collection: IModelCollection<IEntity>): Promise<void>;
-    removeFromCollection(value: any, collection: IModelCollection<IEntity>): Promise<void>;
+    addToCollection(value: any, collection: IModelCollection<IEntity>): Promise<void | IEntity>;
+    removeFromCollection(value: any, collection: IModelCollection<IEntity>): Promise<void | IEntity>;
     attr(config?: IModelConfigurationDetails): any;
     keys(config?: IModelConfigurationDetails): string[];
     sum(numericAttrName: keyof IEntity, criteria?: IQueryOrPartial<IEntity>, config?: IModelConfigurationDetails): Promise<any>;

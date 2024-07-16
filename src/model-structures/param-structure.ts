@@ -92,9 +92,11 @@ export class ModelCollection<T extends IEntity>
    * @description adds and entity or id to a collection. It's function is
    *   controlled by the connector
    * @param {number | IEntity} value
-   * @returns {Promise<void>}
+   * @returns {Promise<void | T>}
    */
-  public async addToCollection(value: number | IEntity): Promise<void> {
+  public async addToCollection(
+    value: number | IEntity
+  ): Promise<void | IEntity> {
     return await this.#_connector.addToCollection(value, this);
   }
   /**
@@ -105,7 +107,9 @@ export class ModelCollection<T extends IEntity>
    * @param {number | IEntity} value
    * @returns {Promise<void>}
    */
-  public async removeFromCollection(value: number | IEntity): Promise<void> {
+  public async removeFromCollection(
+    value: number | IEntity
+  ): Promise<void | IEntity> {
     return await this.#_connector.removeFromCollection(value, this);
   }
 }
