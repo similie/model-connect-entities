@@ -31,8 +31,7 @@ export declare class CollectionIdentifier<T> {
  * @param {LiveConnectionConstruct} connector
  */
 export declare class ModelCollection<T extends IEntity> extends Array<T> implements IModelCollection<T> {
-    private _identity;
-    private _connector;
+    #private;
     constructor(identity: CollectionIdentifier<T>, connector: LiveConnectionConstruct);
     get model(): string;
     get name(): string;

@@ -64,27 +64,27 @@ export class ModelCollection<T extends IEntity>
   implements IModelCollection<T>
 {
   // [AS] hides properties from console.log
-  private _identity: CollectionIdentifier<T>;
-  private _connector: LiveConnectionConstruct;
+  #_identity: CollectionIdentifier<T>;
+  #_connector: LiveConnectionConstruct;
   public constructor(
     identity: CollectionIdentifier<T>,
     connector: LiveConnectionConstruct
   ) {
     super();
-    this._identity = identity;
-    this._connector = connector;
+    this.#_identity = identity;
+    this.#_connector = connector;
   }
   public get model() {
-    return this._identity.model;
+    return this.#_identity.model;
   }
   public get name() {
-    return this._identity.name;
+    return this.#_identity.name;
   }
   public get collection() {
-    return this._identity.collection;
+    return this.#_identity.collection;
   }
   public get instance() {
-    return this._identity.instance;
+    return this.#_identity.instance;
   }
   /**
    * @public
@@ -97,7 +97,7 @@ export class ModelCollection<T extends IEntity>
   public async addToCollection(
     value: number | IEntity
   ): Promise<void | IEntity> {
-    return await this._connector.addToCollection(value, this);
+    return await this.#_connector.addToCollection(value, this);
   }
   /**
    * @public
@@ -110,7 +110,7 @@ export class ModelCollection<T extends IEntity>
   public async removeFromCollection(
     value: number | IEntity
   ): Promise<void | IEntity> {
-    return await this._connector.removeFromCollection(value, this);
+    return await this.#_connector.removeFromCollection(value, this);
   }
 }
 

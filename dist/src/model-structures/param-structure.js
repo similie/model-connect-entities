@@ -8,6 +8,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
+};
+var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+};
+var _ModelCollection__identity, _ModelCollection__connector;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ModelInstanceIdentity = exports.ModelInstance = exports.ModelCollection = exports.CollectionIdentifier = void 0;
 const utils_1 = require("../utils");
@@ -55,20 +67,23 @@ exports.CollectionIdentifier = CollectionIdentifier;
 class ModelCollection extends Array {
     constructor(identity, connector) {
         super();
-        this._identity = identity;
-        this._connector = connector;
+        // [AS] hides properties from console.log
+        _ModelCollection__identity.set(this, void 0);
+        _ModelCollection__connector.set(this, void 0);
+        __classPrivateFieldSet(this, _ModelCollection__identity, identity, "f");
+        __classPrivateFieldSet(this, _ModelCollection__connector, connector, "f");
     }
     get model() {
-        return this._identity.model;
+        return __classPrivateFieldGet(this, _ModelCollection__identity, "f").model;
     }
     get name() {
-        return this._identity.name;
+        return __classPrivateFieldGet(this, _ModelCollection__identity, "f").name;
     }
     get collection() {
-        return this._identity.collection;
+        return __classPrivateFieldGet(this, _ModelCollection__identity, "f").collection;
     }
     get instance() {
-        return this._identity.instance;
+        return __classPrivateFieldGet(this, _ModelCollection__identity, "f").instance;
     }
     /**
      * @public
@@ -80,7 +95,7 @@ class ModelCollection extends Array {
      */
     addToCollection(value) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this._connector.addToCollection(value, this);
+            return yield __classPrivateFieldGet(this, _ModelCollection__connector, "f").addToCollection(value, this);
         });
     }
     /**
@@ -93,11 +108,12 @@ class ModelCollection extends Array {
      */
     removeFromCollection(value) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this._connector.removeFromCollection(value, this);
+            return yield __classPrivateFieldGet(this, _ModelCollection__connector, "f").removeFromCollection(value, this);
         });
     }
 }
 exports.ModelCollection = ModelCollection;
+_ModelCollection__identity = new WeakMap(), _ModelCollection__connector = new WeakMap();
 /**
  * @class
  * @name ModelInstance
