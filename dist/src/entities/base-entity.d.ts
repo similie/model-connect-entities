@@ -50,6 +50,6 @@ export interface IBetweenQuery {
     from: number | Date;
     to: number | Date;
 }
-export declare type IQueryBaseType<T extends IEntity> = {
+export type IQueryBaseType<T extends IEntity> = {
     [P in keyof T]?: T[P] | T[P][] | Partial<IQueryElements>;
 };

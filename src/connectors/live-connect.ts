@@ -8,6 +8,9 @@ import {
   IQueryOrPartial,
   IEntityPartial,
   IValuesToEscape,
+  IModelAttributes,
+  ISumType,
+  IAvgType,
 } from '../entities';
 
 import { GlobalConnection } from '../global-connect';
@@ -51,172 +54,115 @@ export abstract class LiveConnection implements LiveConnectionConstruct {
     return getId(query);
   }
 
-  public async init() {
-    return null;
-  }
-
   public get modelConfig() {
     return new LiveConnectConfig();
   }
 
-  public raw(config?: IModelConfigurationDetails) {
-    !!config;
-    throw new Error('NOT IMPLEMENTED');
-  }
+  public abstract init(): Promise<any>;
 
-  public find(
+  public abstract raw(config?: IModelConfigurationDetails): any;
+
+  public abstract find(
     query: any,
     limiters: IQueryLimiters,
-    config?: IModelConfigurationDetails
-  ) {
-    !{ query, limiters, config };
-    throw new Error('NOT IMPLEMENTED');
-    return null as any;
-  }
+    config?: IModelConfigurationDetails,
+  ): Promise<IEntity[]>;
 
-  public findOne(
+  public abstract findOne(
     query: any,
     limiters: IQueryLimiters,
-    config?: IModelConfigurationDetails
-  ) {
-    !{ query, limiters, config };
-    throw new Error('NOT IMPLEMENTED');
-    return null as any;
-  }
+    config?: IModelConfigurationDetails,
+  ): Promise<IEntity>;
 
-  public async save(values: any, config?: IModelConfigurationDetails) {
-    !{ values, config };
-    throw new Error('NOT IMPLEMENTED');
-    return null as any;
-  }
+  public abstract save(
+    values: any,
+    config?: IModelConfigurationDetails,
+  ): Promise<IEntity>;
 
-  public async update(
+  public abstract update(
     query: any,
     update: any,
-    config?: IModelConfigurationDetails
-  ) {
-    !{ query, update, config };
-    throw new Error('NOT IMPLEMENTED');
-    return null as any;
-  }
+    config?: IModelConfigurationDetails,
+  ): Promise<IEntity[]>;
 
-  public async count(query: any, config?: IModelConfigurationDetails) {
-    !{ query, config };
-    throw new Error('NOT IMPLEMENTED');
-    return null as any;
-  }
+  public abstract count(
+    query: any,
+    config?: IModelConfigurationDetails,
+  ): Promise<number>;
 
-  public async destroy(query: any, config?: IModelConfigurationDetails) {
-    !{ query, config };
-    throw new Error('NOT IMPLEMENTED');
-    return null as any;
-  }
+  public abstract destroy(
+    query: any,
+    config?: IModelConfigurationDetails,
+  ): Promise<IEntity>;
 
-  public async create(query: any, config?: IModelConfigurationDetails) {
-    !{ query, config };
-    throw new Error('NOT IMPLEMENTED');
-    return null as any;
-  }
+  public abstract create(
+    query: any,
+    config?: IModelConfigurationDetails,
+  ): Promise<IEntity>;
 
-  public async createMany(query: any[], config?: IModelConfigurationDetails) {
-    !{ query, config };
-    throw new Error('NOT IMPLEMENTED');
-    return null as any;
-  }
+  public abstract createMany(
+    query: any[],
+    config?: IModelConfigurationDetails,
+  ): Promise<IEntity[]>;
 
-  public async destroyAll(query: any, config?: IModelConfigurationDetails) {
-    !{ query, config };
-    throw new Error('NOT IMPLEMENTED');
-    return null as any;
-  }
+  public abstract destroyAll(
+    query: any,
+    config?: IModelConfigurationDetails,
+  ): Promise<IEntity[]>;
 
-  public async addToCollection(
+  public abstract addToCollection(
     value: any,
-    collection: IModelCollection<IEntity>
-  ): Promise<void | IEntity> {
-    !{ value, collection };
-    throw new Error('NOT IMPLEMENTED');
-    return null as any;
-  }
+    collection: IModelCollection<IEntity>,
+  ): Promise<void | IEntity>;
 
-  public async removeFromCollection(
+  public abstract removeFromCollection(
     value: any,
-    collection: IModelCollection<IEntity>
-  ): Promise<void | IEntity> {
-    !{ value, collection };
-    throw new Error('NOT IMPLEMENTED');
-    return null as any;
-  }
+    collection: IModelCollection<IEntity>,
+  ): Promise<void | IEntity>;
 
-  public attr(config?: IModelConfigurationDetails) {
-    !!config;
-    throw new Error('NOT IMPLEMENTED');
-    return null as any;
-  }
+  public abstract attr(
+    config?: IModelConfigurationDetails,
+  ): Promise<Record<string, IModelAttributes>>;
 
-  public keys(config?: IModelConfigurationDetails) {
-    !config;
-    throw new Error('NOT IMPLEMENTED');
-    return new Array<string>();
-  }
+  public abstract keys(config?: IModelConfigurationDetails): string[];
 
-  public async sum(
+  public abstract sum(
     numericAttrName: keyof IEntity,
     criteria?: IQueryOrPartial<IEntity>,
-    config?: IModelConfigurationDetails
-  ) {
-    throw new Error('NOT IMPLEMENTED');
-    return { numericAttrName, criteria, config } as any;
-  }
+    config?: IModelConfigurationDetails,
+  ): Promise<ISumType>;
 
-  public async avg(
+  public abstract avg(
     numericAttrName: keyof IEntity,
     criteria?: IQueryOrPartial<IEntity>,
-    config?: IModelConfigurationDetails
-  ) {
-    throw new Error('NOT IMPLEMENTED');
-    return { numericAttrName, criteria, config } as any;
-  }
+    config?: IModelConfigurationDetails,
+  ): Promise<IAvgType>;
 
-  public async findOrCreate(
+  public abstract findOrCreate(
     criteria: IQueryOrPartial<IEntity>,
     initialsValues: IEntityPartial<IEntity>,
-    config?: IModelConfigurationDetails
-  ) {
-    throw new Error('NOT IMPLEMENTED');
-    return { initialsValues, criteria, config } as any;
-  }
+    config?: IModelConfigurationDetails,
+  ): Promise<IEntity>;
 
-  public async streamEach(
+  public abstract streamEach(
     query: IQueryOrPartial<IEntity>,
     limiters: IQueryLimiters,
     config: IModelConfigurationDetails,
-    cb: (model: IEntity) => Promise<void> | void
-  ) {
-    throw new Error('NOT IMPLEMENTED');
-    return { query, limiters, config, cb } as any;
-  }
+    cb: (model: IEntity) => Promise<void> | void,
+  ): Promise<void>;
 
-  public async streamBatch(
+  public abstract streamBatch(
     query: IQueryOrPartial<IEntity>,
     limiters: IQueryLimiters,
     config: IModelConfigurationDetails,
-    cb: (model: IEntity[]) => Promise<void> | void
-  ) {
-    throw new Error('NOT IMPLEMENTED');
-    return { query, limiters, config, cb } as any;
-  }
+    cb: (model: IEntity[]) => Promise<void> | void,
+  ): Promise<void>;
 
-  public async tearDown() {
-    throw new Error('NOT IMPLEMENTED');
-  }
+  public abstract tearDown(): Promise<void>;
 
-  public async query(
+  public abstract query(
     query: string,
     valuesToEscape?: IValuesToEscape,
-    config?: IModelConfigurationDetails
-  ) {
-    throw new Error('NOT IMPLEMENTED');
-    return { query, valuesToEscape, config } as any;
-  }
+    config?: IModelConfigurationDetails,
+  ): Promise<any>;
 }

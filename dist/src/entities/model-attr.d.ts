@@ -41,12 +41,12 @@ export interface IModelSeekValues<t extends IEntity> {
     criteria: FindOptionsWhere<t>;
     initialValues: DeepPartial<t>;
 }
-export declare type ICountType = {
+export type ICountType = {
     count: number;
 };
-export declare type ISumType = {
+export type ISumType = {
     sum: number;
 };
-export declare type IAvgType = {
+export type IAvgType = {
     avg: number;
 };

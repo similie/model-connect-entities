@@ -1,22 +1,37 @@
 {
-  "name": "@similie/one-model-connector-entities",
-  "version": "1.0.10",
-  "description": "Creates a common interface for similie model connects",
+  "name": "@similie/model-connect-entities",
+  "version": "1.0.11",
+  "description": "Creates a common interface for model conmections, offering common CRUD operations accross deployments",
   "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/similie/one-model-connector-entities.git"
+    "url": "https://github.com/similie/model-connect-entities.git"
   },
   "publishConfig": {
     "access": "public"
   },
+  "keywords": [
+    "typescript",
+    "crud",
+    "connectors",
+    "api",
+    "orm"
+  ],
+  "author": "Adam Smith <adam.smith@similie.org>",
+  "license": "MIT",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docs": "./node_modules/typedoc/bin/typedoc --out docs index.ts"
   },
-  "author": "simile",
-  "license": "ISC",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "devDependencies": {
-    "@types/node": "^17.0.41",
-    "typescript": "^4.5.5"
+    "@types/node": "^22.10.1",
+    "typedoc": "^0.27.3"
   }
 }
