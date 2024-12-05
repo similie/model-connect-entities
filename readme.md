@@ -91,7 +91,7 @@ const allAssets = asset.find({where: {active: true}}).fetch(); // returns all ac
 ```
 
 ## Available Connectors
-* [https://github.com/similie/http-connector](HTTP connector) based on the [https://github.com/matthew-andrews/isomorphic-fetch](Isomorphic Fetch API) for front-end applications.
+* [HTTP connector](https://github.com/similie/http-connector) based on the [Isomorphic Fetch Library](https://github.com/matthew-andrews/isomorphic-fetch) for front-end applications.
 
 
 
