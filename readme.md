@@ -46,7 +46,7 @@ npm install @similie/model-connect-entites
 ### Creating a Connection
 
 In your entry-point script for establishing model connections, i.e. (app/main/index).ts we build the following:
-````typescript
+```typescript
 /**
 * Create a static instance of the GlobalConnection class
 */

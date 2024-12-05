@@ -94,8 +94,8 @@ class QueryDecorators {
      * @returns {Promise<IEntity[]>}
      */
     fetch() {
-        var _a;
         return __awaiter(this, void 0, void 0, function* () {
+            var _a;
             const found = (yield ((_a = this.connector) === null || _a === void 0 ? void 0 : _a.find(this._query, this._limiter, this.modelConfig)));
             return this.modelInstance.applyMany(found);
         });
@@ -107,8 +107,8 @@ class QueryDecorators {
      * @returns {Promise<IEntity>}
      */
     fetchOne() {
-        var _a;
         return __awaiter(this, void 0, void 0, function* () {
+            var _a;
             const found = (yield ((_a = this.connector) === null || _a === void 0 ? void 0 : _a.findOne(this._query, this._limiter, this.modelConfig)));
             return this.modelInstance.applyOne(found);
         });

@@ -105,8 +105,8 @@ class Model {
      * @returns {Promise<IEntity>} saved values
      */
     save(values) {
-        var _a;
         return __awaiter(this, void 0, void 0, function* () {
+            var _a;
             const updated = yield ((_a = this.connector) === null || _a === void 0 ? void 0 : _a.save(values, this.modelConfig));
             return this.modelInstance.applyOne(updated);
         });
@@ -119,8 +119,8 @@ class Model {
      * @returns {Promise<IEntity[]>} saved records
      */
     update(query, update) {
-        var _a;
         return __awaiter(this, void 0, void 0, function* () {
+            var _a;
             const updated = (yield ((_a = this.connector) === null || _a === void 0 ? void 0 : _a.update(query, update, this.modelConfig)));
             return this.modelInstance.applyMany(updated);
         });
@@ -132,8 +132,8 @@ class Model {
      * @returns {Promise<number>}
      */
     count(query) {
-        var _a;
         return __awaiter(this, void 0, void 0, function* () {
+            var _a;
             return yield ((_a = this.connector) === null || _a === void 0 ? void 0 : _a.count(query, this.modelConfig));
         });
     }
@@ -144,8 +144,8 @@ class Model {
      * @returns {Promise<IEntity>} deleted record if avaible
      */
     destroy(value) {
-        var _a;
         return __awaiter(this, void 0, void 0, function* () {
+            var _a;
             // [AS] I don't bother sending through the model instance
             // param since it is destroyed now
             return yield ((_a = this.connector) === null || _a === void 0 ? void 0 : _a.destroy(value, this.modelConfig));
@@ -158,8 +158,8 @@ class Model {
      * @returns {Promise<IEntity[]>} destroyed records
      */
     destroyAll(query) {
-        var _a;
         return __awaiter(this, void 0, void 0, function* () {
+            var _a;
             return yield ((_a = this.connector) === null || _a === void 0 ? void 0 : _a.destroyAll(query, this.modelConfig));
         });
     }
@@ -170,8 +170,8 @@ class Model {
      * @returns {Promise<IEntity>} newly created model
      */
     create(query) {
-        var _a;
         return __awaiter(this, void 0, void 0, function* () {
+            var _a;
             const created = yield ((_a = this.connector) === null || _a === void 0 ? void 0 : _a.create(query, this.modelConfig));
             return this.modelInstance.applyOne(created);
         });
@@ -183,8 +183,8 @@ class Model {
      * @returns {Promise<IEntity[]>} newly created models
      */
     createMany(query) {
-        var _a;
         return __awaiter(this, void 0, void 0, function* () {
+            var _a;
             const created = (yield ((_a = this.connector) === null || _a === void 0 ? void 0 : _a.createMany(query, this.modelConfig)));
             return this.modelInstance.applyMany(created);
         });
@@ -199,8 +199,8 @@ class Model {
      * @returns {Promise<IEntity>}
      */
     findOrCreate(criteria, initialValues) {
-        var _a;
         return __awaiter(this, void 0, void 0, function* () {
+            var _a;
             const foundOrCreated = (yield ((_a = this.connector) === null || _a === void 0 ? void 0 : _a.findOrCreate(criteria, initialValues, this.modelConfig)));
             return this.modelInstance.applyOne(foundOrCreated);
         });
@@ -214,8 +214,8 @@ class Model {
      * @returns {Promise<number>}
      */
     avg(numericAttrName, criteria) {
-        var _a;
         return __awaiter(this, void 0, void 0, function* () {
+            var _a;
             return (_a = this.connector) === null || _a === void 0 ? void 0 : _a.avg(numericAttrName, criteria, this.modelConfig);
         });
     }
@@ -228,8 +228,8 @@ class Model {
      * @returns {Promise<ISumType>}
      */
     sum(numericAttrName, criteria) {
-        var _a;
         return __awaiter(this, void 0, void 0, function* () {
+            var _a;
             return (_a = this.connector) === null || _a === void 0 ? void 0 : _a.sum(numericAttrName, criteria, this.modelConfig);
         });
     }
@@ -268,8 +268,8 @@ class Model {
      * @returns {any} the queried results
      */
     query(query, valuesToEscape) {
-        var _a;
         return __awaiter(this, void 0, void 0, function* () {
+            var _a;
             return (_a = this.connector) === null || _a === void 0 ? void 0 : _a.query(query, valuesToEscape, this.modelConfig);
         });
     }
