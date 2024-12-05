@@ -1,4 +1,5 @@
 /// <reference types="node" />
+/// <reference types="node" />
 /** @public */
 export declare interface ObjectIdLike {
     id: string | Uint8Array;
@@ -89,8 +90,8 @@ export interface ValueTransformer {
      */
     from(value: any): any;
 }
-export declare type FindOperatorType = 'not' | 'lessThan' | 'lessThanOrEqual' | 'moreThan' | 'moreThanOrEqual' | 'equal' | 'between' | 'in' | 'any' | 'isNull' | 'ilike' | 'like' | 'raw' | 'arrayContains' | 'arrayContainedBy' | 'arrayOverlap' | 'and' | 'jsonContains';
-declare type SqlGeneratorType = (aliasPath: string) => string;
+export type FindOperatorType = 'not' | 'lessThan' | 'lessThanOrEqual' | 'moreThan' | 'moreThanOrEqual' | 'equal' | 'between' | 'in' | 'any' | 'isNull' | 'ilike' | 'like' | 'raw' | 'arrayContains' | 'arrayContainedBy' | 'arrayOverlap' | 'and' | 'jsonContains';
+type SqlGeneratorType = (aliasPath: string) => string;
 /**
  * Find Operator used in Find Conditions.
  */
@@ -157,24 +158,24 @@ export declare class EqualOperator<T> extends FindOperator<T> {
     readonly '@instanceof': symbol;
     constructor(value: T | FindOperator<T>);
 }
-export declare type FindOptionsWhereProperty<PropertyToBeNarrowed, Property = PropertyToBeNarrowed> = PropertyToBeNarrowed extends Promise<infer I> ? FindOptionsWhereProperty<NonNullable<I>> : PropertyToBeNarrowed extends Array<infer I> ? FindOptionsWhereProperty<NonNullable<I>> : PropertyToBeNarrowed extends Function ? never : PropertyToBeNarrowed extends Buffer ? Property | FindOperator<Property> : PropertyToBeNarrowed extends Date ? Property | FindOperator<Property> : PropertyToBeNarrowed extends ObjectId ? Property | FindOperator<Property> : PropertyToBeNarrowed extends string ? Property | FindOperator<Property> : PropertyToBeNarrowed extends number ? Property | FindOperator<Property> : PropertyToBeNarrowed extends boolean ? Property | FindOperator<Property> : PropertyToBeNarrowed extends object ? FindOptionsWhere<Property> | FindOptionsWhere<Property>[] | EqualOperator<Property> | FindOperator<any> | boolean : Property | FindOperator<Property>;
-export declare type FindOptionsWhere<IEntity> = {
+export type FindOptionsWhereProperty<PropertyToBeNarrowed, Property = PropertyToBeNarrowed> = PropertyToBeNarrowed extends Promise<infer I> ? FindOptionsWhereProperty<NonNullable<I>> : PropertyToBeNarrowed extends Array<infer I> ? FindOptionsWhereProperty<NonNullable<I>> : PropertyToBeNarrowed extends Function ? never : PropertyToBeNarrowed extends Buffer ? Property | FindOperator<Property> : PropertyToBeNarrowed extends Date ? Property | FindOperator<Property> : PropertyToBeNarrowed extends ObjectId ? Property | FindOperator<Property> : PropertyToBeNarrowed extends string ? Property | FindOperator<Property> : PropertyToBeNarrowed extends number ? Property | FindOperator<Property> : PropertyToBeNarrowed extends boolean ? Property | FindOperator<Property> : PropertyToBeNarrowed extends object ? FindOptionsWhere<Property> | FindOptionsWhere<Property>[] | EqualOperator<Property> | FindOperator<any> | boolean : Property | FindOperator<Property>;
+export type FindOptionsWhere<IEntity> = {
     [P in keyof IEntity]?: P extends 'toString' ? unknown : FindOptionsWhereProperty<NonNullable<IEntity[P]>>;
 };
 /**
  * Make all properties in T optional
  */
-export declare type QueryPartialEntity<T> = {
+export type QueryPartialEntity<T> = {
     [P in keyof T]?: T[P] | (() => string);
 };
 /**
  * Make all properties in T optional. Deep version.
  */
-export declare type QueryDeepPartialEntity<T> = _QueryDeepPartialEntity<ObjectLiteral extends T ? unknown : T>;
-declare type _QueryDeepPartialEntity<T> = {
+export type QueryDeepPartialEntity<T> = _QueryDeepPartialEntity<ObjectLiteral extends T ? unknown : T>;
+type _QueryDeepPartialEntity<T> = {
     [P in keyof T]?: (T[P] extends Array<infer U> ? Array<_QueryDeepPartialEntity<U>> : T[P] extends ReadonlyArray<infer U> ? ReadonlyArray<_QueryDeepPartialEntity<U>> : _QueryDeepPartialEntity<T[P]>) | (() => string);
 };
-export declare type DeepPartial<T> = T | (T extends Array<infer U> ? DeepPartial<U>[] : T extends Map<infer K, infer V> ? Map<DeepPartial<K>, DeepPartial<V>> : T extends Set<infer M> ? Set<DeepPartial<M>> : T extends object ? {
+export type DeepPartial<T> = T | (T extends Array<infer U> ? DeepPartial<U>[] : T extends Map<infer K, infer V> ? Map<DeepPartial<K>, DeepPartial<V>> : T extends Set<infer M> ? Set<DeepPartial<M>> : T extends object ? {
     [K in keyof T]?: DeepPartial<T[K]>;
 } : T);
 export {};

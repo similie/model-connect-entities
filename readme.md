@@ -1,4 +1,4 @@
-# One Connect Entitites
+# Node Model Connect
 
 ### Note, this package should only be used for similie products. It is not to be used for public consumption
 

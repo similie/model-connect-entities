@@ -1,4 +1,4 @@
-import { IEntity, IModelCollection, IQueryLimiters, LiveConnectionConstruct, IModelConfigurationDetails, IQueryOrPartial, IEntityPartial, IValuesToEscape } from '../entities';
+import { IEntity, IModelCollection, IQueryLimiters, LiveConnectionConstruct, IModelConfigurationDetails, IQueryOrPartial, IEntityPartial, IValuesToEscape, IModelAttributes, ISumType, IAvgType } from '../entities';
 export declare class LiveConnectConfig implements IModelConfigurationDetails {
     private _name;
     constructor();
@@ -21,27 +21,27 @@ export declare class LiveConnectConfig implements IModelConfigurationDetails {
 export declare abstract class LiveConnection implements LiveConnectionConstruct {
     constructor(global?: boolean);
     getId(query: number | any | undefined | null): number | null;
-    init(): Promise<null>;
     get modelConfig(): LiveConnectConfig;
-    raw(config?: IModelConfigurationDetails): void;
-    find(query: any, limiters: IQueryLimiters, config?: IModelConfigurationDetails): any;
-    findOne(query: any, limiters: IQueryLimiters, config?: IModelConfigurationDetails): any;
-    save(values: any, config?: IModelConfigurationDetails): Promise<any>;
-    update(query: any, update: any, config?: IModelConfigurationDetails): Promise<any>;
-    count(query: any, config?: IModelConfigurationDetails): Promise<any>;
-    destroy(query: any, config?: IModelConfigurationDetails): Promise<any>;
-    create(query: any, config?: IModelConfigurationDetails): Promise<any>;
-    createMany(query: any[], config?: IModelConfigurationDetails): Promise<any>;
-    destroyAll(query: any, config?: IModelConfigurationDetails): Promise<any>;
-    addToCollection(value: any, collection: IModelCollection<IEntity>): Promise<void | IEntity>;
-    removeFromCollection(value: any, collection: IModelCollection<IEntity>): Promise<void | IEntity>;
-    attr(config?: IModelConfigurationDetails): any;
-    keys(config?: IModelConfigurationDetails): string[];
-    sum(numericAttrName: keyof IEntity, criteria?: IQueryOrPartial<IEntity>, config?: IModelConfigurationDetails): Promise<any>;
-    avg(numericAttrName: keyof IEntity, criteria?: IQueryOrPartial<IEntity>, config?: IModelConfigurationDetails): Promise<any>;
-    findOrCreate(criteria: IQueryOrPartial<IEntity>, initialsValues: IEntityPartial<IEntity>, config?: IModelConfigurationDetails): Promise<any>;
-    streamEach(query: IQueryOrPartial<IEntity>, limiters: IQueryLimiters, config: IModelConfigurationDetails, cb: (model: IEntity) => Promise<void> | void): Promise<any>;
-    streamBatch(query: IQueryOrPartial<IEntity>, limiters: IQueryLimiters, config: IModelConfigurationDetails, cb: (model: IEntity[]) => Promise<void> | void): Promise<any>;
-    tearDown(): Promise<void>;
-    query(query: string, valuesToEscape?: IValuesToEscape, config?: IModelConfigurationDetails): Promise<any>;
+    abstract init(): Promise<any>;
+    abstract raw(config?: IModelConfigurationDetails): any;
+    abstract find(query: any, limiters: IQueryLimiters, config?: IModelConfigurationDetails): Promise<IEntity[]>;
+    abstract findOne(query: any, limiters: IQueryLimiters, config?: IModelConfigurationDetails): Promise<IEntity>;
+    abstract save(values: any, config?: IModelConfigurationDetails): Promise<IEntity>;
+    abstract update(query: any, update: any, config?: IModelConfigurationDetails): Promise<IEntity[]>;
+    abstract count(query: any, config?: IModelConfigurationDetails): Promise<number>;
+    abstract destroy(query: any, config?: IModelConfigurationDetails): Promise<IEntity>;
+    abstract create(query: any, config?: IModelConfigurationDetails): Promise<IEntity>;
+    abstract createMany(query: any[], config?: IModelConfigurationDetails): Promise<IEntity[]>;
+    abstract destroyAll(query: any, config?: IModelConfigurationDetails): Promise<IEntity[]>;
+    abstract addToCollection(value: any, collection: IModelCollection<IEntity>): Promise<void | IEntity>;
+    abstract removeFromCollection(value: any, collection: IModelCollection<IEntity>): Promise<void | IEntity>;
+    abstract attr(config?: IModelConfigurationDetails): Promise<Record<string, IModelAttributes>>;
+    abstract keys(config?: IModelConfigurationDetails): string[];
+    abstract sum(numericAttrName: keyof IEntity, criteria?: IQueryOrPartial<IEntity>, config?: IModelConfigurationDetails): Promise<ISumType>;
+    abstract avg(numericAttrName: keyof IEntity, criteria?: IQueryOrPartial<IEntity>, config?: IModelConfigurationDetails): Promise<IAvgType>;
+    abstract findOrCreate(criteria: IQueryOrPartial<IEntity>, initialsValues: IEntityPartial<IEntity>, config?: IModelConfigurationDetails): Promise<IEntity>;
+    abstract streamEach(query: IQueryOrPartial<IEntity>, limiters: IQueryLimiters, config: IModelConfigurationDetails, cb: (model: IEntity) => Promise<void> | void): Promise<void>;
+    abstract streamBatch(query: IQueryOrPartial<IEntity>, limiters: IQueryLimiters, config: IModelConfigurationDetails, cb: (model: IEntity[]) => Promise<void> | void): Promise<void>;
+    abstract tearDown(): Promise<void>;
+    abstract query(query: string, valuesToEscape?: IValuesToEscape, config?: IModelConfigurationDetails): Promise<any>;
 }
