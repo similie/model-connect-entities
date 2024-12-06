@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getId = getId;
+exports.getId = void 0;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getId(query) {
     if (query === 'undefined' || query === 'null') {
@@ -12,3 +12,4 @@ function getId(query) {
             : null
         : query;
 }
+exports.getId = getId;

@@ -3,8 +3,10 @@
  * @name IEntity
  * @description the basic type for a base model
  */
+export type UUID = `${string}-${string}-${string}-${string}-${string}`;
+export type IDValue = number | number[] | UUID | UUID[];
 export interface IEntity {
-    id: number;
+    id: IDValue;
     createdAt: Date;
     updatedAt: Date;
 }

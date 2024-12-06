@@ -82,6 +82,10 @@ import { IAssetscheduler } from '../model-interfaces';
 
 import {LiveConnectionConstruct, Model } from '@similie/model-connect-entites';
 export class AssetModel extends Model<IAsset> {
+  constructor() {
+    super(LiveConnectionConstruct);
+    this.modelname = "assset";
+  }
  // you can override or define additional methods here
 }
 

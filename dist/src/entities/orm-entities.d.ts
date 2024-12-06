@@ -1,3 +1,5 @@
+/// <reference types="node" />
+/// <reference types="node" />
 /** @public */
 export declare interface ObjectIdLike {
     id: string | Uint8Array;
