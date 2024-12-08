@@ -1,6 +1,6 @@
 {
   "name": "@similie/model-connect-entities",
-  "version": "1.0.13",
+  "version": "1.1.0",
   "description": "Creates a common interface for model conmections, offering common CRUD operations accross deployments",
   "main": "dist/index.js",
   "repository": {
@@ -23,7 +23,8 @@
     "build": "tsc",
     "watch": "tsc --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "docs": "./node_modules/typedoc/bin/typedoc --out docs index.ts"
+    "docs": "./node_modules/typedoc/bin/typedoc --out docs index.ts",
+    "release": "standard-version"
   },
   "files": [
     "dist",
@@ -32,6 +33,7 @@
   ],
   "devDependencies": {
     "@types/node": "^22.10.1",
+    "standard-version": "^9.5.0",
     "typedoc": "^0.27.3"
   },
   "dependencies": {
