@@ -13,6 +13,7 @@ import {
   IEntityPartial,
   IValuesToEscape,
   IQueryBaseType,
+  IDValue,
 } from '../entities';
 
 import { GlobalConnection } from '../global-connect';
@@ -38,7 +39,7 @@ export class Model<T extends IEntity> implements IModelConnect<T> {
       this._connector = globalConfig.connector;
     } else {
       throw new Error(
-        'A valid connection is required to instantiate this model'
+        'A valid connection is required to instantiate this model',
       );
     }
     // [AS] we are only defining the modelname currently for the configuration
@@ -47,7 +48,7 @@ export class Model<T extends IEntity> implements IModelConnect<T> {
     // [AS] this will build the model with the specific entity
     this._modelInstance = new ModelInstance<T>(
       this.connector,
-      this.modelConfig
+      this.modelConfig,
     );
   }
   // getters
@@ -91,8 +92,8 @@ export class Model<T extends IEntity> implements IModelConnect<T> {
    * @param {number | IEntity | undefined | null} query
    * @returns {number | null}
    */
-  public getId(query: number | T | undefined | null): number | undefined {
-    return getId(query) as number | undefined;
+  public getId(query: T | undefined | null | IDValue): number | null {
+    return getId(query) as number | null;
   }
 
   /**
@@ -101,7 +102,7 @@ export class Model<T extends IEntity> implements IModelConnect<T> {
    * @param {number} id
    * @returns {QyeryPopulantDecorators<IEntity>}
    */
-  public initWithId(id: number) {
+  public initWithId(id: IDValue) {
     const decorator = new QueryDecorators<T>(this, { id: id });
     return new QueryPopulantDecorators<T>(decorator);
   }
@@ -150,7 +151,7 @@ export class Model<T extends IEntity> implements IModelConnect<T> {
   public async count(query?: IQueryOrPartial<T>) {
     return await this.connector?.count(
       query as IQueryOrPartial<IEntity>,
-      this.modelConfig
+      this.modelConfig,
     );
   }
 
@@ -211,13 +212,13 @@ export class Model<T extends IEntity> implements IModelConnect<T> {
    */
   public async findOrCreate(
     criteria: IQueryOrPartial<T>,
-    initialValues: IEntityPartial<T>
+    initialValues: IEntityPartial<T>,
   ) {
     const foundOrCreated = <T>(
       await this.connector?.findOrCreate(
         criteria,
         initialValues,
-        this.modelConfig
+        this.modelConfig,
       )
     );
     return this.modelInstance.applyOne(foundOrCreated) as Promise<T>;
@@ -235,7 +236,7 @@ export class Model<T extends IEntity> implements IModelConnect<T> {
     return this.connector?.avg(
       numericAttrName as keyof IEntity,
       criteria,
-      this.modelConfig
+      this.modelConfig,
     );
   }
 
@@ -251,7 +252,7 @@ export class Model<T extends IEntity> implements IModelConnect<T> {
     return this.connector?.sum(
       numericAttrName as keyof IEntity,
       criteria,
-      this.modelConfig
+      this.modelConfig,
     );
   }
 

@@ -1,3 +1,5 @@
+import { IDValue } from './base-entity';
+
 /** @public */
 export declare interface ObjectIdLike {
   id: string | Uint8Array;
@@ -18,7 +20,9 @@ export declare class ObjectId {
    *
    * @param inputId - Can be a 24 character hex string, 12 byte binary Buffer, or a number.
    */
-  constructor(inputId?: string | number | ObjectId | ObjectIdLike | Uint8Array);
+  constructor(
+    inputId?: string | number | ObjectId | ObjectIdLike | Uint8Array | IDValue,
+  );
   /**
    * The ObjectId bytes
    * @readonly
@@ -68,7 +72,7 @@ export declare class ObjectId {
    * @param id - ObjectId instance to validate.
    */
   static isValid(
-    id: string | number | ObjectId | ObjectIdLike | Uint8Array
+    id: string | number | ObjectId | ObjectIdLike | Uint8Array | IDValue,
   ): boolean;
   inspect(): string;
 }
@@ -149,7 +153,7 @@ export declare class FindOperator<T> {
     useParameter?: boolean,
     multipleParameters?: boolean,
     getSql?: SqlGeneratorType,
-    objectLiteralParameters?: ObjectLiteral
+    objectLiteralParameters?: ObjectLiteral,
   );
   /**
    * Indicates if parameter is used or not for this operator.
@@ -191,33 +195,34 @@ export declare class EqualOperator<T> extends FindOperator<T> {
 
 export type FindOptionsWhereProperty<
   PropertyToBeNarrowed,
-  Property = PropertyToBeNarrowed
-> = PropertyToBeNarrowed extends Promise<infer I>
-  ? FindOptionsWhereProperty<NonNullable<I>>
-  : PropertyToBeNarrowed extends Array<infer I>
-  ? FindOptionsWhereProperty<NonNullable<I>>
-  : PropertyToBeNarrowed extends Function
-  ? never
-  : PropertyToBeNarrowed extends Buffer
-  ? Property | FindOperator<Property>
-  : PropertyToBeNarrowed extends Date
-  ? Property | FindOperator<Property>
-  : PropertyToBeNarrowed extends ObjectId
-  ? Property | FindOperator<Property>
-  : PropertyToBeNarrowed extends string
-  ? Property | FindOperator<Property>
-  : PropertyToBeNarrowed extends number
-  ? Property | FindOperator<Property>
-  : PropertyToBeNarrowed extends boolean
-  ? Property | FindOperator<Property>
-  : PropertyToBeNarrowed extends object
-  ?
-      | FindOptionsWhere<Property>
-      | FindOptionsWhere<Property>[]
-      | EqualOperator<Property>
-      | FindOperator<any>
-      | boolean
-  : Property | FindOperator<Property>;
+  Property = PropertyToBeNarrowed,
+> =
+  PropertyToBeNarrowed extends Promise<infer I>
+    ? FindOptionsWhereProperty<NonNullable<I>>
+    : PropertyToBeNarrowed extends Array<infer I>
+      ? FindOptionsWhereProperty<NonNullable<I>>
+      : PropertyToBeNarrowed extends Function
+        ? never
+        : PropertyToBeNarrowed extends Buffer
+          ? Property | FindOperator<Property>
+          : PropertyToBeNarrowed extends Date
+            ? Property | FindOperator<Property>
+            : PropertyToBeNarrowed extends ObjectId
+              ? Property | FindOperator<Property>
+              : PropertyToBeNarrowed extends string
+                ? Property | FindOperator<Property>
+                : PropertyToBeNarrowed extends number
+                  ? Property | FindOperator<Property>
+                  : PropertyToBeNarrowed extends boolean
+                    ? Property | FindOperator<Property>
+                    : PropertyToBeNarrowed extends object
+                      ?
+                          | FindOptionsWhere<Property>
+                          | FindOptionsWhere<Property>[]
+                          | EqualOperator<Property>
+                          | FindOperator<any>
+                          | boolean
+                      : Property | FindOperator<Property>;
 
 export type FindOptionsWhere<IEntity> = {
   [P in keyof IEntity]?: P extends 'toString'
@@ -242,8 +247,8 @@ type _QueryDeepPartialEntity<T> = {
     | (T[P] extends Array<infer U>
         ? Array<_QueryDeepPartialEntity<U>>
         : T[P] extends ReadonlyArray<infer U>
-        ? ReadonlyArray<_QueryDeepPartialEntity<U>>
-        : _QueryDeepPartialEntity<T[P]>)
+          ? ReadonlyArray<_QueryDeepPartialEntity<U>>
+          : _QueryDeepPartialEntity<T[P]>)
     | (() => string);
 };
 
@@ -252,11 +257,11 @@ export type DeepPartial<T> =
   | (T extends Array<infer U>
       ? DeepPartial<U>[]
       : T extends Map<infer K, infer V>
-      ? Map<DeepPartial<K>, DeepPartial<V>>
-      : T extends Set<infer M>
-      ? Set<DeepPartial<M>>
-      : T extends object
-      ? {
-          [K in keyof T]?: DeepPartial<T[K]>;
-        }
-      : T);
+        ? Map<DeepPartial<K>, DeepPartial<V>>
+        : T extends Set<infer M>
+          ? Set<DeepPartial<M>>
+          : T extends object
+            ? {
+                [K in keyof T]?: DeepPartial<T[K]>;
+              }
+            : T);

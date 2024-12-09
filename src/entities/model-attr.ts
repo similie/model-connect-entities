@@ -1,4 +1,4 @@
-import { IEntity } from './base-entity';
+import { IDValue, IEntity } from './base-entity';
 import {
   FindOptionsWhere,
   QueryDeepPartialEntity,
@@ -35,7 +35,7 @@ export interface IModelAttributes {
 
 export interface IModelDestroy<t extends IEntity> {
   where?: FindOptionsWhere<t>;
-  id?: number;
+  id?: IDValue;
 }
 
 export interface IModelUpdate<t extends IEntity> extends IModelDestroy<t> {
@@ -52,6 +52,6 @@ export interface IModelSeekValues<t extends IEntity> {
   initialValues: DeepPartial<t>;
 }
 
-export type ICountType = { count: number };
-export type ISumType = { sum: number };
-export type IAvgType = { avg: number };
+export type ICountType = { count: number | null };
+export type ISumType = { sum: number | null };
+export type IAvgType = { avg: number | null };

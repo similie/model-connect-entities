@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { IEntity } from '../entities';
+import { IDValue, IEntity } from '../entities';
 import { IQueryOrPartial, ISingleQueryObject } from './queries';
 import { ISharedDataConnects } from './shared';
 
@@ -12,9 +12,9 @@ import { ISharedDataConnects } from './shared';
  */
 export interface IModelConnect<T extends IEntity>
   extends ISharedDataConnects<T> {
-  getId: (query: number | T | undefined | null) => number | undefined;
+  getId: (query: IDValue | T | undefined | null) => IDValue | null;
   find: (query: IQueryOrPartial<T>) => IQueryDecorators<T>;
-  initWithId: (id: number) => IQueryPopulates<T>;
+  initWithId: (id: IDValue) => IQueryPopulates<T>;
   stream: (query: any) => IQueryStreamDecorators<T>;
   toJson: (model: T) => Promise<any>;
 }
@@ -51,7 +51,7 @@ export interface IQueryFetch<T extends IEntity> {
 export interface IQueryPopulates<T extends IEntity> {
   populate: (
     value: string,
-    criteria?: ISingleQueryObject<any>
+    criteria?: ISingleQueryObject<any>,
   ) => IQueryFetch<T>;
   populateAll: () => IQueryFetch<T>;
   fetch: () => Promise<T>;
@@ -69,7 +69,7 @@ export interface IQueryDecorators<T extends IEntity> {
   populateAll: () => IQueryDecorators<T>;
   populate: (
     value: string,
-    criteria?: ISingleQueryObject<any>
+    criteria?: ISingleQueryObject<any>,
   ) => IQueryDecorators<T>;
   fetch: () => Promise<T[]>;
   fetchOne: () => Promise<T>;
@@ -84,10 +84,10 @@ export interface IQueryDecorators<T extends IEntity> {
 export interface IQueryStreamDecorators<T extends IEntity>
   extends IQueryDecorators<T> {
   eachRecord: (
-    cb: (model: T) => Promise<any> | any
+    cb: (model: T) => Promise<any> | any,
   ) => IQueryStreamDecorators<T>;
   eachBatch: (
     batchNumber: number,
-    cb: (model: T[]) => Promise<any> | any
+    cb: (model: T[]) => Promise<any> | any,
   ) => IQueryStreamDecorators<T>;
 }
