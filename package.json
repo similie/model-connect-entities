@@ -1,6 +1,6 @@
 {
   "name": "@similie/model-connect-entities",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Creates a common interface for model conmections, offering common CRUD operations accross deployments",
   "main": "dist/index.js",
   "repository": {
