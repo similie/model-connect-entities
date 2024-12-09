@@ -13,9 +13,9 @@ import { ISharedDataConnects } from './shared';
 export interface IModelConnect<T extends IEntity>
   extends ISharedDataConnects<T> {
   getId: (query: IDValue | T | undefined | null) => IDValue | null;
-  find: (query: IQueryOrPartial<T>) => IQueryDecorators<T>;
+  find: (query?: IQueryOrPartial<T>) => IQueryDecorators<T>;
   initWithId: (id: IDValue) => IQueryPopulates<T>;
-  stream: (query: any) => IQueryStreamDecorators<T>;
+  stream: (query?: any) => IQueryStreamDecorators<T>;
   toJson: (model: T) => Promise<any>;
 }
 
